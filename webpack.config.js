@@ -30,7 +30,7 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            {from: './src/html', to: './'}// to 的参数是以 output 配置目录为根的
+            {from: __dirname + '/src/html', to: './'}
         ])
     ]
 };
