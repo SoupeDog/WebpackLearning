@@ -39,7 +39,8 @@ module.exports = {
     },
     plugins: [
         new CopyWebpackPlugin([
-            {from: __dirname + '/src/html', to: './'}
+            {from: __dirname + '/src/html', to: './'},
+            {from: __dirname + '/src/css/default.css', to: './'}
         ])
     ]
 };
