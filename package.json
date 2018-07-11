@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --colors --mode development",
+    "build": "webpack --progress --colors --mode production",
     "start": "webpack-dev-server --progress --colors --mode development"
   },
   "author": "",
@@ -12,6 +12,10 @@
   "dependencies": {},
   "devDependencies": {
     "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "less": "^3.6.0",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.21.0",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.4"
