@@ -4,7 +4,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
-        index: './src/js/index.js'
+        index: './src/js/index.jsx'
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -26,6 +26,15 @@ module.exports = {
             }, {
                 loader: "less-loader" // compiles Less to CSS
             }]
+        }, {
+            test: /\.(js|jsx)$/,
+            exclude: /(node_modules)/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['react', 'es2015']
+                }
+            }
         }]
     },
     plugins: [
