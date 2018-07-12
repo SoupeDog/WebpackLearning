@@ -79,7 +79,7 @@ module.exports = {
         // ]),
         new HtmlWebpackPlugin({
             title: '引导页',
-            favicon: "./src/img/icon2.ico",
+            favicon: "./src/img/icon.ico",
             template: "./src/html/index.html",
             inject: "body",
             minify: {
