@@ -10,7 +10,7 @@ module.exports = {
     output: {
         publicPath: "",
         path: path.resolve(__dirname, './dist'),
-        filename: 'js/[name]-[chunkhash].js'
+        filename: './js/[name]-[chunkhash].js'
     },
     devServer: {
         contentBase: path.join(__dirname, "./dist"),
@@ -79,8 +79,8 @@ module.exports = {
         // ]),
         new HtmlWebpackPlugin({
             title: '引导页',
-            favicon: "src/img/icon.ico",
-            template: "src/html/index.html",
+            favicon: "./src/img/icon2.ico",
+            template: "./src/html/index.html",
             inject: "body",
             minify: {
                 removeComments: true,
