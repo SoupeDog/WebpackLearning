@@ -1,5 +1,5 @@
 // 内置插件
-const path = require('path');
+const Path = require('path');
 // npm 外部安装插件
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,11 +9,11 @@ module.exports = {
     },
     output: {
         publicPath: "",
-        path: path.resolve(__dirname, './dist'),
+        path: Path.resolve(__dirname, './dist'),
         filename: './js/[name]-[chunkhash].js'
     },
     devServer: {
-        contentBase: path.join(__dirname, "./dist"),
+        contentBase: Path.join(__dirname, "./dist"),
         open: true,
         compress: true,
         port: 9000
