@@ -7,10 +7,10 @@ export default class TimeHelper {
     // 填充 target 为 size 位数
     static formatNumber(target, size) {
         if (typeof target != "number") {
-            throw new Error("[target] of formatNumber(target, size) should be number.");
+            throw new Error("TimeHelper:[target] of formatNumber(target, size) should be number.");
         }
         if (typeof size != "number") {
-            throw new Error("[size] of formatNumber(target, size) should be number.");
+            throw new Error("TimeHelper:[size] of formatNumber(target, size) should be number.");
         }
         let compareNumber = Math.pow(10, size);
         let needAddCount = 0;
@@ -41,7 +41,7 @@ export default class TimeHelper {
             return currentTs;
         }
         if (typeof x != "number") {
-            throw new Error("[target] of getTimeStamp(x) should be number.");
+            throw new Error("TimeHelper:[target] of getTimeStamp(x) should be number.");
         }
         currentTs -= x * this.getDayMsec();
         return currentTs;
@@ -50,7 +50,7 @@ export default class TimeHelper {
     // 目标毫秒级时间戳格式化成字符串,默认格式为 yyyy-mm-dd hh:mm:ss
     static formatTimeStampToString(target, type) {
         if (typeof target != "number") {
-            throw new Error("[target] of formatTimeStampToString(target, type) should be number.");
+            throw new Error("TimeHelper:[target] of formatTimeStampToString(target, type) should be number.");
         }
         let currentDate = new Date(target);
         var year = currentDate.getFullYear();
@@ -76,14 +76,14 @@ export default class TimeHelper {
         var month = currentDate.getMonth();
         var day = currentDate.getDate();
         if (typeof target != "number") {
-            throw new Error("[target] of getNaturalDayTimeStamp(target, x) should be number.");
+            throw new Error("TimeHelper:[target] of getNaturalDayTimeStamp(target, x) should be number.");
         }
         let resultDate = new Date(year, month, day, 0, 0, 0, 0);
         if (x == null) {
             x = 0;
         }
         if (typeof x != "number") {
-            throw new Error("[x] of getNaturalDayTimeStamp(target, x) should be number.");
+            throw new Error("TimeHelper:[x] of getNaturalDayTimeStamp(target, x) should be number.");
         }
         return resultDate.getTime() + x * this.getDayMsec();
     }

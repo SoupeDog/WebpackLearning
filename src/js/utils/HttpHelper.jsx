@@ -12,27 +12,139 @@ export default class HttpHelper {
         return "application/json";
     }
 
-    static httpGet(path, headers) {
+    // 默认请求超时时间
+    static getDefaultTimeOut() {
+        return 5000;
+    }
+
+    static httpGet(requestOBJ) {
+        let finalUrl;
+        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+            throw new Error("HttpHelper:[path] can't be empty.");
+        }
+        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
+            finalUrl = requestOBJ.finalUrl;
+        } else {
+            finalUrl = this.getPrefix() + requestOBJ.path;
+        }
         $.ajax({
-            url: this.getPrefix() + path,
-            headers: {
-                "uId": "U00000001",
-                "token": "1",
-                "scope": "web"
-            },
+            url: finalUrl,
+            headers: requestOBJ.headers,
             type: 'get',
             contentType: this.getContentType(),
-            // cache: false,
-            crossDomain: true,
-            xhrFields: {
-                withCredentials: true
-            },
+            cache: false,
             success: function (data) {
+                // requestOBJ.success(data);
                 console.log(data);
             },
-            error: function (status) {
-                console.log(status);
-            }
+            error: function (data) {
+                // requestOBJ.error(status);
+                if (data.status == 0 && data.statusText == "timeout") {
+                    alert("超时");
+                } else {
+                    console.log(data);
+                }
+            },
+            timeout: this.getDefaultTimeOut()
         });
     }
+
+    static httpPost(requestOBJ) {
+        let finalUrl;
+        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+            throw new Error("HttpHelper:[path] can't be empty.");
+        }
+        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
+            finalUrl = requestOBJ.finalUrl;
+        } else {
+            finalUrl = this.getPrefix() + requestOBJ.path;
+        }
+        $.ajax({
+            url: finalUrl,
+            headers: requestOBJ.headers,
+            type: 'post',
+            contentType: this.getContentType(),
+            cache: false,
+            data: requestOBJ.requestData,
+            success: function (data) {
+                // requestOBJ.success(data);
+                console.log(data);
+            },
+            error: function (data) {
+                // requestOBJ.error(status);
+                if (data.status == 0 && data.statusText == "timeout") {
+                    alert("超时");
+                } else {
+                    console.log(data);
+                }
+            },
+            timeout: this.getDefaultTimeOut()
+        });
+    }
+
+    static httpPut(requestOBJ) {
+        let finalUrl;
+        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+            throw new Error("HttpHelper:[path] can't be empty.");
+        }
+        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
+            finalUrl = requestOBJ.finalUrl;
+        } else {
+            finalUrl = this.getPrefix() + requestOBJ.path;
+        }
+        $.ajax({
+            url: finalUrl,
+            headers: requestOBJ.headers,
+            type: 'put',
+            contentType: this.getContentType(),
+            cache: false,
+            data: requestOBJ.requestData,
+            success: function (data) {
+                // requestOBJ.success(data);
+                console.log(data);
+            },
+            error: function (data) {
+                // requestOBJ.error(status);
+                if (data.status == 0 && data.statusText == "timeout") {
+                    alert("超时");
+                } else {
+                    console.log(data);
+                }
+            },
+            timeout: this.getDefaultTimeOut()
+        });
+    }
+
+    static httpDelete(requestOBJ) {
+        let finalUrl;
+        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+            throw new Error("HttpHelper:[path] can't be empty.");
+        }
+        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
+            finalUrl = requestOBJ.finalUrl;
+        } else {
+            finalUrl = this.getPrefix() + requestOBJ.path;
+        }
+        $.ajax({
+            url: finalUrl,
+            headers: requestOBJ.headers,
+            type: 'delete',
+            contentType: this.getContentType(),
+            cache: false,
+            success: function (data) {
+                // requestOBJ.success(data);
+                console.log(data);
+            },
+            error: function (data) {
+                // requestOBJ.error(status);
+                if (data.status == 0 && data.statusText == "timeout") {
+                    alert("超时");
+                } else {
+                    console.log(data);
+                }
+            },
+            timeout: this.getDefaultTimeOut()
+        });
+    }
+
 }
