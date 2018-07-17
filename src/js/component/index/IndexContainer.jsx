@@ -41,9 +41,9 @@ class IndexContainer extends BaseComponent {
                     <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
                     <Button variant="contained" color="primary" justify="center" onClick={() => {
                         let _react = this;
-                        _react.CallBackView.isVisible_Loading_Circle_Interrupt(true);
+                        _react.CallBackView.call_Loading_Circle_Interrupt(true);
                         setTimeout(function () {
-                            _react.CallBackView.isVisible_Loading_Circle_Interrupt(false);
+                            _react.CallBackView.call_Loading_Circle_Interrupt(false);
                         }, 3000);
                     }}>
                         加载

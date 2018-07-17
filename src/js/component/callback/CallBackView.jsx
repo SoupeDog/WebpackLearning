@@ -32,10 +32,10 @@ class CallBackView extends BaseComponent {
                     }}
                     open={this.state.lightTip_Visible}
                     autoHideDuration={3000}
-                    onClose={this.isVisible_lightTip_Success.bind(this, false, this.state.lightTip_variant, this.state.lightTip_Msg)}
+                    onClose={this.call_LightTip.bind(this, false, this.state.lightTip_variant, this.state.lightTip_Msg)}
                 >
                     <LightTip
-                        onClose={this.isVisible_lightTip_Success.bind(this, false, this.state.lightTip_variant, this.state.lightTip_Msg)}
+                        onClose={this.call_LightTip.bind(this, false, this.state.lightTip_variant, this.state.lightTip_Msg)}
                         variant={this.state.lightTip_variant}
                         message={this.state.lightTip_Msg}
                     />
@@ -47,12 +47,11 @@ class CallBackView extends BaseComponent {
     componentDidMount() {
     }
 
-    isVisible_Loading_Circle_Interrupt(state) {
+    call_Loading_Circle_Interrupt(state) {
         this.setState({loading_Circle_Interrupt: state});
-        this.isVisible_lightTip_Success(true, "warning", "搞事情！");
     }
 
-    isVisible_lightTip_Success(state, variant, msg) {
+    call_LightTip(state, variant, msg) {
         this.setState({
             lightTip_Visible: state,
             lightTip_variant: variant,
