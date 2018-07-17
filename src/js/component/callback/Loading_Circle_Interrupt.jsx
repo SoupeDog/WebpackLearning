@@ -15,6 +15,9 @@ class Loading_Circle_Interrupt extends BaseComponent {
             currentWidth: 0,
             halfProgressCircleDiameter: 100,
         };
+
+        this.handleClose = this.handleClose.bind(this);
+        this.initCurrentWindowSize=this.initCurrentWindowSize.bind(this);
         // alert("constructor");
     }
 
@@ -43,8 +46,8 @@ class Loading_Circle_Interrupt extends BaseComponent {
                             SonW: this.state.halfProgressCircleDiameter,
                             SonH: this.state.halfProgressCircleDiameter
                         })
-                    }} onClose={this.handleClose.bind(this)}
-                                      onClick={this.handleClose.bind(this)}
+                    }} onClose={this.handleClose}
+                                      onClick={this.handleClose}
                                       size={(this.state.halfProgressCircleDiameter)}/>
                 </Modal>
             </div>
