@@ -1,41 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BaseComponent from "../BaseComponent.jsx";
-import Modal from '@material-ui/core/Modal';
+import CallBackView from "../callback/CallBackView.jsx";
+import Button from "@material-ui/core/es/Button/Button";
 
-export default class IndexContainer extends BaseComponent {
+class IndexContainer extends BaseComponent {
 
     constructor(props) {
         super(props)
-        this.state = {open: true}
-        alert("constructor");
+        this.state = {
+            CallBackView: null
+        }
     }
 
-    handleClose() {
-        this.setState({ open: false });
-    };
+    // 初始化子组件
+    initCallBackView(CallBackView) {
+        this.CallBackView = CallBackView;
+    }
 
     componentWillMount() {
-        alert("componentWillMount");
     }
 
     render() {
         return (
             <div>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.open}
-                >
-                    <div onClick={this.handleClose.bind(this)}>asd</div>
-                </Modal>
-                <span>Hello world!</span>
+                <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
+                <Button variant="contained" color="primary" justify="center" onClick={() => {
+                    let _react = this;
+                    _react.CallBackView.isVisible_Loading_Circle_Interrupt(true);
+                    setTimeout(function () {
+                        _react.CallBackView.isVisible_Loading_Circle_Interrupt(false);
+                    }, 3000);
+                }}>
+                    加载
+                </Button>
             </div>
-
         );
     }
 
     componentDidMount() {
-        alert("componentDidMount");
     }
 }
+
+export default IndexContainer;

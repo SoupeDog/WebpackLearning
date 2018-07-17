@@ -19,7 +19,10 @@ export default class HttpHelper {
 
     static httpGet(requestOBJ) {
         let finalUrl;
-        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
+            if (requestOBJ.customerFinally != null) {
+                requestOBJ.customerFinally();
+            }
             throw new Error("HttpHelper:[path] can't be empty.");
         }
         if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
@@ -34,10 +37,17 @@ export default class HttpHelper {
             contentType: this.getContentType(),
             cache: false,
             success: function (data) {
+                if (requestOBJ.customerFinally != null) {
+                    requestOBJ.customerFinally();
+                }
                 // requestOBJ.success(data);
+                alert("成功")
                 console.log(data);
             },
             error: function (data) {
+                if (requestOBJ.customerFinally != null) {
+                    requestOBJ.customerFinally();
+                }
                 // requestOBJ.error(status);
                 if (data.status == 0 && data.statusText == "timeout") {
                     alert("超时");
@@ -51,7 +61,7 @@ export default class HttpHelper {
 
     static httpPost(requestOBJ) {
         let finalUrl;
-        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
             throw new Error("HttpHelper:[path] can't be empty.");
         }
         if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
@@ -84,7 +94,7 @@ export default class HttpHelper {
 
     static httpPut(requestOBJ) {
         let finalUrl;
-        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
             throw new Error("HttpHelper:[path] can't be empty.");
         }
         if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
@@ -117,7 +127,7 @@ export default class HttpHelper {
 
     static httpDelete(requestOBJ) {
         let finalUrl;
-        if (requestOBJ.path == null || requestOBJ.path.trim() == "") {
+        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
             throw new Error("HttpHelper:[path] can't be empty.");
         }
         if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
