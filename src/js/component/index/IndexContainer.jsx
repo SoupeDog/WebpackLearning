@@ -38,7 +38,6 @@ class IndexContainer extends BaseComponent {
         return (
             <div>
                 <MuiThemeProvider theme={customerTheme}>
-
                     <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
                     <Button variant="contained" color="primary" justify="center" onClick={() => {
                         let _react = this;
