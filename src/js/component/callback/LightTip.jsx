@@ -48,13 +48,14 @@ const styles = theme => ({
     },
 });
 
+let MIcon
 
 class LightTip extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {}
-        this.MIcon = variantIcon[props.variant];
+        MIcon = variantIcon[props.variant];
         // alert("constructor");
     }
 
@@ -66,10 +67,10 @@ class LightTip extends React.Component {
         return (
             <SnackbarContent
                 className={classNames(this.props.classes[this.props.variant], this.props.className)}
-                aria-describedby="client-snackbar"
+                aria-describedby={"client-snackbar"+this.props.className}
                 message={
-                    <span id="client-snackbar" className={this.props.classes.message}>
-          <this.MIcon className={classNames(this.props.classes.icon, this.props.classes.iconVariant)}/>
+                    <span id={"client-snackbar"+this.props.className} className={this.props.classes.message}>
+          <MIcon className={classNames(this.props.classes.icon, this.props.classes.iconVariant)}/>
                         {this.props.message}
         </span>
                 }

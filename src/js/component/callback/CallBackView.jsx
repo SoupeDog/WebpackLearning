@@ -11,8 +11,9 @@ class CallBackView extends BaseComponent {
         super(props)
         this.state = {
             loading_Circle_Interrupt: false,
-            lightTip_Success_Visible:true,
-            lightTip_Success_Msg:"这是一条成功信息！",
+            lightTip_Visible: true,
+            lightTip_Msg: "这是一条成功信息！",
+            lightTip_variant: "success"
         }
         this.props.initCallBackView(this);
     }
@@ -29,14 +30,14 @@ class CallBackView extends BaseComponent {
                         vertical: 'bottom',
                         horizontal: 'center',
                     }}
-                    open={this.state.lightTip_Success_Visible}
-                    autoHideDuration={300000}
-                    onClose={this.isVisible_lightTip_Success.bind(this,!this.state.lightTip_Success_Visible)}
+                    open={this.state.lightTip_Visible}
+                    autoHideDuration={3000}
+                    onClose={this.isVisible_lightTip_Success.bind(this, false, this.state.lightTip_variant, this.state.lightTip_Msg)}
                 >
                     <LightTip
-                        onClose={this.isVisible_lightTip_Success.bind(this,!this.state.lightTip_Success_Visible)}
-                        variant="success"
-                        message={this.state.lightTip_Success_Msg}
+                        onClose={this.isVisible_lightTip_Success.bind(this, false, this.state.lightTip_variant, this.state.lightTip_Msg)}
+                        variant={this.state.lightTip_variant}
+                        message={this.state.lightTip_Msg}
                     />
                 </Snackbar>
             </div>
@@ -48,11 +49,16 @@ class CallBackView extends BaseComponent {
 
     isVisible_Loading_Circle_Interrupt(state) {
         this.setState({loading_Circle_Interrupt: state});
-    }
-    isVisible_lightTip_Success(state) {
-        this.setState({lightTip_Success_Visible: state});
+        this.isVisible_lightTip_Success(true, "warning", "搞事情！");
     }
 
+    isVisible_lightTip_Success(state, variant, msg) {
+        this.setState({
+            lightTip_Visible: state,
+            lightTip_variant: variant,
+            lightTip_Msg: msg
+        });
+    }
 
 
 }
