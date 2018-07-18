@@ -78,7 +78,7 @@ class IndexContainer extends BaseComponent {
                         </Button>
                         <Button variant="contained" color="primary" justify="center" onClick={() => {
                             let _react = this;
-                            _react.CallBackView.call_Dialog_Conform(true, "zoom", "提示", "这个是一个不可逆操作，请重新确认是否执行。", () => {
+                            _react.CallBackView.call_Dialog_Conform(true, "zoom", "注意", "这个是一个不可逆操作，请重新确认是否执行。", () => {
                                 alert("确认")
                             }, () => {
                                 alert("取消")

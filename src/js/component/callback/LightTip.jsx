@@ -97,7 +97,7 @@ export default withStyles(styles)(LightTip);
 
 LightTip.propTypes = {
     className: PropTypes.string,
-    message: PropTypes.node,
+    message: PropTypes.string,
     onClose: PropTypes.func,
     variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };

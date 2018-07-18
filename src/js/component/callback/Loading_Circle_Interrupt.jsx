@@ -32,7 +32,6 @@ class Loading_Circle_Interrupt extends BaseComponent {
 
     render() {
         return (
-            <div>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
@@ -50,7 +49,6 @@ class Loading_Circle_Interrupt extends BaseComponent {
                                       onClick={this.handleClose}
                                       size={(this.state.halfProgressCircleDiameter)}/>
                 </Modal>
-            </div>
         );
     }
 
