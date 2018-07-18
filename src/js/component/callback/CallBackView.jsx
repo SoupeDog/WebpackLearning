@@ -4,6 +4,7 @@ import BaseComponent from "../BaseComponent.jsx";
 import Loading_Circle_Interrupt from "./Loading_Circle_Interrupt.jsx";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import LightTip from "./LightTip.jsx";
+import Loading_Linear_Unknown from "./Loading_Linear_Unknown.jsx";
 
 class CallBackView extends BaseComponent {
 
@@ -11,6 +12,7 @@ class CallBackView extends BaseComponent {
         super(props)
         this.state = {
             loading_Circle_Interrupt: false,
+            loading_Linear_Unknown: false,
             lightTip_Visible: true,
             lightTip_Msg: "这是一条成功信息！",
             lightTip_variant: "success"
@@ -25,6 +27,8 @@ class CallBackView extends BaseComponent {
         return (
             <div>
                 <Loading_Circle_Interrupt open={this.state.loading_Circle_Interrupt}/>
+                <Loading_Linear_Unknown open={this.state.loading_Linear_Unknown}/>
+
                 <Snackbar
                     anchorOrigin={{
                         vertical: 'bottom',
@@ -49,6 +53,9 @@ class CallBackView extends BaseComponent {
 
     call_Loading_Circle_Interrupt(state) {
         this.setState({loading_Circle_Interrupt: state});
+    }
+    call_Loading_Linear_Unknown(state) {
+        this.setState({loading_Linear_Unknown:state});
     }
 
     call_LightTip(state, variant, msg) {
