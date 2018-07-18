@@ -5,6 +5,7 @@ import Loading_Circle_Interrupt from "./Loading_Circle_Interrupt.jsx";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import LightTip from "./LightTip.jsx";
 import Loading_Linear_Unknown from "./Loading_Linear_Unknown.jsx";
+import Dialog_Conform from "./Dialog_Conform.jsx";
 
 class CallBackView extends BaseComponent {
 
@@ -13,7 +14,13 @@ class CallBackView extends BaseComponent {
         this.state = {
             loading_Circle_Interrupt: false,
             loading_Linear_Unknown: false,
-            lightTip_Visible: true,
+            dialog_Conform: false,
+            dialog_Transition: "fade",
+            dialog_Title: "提示",
+            dialog_Msg: "内容",
+            dialog_Ensure: null,
+            dialog_Cancel: null,
+            lightTip_Visible: false,
             lightTip_Msg: "这是一条成功信息！",
             lightTip_variant: "success"
         }
@@ -26,9 +33,16 @@ class CallBackView extends BaseComponent {
     render() {
         return (
             <div>
-                <Loading_Circle_Interrupt open={this.state.loading_Circle_Interrupt}/>
                 <Loading_Linear_Unknown open={this.state.loading_Linear_Unknown}/>
-
+                <Loading_Circle_Interrupt open={this.state.loading_Circle_Interrupt}/>
+                <Dialog_Conform call_Dialog_Conform={this.call_Dialog_Conform.bind(this)}
+                                open={this.state.dialog_Conform}
+                                transition={this.state.dialog_Transition}
+                                title={this.state.dialog_Title}
+                                msg={this.state.dialog_Msg}
+                                ensure={this.state.dialog_Ensure}
+                                cancel={this.state.dialog_Cancel}
+                />
                 <Snackbar
                     anchorOrigin={{
                         vertical: 'bottom',
@@ -54,8 +68,20 @@ class CallBackView extends BaseComponent {
     call_Loading_Circle_Interrupt(state) {
         this.setState({loading_Circle_Interrupt: state});
     }
+
     call_Loading_Linear_Unknown(state) {
-        this.setState({loading_Linear_Unknown:state});
+        this.setState({loading_Linear_Unknown: state});
+    }
+
+    call_Dialog_Conform(state, transition, title, msg, ensure, cancel) {
+        this.setState({
+            dialog_Conform: state,
+            dialog_Transition: transition == null ? "fade" : transition,
+            dialog_Title: title,
+            dialog_Msg: msg,
+            dialog_Ensure: ensure,
+            dialog_Cancel: cancel
+        });
     }
 
     call_LightTip(state, variant, msg) {

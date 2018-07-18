@@ -26,7 +26,7 @@ class Loading_Linear_Unknown extends React.Component {
 
     render() {
         return (
-            <div className={this.props.classes.root}>
+            <div className={this.props.classes.root} style={{width: "100%", position: "absolute",zIndex:1000}}>
                 <LinearProgress style={{display: this.props.open == true ? "inherit" : "none"}} color="secondary"/>
             </div>
         );
