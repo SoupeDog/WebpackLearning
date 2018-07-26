@@ -7,6 +7,28 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import lightGreen from "@material-ui/core/es/colors/lightGreen";
 import yellow from "@material-ui/core/es/colors/yellow";
+import H from "highlight.js/lib/highlight";
+
+const socket = new WebSocket("ws:localhost:8080/webSocket/"+Math.floor(Math.random()*100));
+
+socket.onopen = function() {
+    console.log("Socket 已打开");
+    socket.send("这是来自客户端的消息" + location.href + new Date());
+};
+//获得消息事件
+socket.onmessage = function(msg) {
+    console.log(msg.data);
+    //发现消息进入    开始处理前端触发逻辑
+};
+//关闭事件
+socket.onclose = function() {
+    console.log("Socket已关闭");
+};
+//发生了错误事件
+socket.onerror = function() {
+    alert("Socket发生了错误");
+    //此时可以尝试刷新页面
+}
 
 const customerTheme = createMuiTheme({
     palette: {
@@ -91,11 +113,14 @@ class IndexContainer extends BaseComponent {
 
 
                 </MuiThemeProvider>
+
             </div>
         );
     }
 
     componentDidMount() {
+
+        H.initHighlightingOnLoad()
     }
 }
 
