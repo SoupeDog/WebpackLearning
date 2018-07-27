@@ -68,17 +68,10 @@ class IndexContainer extends BaseComponent {
                 <JssProvider jss={jss} generateClassName={generateClassName}>
                     <MuiThemeProvider theme={customerTheme}>
                         <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
-
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
-
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 this.mockHttpRequest();
-                                // let _react = this;
-                                // _react.CallBackView.call_Loading_Circle_Interrupt(true);
-                                // setTimeout(function () {
-                                //     _react.CallBackView.call_Loading_Circle_Interrupt(false);
-                                // }, 3000);
                             }}>
                                 打断型加载
                             </Button>
