@@ -7,12 +7,17 @@ export default class HttpHelper {
         return "";
     }
 
+    // ajax 请求缓存是否开启标识(false:不开启)
+    static getDefaultCache() {
+        return false;
+    }
+
     // 默认 Content-Type
-    static getContentType() {
+    static getDefaultContentType() {
         return "application/json";
     }
 
-    // 默认请求超时时间
+    // 默认请求超时时间(毫秒)
     static getDefaultTimeOut() {
         return 5000;
     }
@@ -20,8 +25,8 @@ export default class HttpHelper {
     static httpGet(requestOBJ) {
         let finalUrl;
         if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
-            if (requestOBJ.customerFinally != null) {
-                requestOBJ.customerFinally();
+            if (requestOBJ.customFinally != null) {
+                requestOBJ.customFinally();
             }
             throw new Error("HttpHelper:[path] can't be empty.");
         }
@@ -33,29 +38,28 @@ export default class HttpHelper {
         $.ajax({
             url: finalUrl,
             headers: requestOBJ.headers,
-            type: 'get',
-            contentType: this.getContentType(),
-            cache: false,
+            type: 'GET',
+            contentType: this.getDefaultContentType(),
+            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
             success: function (data) {
-                if (requestOBJ.customerFinally != null) {
-                    requestOBJ.customerFinally();
+                if (requestOBJ.customFinally != null) {
+                    requestOBJ.customFinally();
                 }
-                // requestOBJ.success(data);
+                requestOBJ.success(data);
                 alert("成功")
                 console.log(data);
             },
             error: function (data) {
-                if (requestOBJ.customerFinally != null) {
-                    requestOBJ.customerFinally();
+                if (requestOBJ.customFinally != null) {
+                    requestOBJ.customFinally();
                 }
-                // requestOBJ.error(status);
                 if (data.status == 0 && data.statusText == "timeout") {
                     alert("超时");
                 } else {
                     console.log(data);
                 }
             },
-            timeout: this.getDefaultTimeOut()
+            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
         });
     }
 
@@ -72,9 +76,9 @@ export default class HttpHelper {
         $.ajax({
             url: finalUrl,
             headers: requestOBJ.headers,
-            type: 'post',
-            contentType: this.getContentType(),
-            cache: false,
+            type: 'POST',
+            contentType: this.getDefaultContentType(),
+            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
             data: requestOBJ.requestData,
             success: function (data) {
                 // requestOBJ.success(data);
@@ -88,7 +92,7 @@ export default class HttpHelper {
                     console.log(data);
                 }
             },
-            timeout: this.getDefaultTimeOut()
+            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
         });
     }
 
@@ -105,9 +109,9 @@ export default class HttpHelper {
         $.ajax({
             url: finalUrl,
             headers: requestOBJ.headers,
-            type: 'put',
-            contentType: this.getContentType(),
-            cache: false,
+            type: 'PUT',
+            contentType: this.getDefaultContentType(),
+            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
             data: requestOBJ.requestData,
             success: function (data) {
                 // requestOBJ.success(data);
@@ -121,7 +125,7 @@ export default class HttpHelper {
                     console.log(data);
                 }
             },
-            timeout: this.getDefaultTimeOut()
+            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
         });
     }
 
@@ -138,9 +142,9 @@ export default class HttpHelper {
         $.ajax({
             url: finalUrl,
             headers: requestOBJ.headers,
-            type: 'delete',
-            contentType: this.getContentType(),
-            cache: false,
+            type: 'DELETE',
+            contentType: this.getDefaultContentType(),
+            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
             success: function (data) {
                 // requestOBJ.success(data);
                 console.log(data);
@@ -153,7 +157,7 @@ export default class HttpHelper {
                     console.log(data);
                 }
             },
-            timeout: this.getDefaultTimeOut()
+            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
         });
     }
 

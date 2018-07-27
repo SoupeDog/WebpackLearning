@@ -8,27 +8,30 @@ import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import lightGreen from "@material-ui/core/es/colors/lightGreen";
 import yellow from "@material-ui/core/es/colors/yellow";
 import H from "highlight.js/lib/highlight";
+import HttpHelper from "../../utils/HttpHelper.jsx";6
+import $ from 'jquery'
 
-const socket = new WebSocket("ws:localhost:8080/webSocket/"+Math.floor(Math.random()*100));
 
-socket.onopen = function() {
-    console.log("Socket 已打开");
-    socket.send("这是来自客户端的消息" + location.href + new Date());
-};
-//获得消息事件
-socket.onmessage = function(msg) {
-    console.log(msg.data);
-    //发现消息进入    开始处理前端触发逻辑
-};
-//关闭事件
-socket.onclose = function() {
-    console.log("Socket已关闭");
-};
-//发生了错误事件
-socket.onerror = function() {
-    alert("Socket发生了错误");
-    //此时可以尝试刷新页面
-}
+// const socket = new WebSocket("ws:localhost:8080/webSocket/" + Math.floor(Math.random() * 100));
+//
+// socket.onopen = function () {
+//     console.log("Socket 已打开");
+//     socket.send("这是来自客户端的消息" + location.href + new Date());
+// };
+// //获得消息事件
+// socket.onmessage = function (msg) {
+//     console.log(msg.data);
+//     //发现消息进入    开始处理前端触发逻辑
+// };
+// //关闭事件
+// socket.onclose = function () {
+//     console.log("Socket已关闭");
+// };
+// //发生了错误事件
+// socket.onerror = function () {
+//     alert("Socket发生了错误");
+//     //此时可以尝试刷新页面
+// }
 
 const customerTheme = createMuiTheme({
     palette: {
@@ -63,11 +66,12 @@ class IndexContainer extends BaseComponent {
                     <div id="button_Group" style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
 
                         <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            let _react = this;
-                            _react.CallBackView.call_Loading_Circle_Interrupt(true);
-                            setTimeout(function () {
-                                _react.CallBackView.call_Loading_Circle_Interrupt(false);
-                            }, 3000);
+                            this.mockHttpRequest();
+                            // let _react = this;
+                            // _react.CallBackView.call_Loading_Circle_Interrupt(true);
+                            // setTimeout(function () {
+                            //     _react.CallBackView.call_Loading_Circle_Interrupt(false);
+                            // }, 3000);
                         }}>
                             打断型加载
                         </Button>
@@ -118,8 +122,26 @@ class IndexContainer extends BaseComponent {
         );
     }
 
-    componentDidMount() {
+    mockHttpRequest(){
+        let _react=this;
+        _react.CallBackView.call_Loading_Circle_Interrupt(true);
+        HttpHelper.httpGet({
+            headers: {
+                uid: "U00000001",
+                token: "522abdd48da34499914abd2c40c2746e",
+                scope: "web"
+            },
+            finalUrl:"http://127.0.0.1:8080/main/user/U00000001",
+            success:function (data) {
+                // console.log(data);
+            },
+            customFinally:function () {
+                _react.CallBackView.call_Loading_Circle_Interrupt(false);
+            }
+        });
+    }
 
+    componentDidMount() {
         H.initHighlightingOnLoad()
     }
 }
