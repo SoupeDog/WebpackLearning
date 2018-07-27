@@ -8,8 +8,13 @@ import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import lightGreen from "@material-ui/core/es/colors/lightGreen";
 import yellow from "@material-ui/core/es/colors/yellow";
 import H from "highlight.js/lib/highlight";
-import HttpHelper from "../../utils/HttpHelper.jsx";6
-import $ from 'jquery'
+import HttpHelper from "../../utils/HttpHelper.jsx";
+import JssProvider from 'react-jss/lib/JssProvider';
+import {create} from 'jss';
+import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
+
+const generateClassName = createGenerateClassName();
+const jss = create(jssPreset());
 
 
 // const socket = new WebSocket("ws:localhost:8080/webSocket/" + Math.floor(Math.random() * 100));
@@ -60,70 +65,69 @@ class IndexContainer extends BaseComponent {
     render() {
         return (
             <div>
-                <MuiThemeProvider theme={customerTheme}>
-                    <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
+                <JssProvider jss={jss} generateClassName={generateClassName}>
+                    <MuiThemeProvider theme={customerTheme}>
+                        <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
 
-                    <div id="button_Group" style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
+                        <div id="button_Group"
+                             style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
 
-                        <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            this.mockHttpRequest();
-                            // let _react = this;
-                            // _react.CallBackView.call_Loading_Circle_Interrupt(true);
-                            // setTimeout(function () {
-                            //     _react.CallBackView.call_Loading_Circle_Interrupt(false);
-                            // }, 3000);
-                        }}>
-                            打断型加载
-                        </Button>
-                        <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            let _react = this;
-                            _react.CallBackView.call_Loading_Linear_Unknown(true);
-                            setTimeout(function () {
-                                _react.CallBackView.call_Loading_Linear_Unknown(false);
-                            }, 3000);
-                        }}>
-                            非打断型加载
-                        </Button>
-                        <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            let _react = this;
-                            _react.CallBackView.call_LightTip(true, "success", "这是一条成功提示");
-                        }}>
-                            成功提示
-                        </Button>
-                        <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            let _react = this;
-                            _react.CallBackView.call_LightTip(true, "warning", "这是一条警告提示");
-                        }}>
-                            警告提示
-                        </Button>
-                        <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            let _react = this;
-                            _react.CallBackView.call_LightTip(true, "error", "这是一条错误提示");
-                        }}>
-                            错误提示
-                        </Button>
-                        <Button variant="contained" color="primary" justify="center" onClick={() => {
-                            let _react = this;
-                            _react.CallBackView.call_Dialog_Conform(true, "zoom", "注意", "这个是一个不可逆操作，请重新确认是否执行。", () => {
-                                alert("确认")
-                            }, () => {
-                                alert("取消")
-                            });
-                        }}>
-                            确认弹窗
-                        </Button>
-
-                    </div>
-
-
-                </MuiThemeProvider>
-
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                this.mockHttpRequest();
+                                // let _react = this;
+                                // _react.CallBackView.call_Loading_Circle_Interrupt(true);
+                                // setTimeout(function () {
+                                //     _react.CallBackView.call_Loading_Circle_Interrupt(false);
+                                // }, 3000);
+                            }}>
+                                打断型加载
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_Loading_Linear_Unknown(true);
+                                setTimeout(function () {
+                                    _react.CallBackView.call_Loading_Linear_Unknown(false);
+                                }, 3000);
+                            }}>
+                                非打断型加载
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_LightTip(true, "success", "这是一条成功提示");
+                            }}>
+                                成功提示
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_LightTip(true, "warning", "这是一条警告提示");
+                            }}>
+                                警告提示
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_LightTip(true, "error", "这是一条错误提示");
+                            }}>
+                                错误提示
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_Dialog_Conform(true, "zoom", "注意", "这个是一个不可逆操作，请重新确认是否执行。", () => {
+                                    alert("确认")
+                                }, () => {
+                                    alert("取消")
+                                });
+                            }}>
+                                确认弹窗
+                            </Button>
+                        </div>
+                    </MuiThemeProvider>
+                </JssProvider>
             </div>
         );
     }
 
-    mockHttpRequest(){
-        let _react=this;
+    mockHttpRequest() {
+        let _react = this;
         _react.CallBackView.call_Loading_Circle_Interrupt(true);
         HttpHelper.httpGet({
             headers: {
@@ -131,11 +135,11 @@ class IndexContainer extends BaseComponent {
                 token: "522abdd48da34499914abd2c40c2746e",
                 scope: "web"
             },
-            finalUrl:"http://127.0.0.1:8080/main/user/U00000001",
-            success:function (data) {
+            finalUrl: "http://127.0.0.1:8080/main/user/U00000001",
+            success: function (data) {
                 // console.log(data);
             },
-            customFinally:function () {
+            customFinally: function () {
                 _react.CallBackView.call_Loading_Circle_Interrupt(false);
             }
         });
