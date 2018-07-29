@@ -7,13 +7,12 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import lightGreen from "@material-ui/core/es/colors/lightGreen";
 import yellow from "@material-ui/core/es/colors/yellow";
-import H from "highlight.js/lib/highlight";
 import HttpHelper from "../../utils/HttpHelper.jsx";
 import JssProvider from 'react-jss/lib/JssProvider';
 import {create} from 'jss';
 import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
 
-const generateClassName = createGenerateClassName();
+const generateClassName = createGenerateClassName({productionPrefix:"HyggeWriterComponent"});
 const jss = create(jssPreset());
 
 
@@ -139,7 +138,6 @@ class IndexContainer extends BaseComponent {
     }
 
     componentDidMount() {
-        H.initHighlightingOnLoad()
     }
 }
 

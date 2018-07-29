@@ -1,16 +1,17 @@
 // 内置插件
-const Path = require('path');
+const Path = require("path");
 // npm 外部安装插件
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     entry: {
-        index: './src/js/index.jsx'
+        index: "./src/js/index.jsx",
+        browse: "/src/js/browse.jsx"
     },
     output: {
         publicPath: "",
-        path: Path.resolve(__dirname, './dist'),
-        filename: './js/[name]-[chunkhash].js'
+        path: Path.resolve(__dirname, "./dist"),
+        filename: "./js/[name]-[chunkhash].js"
     },
     devServer: {
         contentBase: Path.join(__dirname, "./dist"),
@@ -30,11 +31,11 @@ module.exports = {
                         loader: "css-loader" // translates CSS into CommonJS
                     },
                     {
-                        loader: 'postcss-loader',
+                        loader: "postcss-loader",
                         options: {
-                            ident: 'postcss',
+                            ident: "postcss",
                             plugins: (loader) => [
-                                require('autoprefixer')()
+                                require("autoprefixer")()
                             ]
                         }
                     },
@@ -52,11 +53,11 @@ module.exports = {
                         loader: "css-loader" // translates CSS into CommonJS
                     },
                     {
-                        loader: 'postcss-loader',
+                        loader: "postcss-loader",
                         options: {
-                            ident: 'postcss',
+                            ident: "postcss",
                             plugins: (loader) => [
-                                require('autoprefixer')()
+                                require("autoprefixer")()
                             ]
                         }
                     }]
@@ -65,9 +66,9 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules)/,
                 use: {
-                    loader: 'babel-loader',
+                    loader: "babel-loader",
                     options: {
-                        presets: ['react', 'es2015']
+                        presets: ["react", "es2015"]
                     }
                 }
             }
@@ -75,16 +76,28 @@ module.exports = {
     },
     plugins: [
         // new CopyWebpackPlugin([
-        //     {from: __dirname + '/src/css/default.css', to: './'}
+        //     {from: __dirname + "/src/css/default.css", to: "./"}
         // ]),
         new HtmlWebpackPlugin({
-            title: '引导页',
+            filename: "index.html",
+            title: "引导页",
             favicon: "./src/img/icon.ico",
-            template: "./src/html/index.html",
+            template: "./src/html/template.html",
             inject: "body",
             minify: {
                 removeComments: true,
-                collapseWhitespace:true
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            filename: "browse.html",
+            title: "浏览页",
+            favicon: "./src/img/icon.ico",
+            template: "./src/html/template.html",
+            inject: "body",
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
             }
         })
     ]
