@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     entry: {
         index: "./src/js/index.jsx",
-        browse: "/src/js/browse.jsx"
+        browse: "./src/js/browse.jsx"
     },
     output: {
         publicPath: "",
@@ -83,6 +83,7 @@ module.exports = {
             title: "引导页",
             favicon: "./src/img/icon.ico",
             template: "./src/html/template.html",
+            chunks:["index"],
             inject: "body",
             minify: {
                 removeComments: true,
@@ -94,6 +95,7 @@ module.exports = {
             title: "浏览页",
             favicon: "./src/img/icon.ico",
             template: "./src/html/template.html",
+            chunks:["browse"],
             inject: "body",
             minify: {
                 removeComments: true,
