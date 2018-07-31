@@ -23,7 +23,7 @@ a img {
     border: 0
 }
 
-address, caption, cite, code, dfn, em, i, th, var {
+address, caption, cite, code, dfn, p, em, i, th, var {
     font-style: normal;
     font-weight: normal
 }

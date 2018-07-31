@@ -1,7 +1,7 @@
 // 内置插件
 const Path = require("path");
 // npm 外部安装插件
-// const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     entry: {
@@ -17,6 +17,7 @@ module.exports = {
         contentBase: Path.join(__dirname, "./dist"),
         open: true,
         compress: true,
+        host:"172.16.1.143",
         port: 9000
     },
     module: {
@@ -75,9 +76,9 @@ module.exports = {
         ]
     },
     plugins: [
-        // new CopyWebpackPlugin([
-        //     {from: __dirname + "/src/css/default.css", to: "./"}
-        // ]),
+        new CopyWebpackPlugin([
+            {from: __dirname + "/src/plugin/", to: "./plugin/"}
+        ]),
         new HtmlWebpackPlugin({
             filename: "index.html",
             title: "引导页",

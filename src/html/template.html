@@ -2,22 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>引导页</title>
-    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/atelier-heath-dark.min.css" rel="stylesheet">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <% if(htmlWebpackPlugin.options.title=="浏览页"){ %>
+    <link rel="stylesheet" href="./plugin/editor.md/css/editormd.min.css" />
+    <%} %>
+
 </head>
 <body>
-<!--<h1>引导页</h1>-->
-<!--我是注释-->
+
+
+
 <div id="root"></div>
-<pre><code>    public String getEndpoint() {
-        return endpoint;
-    }
+</div>
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }</code></pre>
-
+<% if(htmlWebpackPlugin.options.title=="浏览页"){ %>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.js"></script>
+<script src="./plugin/editor.md/editormd.min.js"></script>
 <!--<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>-->
 <!--<script >hljs.initHighlightingOnLoad();</script>-->
+<%} %>
+
 </body>
 </html>
