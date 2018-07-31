@@ -50,6 +50,7 @@ class BrowseContainer extends BaseComponent {
     }
 
     componentDidMount() {
+        this.CallBackView.call_Loading_Linear_Unknown(true);
         var text ="---\n" +
             "title: 小书匠语法使用手册\n" +
             "tags: 小书匠,语法,MARKDOWN,帮助\n" +
@@ -870,7 +871,7 @@ class BrowseContainer extends BaseComponent {
             "[表格标题]\n";
 
 
-       var testEditormdView = editormd.markdownToHTML("root", {
+       var testEditormdView = editormd.markdownToHTML("text", {
             markdown        : text ,//+ "\r\n" + $("#append-test").text(),
             //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
             htmlDecode      : "style,script,iframe",  // you can filter tags decode
