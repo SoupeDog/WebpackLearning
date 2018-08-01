@@ -94,7 +94,7 @@ module.exports = {
             filename: "browse.html",
             title: "浏览页",
             favicon: "./src/img/icon.ico",
-            template: "./src/html/template.html",
+            template: "./src/html/browse.html",
             chunks:["browse"],
             inject: "body",
             minify: {
