@@ -17,8 +17,12 @@ export default class Markdown_Reader extends React.Component {
 
     render() {
         return (
-            <div id="markdown_Reader" className="hyggeWriter_Markdown_Reader col-md-10 offset-md-1" >
+            <div>
+                <div id="markdown_Reader" className="hyggeWriter_Markdown_Reader col-md-10 offset-md-1" >
+                </div>
+                <div id="custom-toc-container" className="hyggeWriter_Markdown_Catalog"></div>
             </div>
+
         );
     }
 
@@ -29,37 +33,6 @@ export default class Markdown_Reader extends React.Component {
         var text ="---\n" +
             "title: 小书匠语法使用手册\n" +
             "tags: 小书匠,语法,MARKDOWN,帮助\n" +
-            "grammar_abbr: true\n" +
-            "grammar_table: true\n" +
-            "grammar_defList: true\n" +
-            "grammar_emoji: true\n" +
-            "grammar_footnote: true\n" +
-            "grammar_ins: true\n" +
-            "grammar_mark: true\n" +
-            "grammar_sub: true\n" +
-            "grammar_sup: true\n" +
-            "grammar_checkbox: true\n" +
-            "grammar_mathjax: true\n" +
-            "grammar_flow: true\n" +
-            "grammar_sequence: true\n" +
-            "grammar_plot: true\n" +
-            "grammar_code: true\n" +
-            "grammar_highlight: true\n" +
-            "grammar_html: true\n" +
-            "grammar_linkify: true\n" +
-            "grammar_typographer: true\n" +
-            "grammar_video: true\n" +
-            "grammar_audio: true\n" +
-            "grammar_attachment: true\n" +
-            "grammar_mermaid: true\n" +
-            "grammar_classy: true\n" +
-            "grammar_cjkEmphasis: true\n" +
-            "grammar_cjkRuby: true\n" +
-            "grammar_center: true\n" +
-            "grammar_align: true\n" +
-            "grammar_tableExtra: true\n" +
-            "--- \n" +
-            "\n" +
             "# 常用语法\n" +
             "\n" +
             "___\n" +
@@ -847,14 +820,14 @@ export default class Markdown_Reader extends React.Component {
 
 
         var testEditormdView = editormd.markdownToHTML("markdown_Reader", {
-            markdown        : text2 ,//+ "\r\n" + $("#append-test").text(),
+            markdown        : text ,//+ "\r\n" + $("#append-test").text(),
             //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
             htmlDecode      : "style,script,iframe",  // you can filter tags decode
-            //toc             : false,
+            toc             : true,
             tocm            : true,    // Using [TOCM]
-            //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
+            tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
             //gfm             : false,
-            //tocDropdown     : true,
+            // tocDropdown     : true,
             // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
             emoji           : true,
             taskList        : true,
@@ -862,7 +835,5 @@ export default class Markdown_Reader extends React.Component {
             flowChart       : true,  // 默认不解析
             sequenceDiagram : true,  // 默认不解析
         });
-
-
     }
 }
