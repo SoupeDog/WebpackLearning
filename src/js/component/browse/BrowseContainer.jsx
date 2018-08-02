@@ -26,7 +26,8 @@ class BrowseContainer extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            CallBackView: null
+            CallBackView: null,
+            isHideCatalog:false
         }
     }
 
@@ -46,9 +47,18 @@ class BrowseContainer extends BaseComponent {
                         <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
                     </MuiThemeProvider>
                 </JssProvider>
-                <div className="row" style={{margin: "0px"}}>
-                    <Markdown_Reader/>
+                <div id="markdown_Reader">
+                    <div className="row" style={{margin: "0px"}}>
+                        <div className={this.state.isHideCatalog==true?"col-auto":"col-md-4"}>
+                            <div id="custom-toc-container" className="hyggeWriter_Markdown_Catalog" onClick={()=>{
+                                $("#custom-toc-container").css("display","none");
+                                this.setState({isHideCatalog:!this.state.isHideCatalog});
+                            }}></div>
+                        </div>
+                        <Markdown_Reader isHideCatalog={this.state.isHideCatalog}/>
+                    </div>
                 </div>
+
 
             </div>
         );

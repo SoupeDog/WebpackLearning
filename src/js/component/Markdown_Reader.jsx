@@ -17,12 +17,9 @@ export default class Markdown_Reader extends React.Component {
 
     render() {
         return (
-            <div>
-                <div id="markdown_Reader" className="hyggeWriter_Markdown_Reader col-md-10 offset-md-1" >
-                </div>
-                <div id="custom-toc-container" className="hyggeWriter_Markdown_Catalog"></div>
+            <div className={this.props.isHideCatalog==true?"row col-md-12":"row col-md-8"} style={{margin: "0px"}}>
+                <div id="markdown_Reader_TestView" className="hyggeWriter_Markdown_Reader col-md-10 offset-md-1" style={{margin: "0px"}}></div>
             </div>
-
         );
     }
 
@@ -819,7 +816,7 @@ export default class Markdown_Reader extends React.Component {
             "[表格标题]\n";
 
 
-        var testEditormdView = editormd.markdownToHTML("markdown_Reader", {
+        var testEditormdView = editormd.markdownToHTML("markdown_Reader_TestView", {
             markdown        : text ,//+ "\r\n" + $("#append-test").text(),
             //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
             htmlDecode      : "style,script,iframe",  // you can filter tags decode
