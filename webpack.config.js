@@ -98,8 +98,8 @@ module.exports = {
             chunks:["browse"],
             inject: "body",
             minify: {
-                removeComments: true,
-                collapseWhitespace: true
+                // removeComments: true,
+                // collapseWhitespace: true
             }
         })
     ]
