@@ -12,7 +12,7 @@ import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 import yellow from "@material-ui/core/es/colors/yellow";
 
-const generateClassName = createGenerateClassName({productionPrefix:"HyggeWriterComponent"});
+const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
 
 
@@ -49,6 +49,7 @@ class IndexContainer extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
+            theme: this.StyleHelper.getLightTheme_Black_Purple(),
             CallBackView: null
         }
     }
@@ -65,7 +66,7 @@ class IndexContainer extends BaseComponent {
         return (
             <div>
                 <JssProvider jss={jss} generateClassName={generateClassName}>
-                    <MuiThemeProvider theme={customerTheme}>
+                    <MuiThemeProvider theme={this.state.theme}>
                         <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>

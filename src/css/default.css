@@ -1,7 +1,4 @@
 @charset "utf-8";
-*{
-    outline: none;
-}
 a, body, div, dl, dt, h1, h2, h3, h4, h5, h6, input, li, ol, p, span, textarea {
     margin: 0;
     padding: 0
@@ -15,7 +12,7 @@ a, em {
     text-decoration: none
 }
 
-a {
+* {
     outline: 0;
 }
 
