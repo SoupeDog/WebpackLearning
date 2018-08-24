@@ -9,6 +9,7 @@ import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import {withStyles} from "@material-ui/core/styles/index";
+import AutoComplete from "../component/input/AutoComplete.jsx";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -21,8 +22,7 @@ const styles = theme => ({
     paper: {
         padding: theme.spacing.unit * 1,
         textAlign: 'center',
-        color: theme.palette.text.secondary,
-        backgroundColor:"#456789"
+        color: theme.palette.text.secondary
     },
 });
 
@@ -32,7 +32,7 @@ class ResponsiveContainer extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            callbackTheme: this.StyleHelper.getLightTheme_Blue_Pink(),
+            callbackTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             show: true
         }
         console.log("constructor----------");
@@ -75,10 +75,20 @@ class ResponsiveContainer extends BaseComponent {
                                     <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=12</Paper>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=6</Paper>
+                                    <AutoComplete fullWidth error={false} label={"姓名"} isMultiple={false}
+                                                  placeholder={null}
+                                                  suggestions={["张三", "李四"]}
+                                                  valueHandler={(x) => {
+                                                      console.log(x)
+                                                  }}/>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=6</Paper>
+                                    <AutoComplete fullWidth error={false} label={"姓名"} isMultiple={true}
+                                                  placeholder={null}
+                                                  suggestions={["张三", "李四"]}
+                                                  valueHandler={(x) => {
+                                                      console.log(x)
+                                                  }}/>
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=3</Paper>
@@ -119,4 +129,4 @@ class ResponsiveContainer extends BaseComponent {
 
 }
 
-export default  withStyles(styles)(ResponsiveContainer);
+export default withStyles(styles)(ResponsiveContainer);
