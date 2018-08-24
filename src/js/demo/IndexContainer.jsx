@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import BaseComponent from "../BaseComponent.jsx";
-import CallBackView from "../callback/CallBackView.jsx";
+import BaseComponent from "../component/BaseComponent.jsx";
+import CallBackView from "../component/callback/CallBackView.jsx";
 import Button from "@material-ui/core/es/Button/Button";
 import {createMuiTheme} from "@material-ui/core/styles";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import lightGreen from "@material-ui/core/es/colors/lightGreen";
-import HttpHelper from "../../utils/HttpHelper.jsx";
+import HttpHelper from "../utils/HttpHelper.jsx";
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";

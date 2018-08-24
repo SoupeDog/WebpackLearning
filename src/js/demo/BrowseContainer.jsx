@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import BaseComponent from "../BaseComponent.jsx";
-import CallBackView from "../callback/CallBackView.jsx";
+import BaseComponent from "../component/BaseComponent.jsx";
+import CallBackView from "../component/callback/CallBackView.jsx";
 import {createMuiTheme} from "@material-ui/core/styles";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import lightGreen from "@material-ui/core/es/colors/lightGreen";
@@ -9,7 +9,7 @@ import yellow from "@material-ui/core/es/colors/yellow";
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
-import Markdown_Reader from "../Markdown_Reader.jsx";
+import Markdown_Reader from "../component/Markdown_Reader.jsx";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());

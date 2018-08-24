@@ -5,9 +5,9 @@ export default class MarkdownHelper {
             throw new Error("[text] can't be null.");
         }
         if (properties.id == null || properties.id.trim() == "") {
-            throw new Error("[if] can't be null.");
+            throw new Error("[id] can't be null.");
         }
-        var testEditormdView = editormd.markdownToHTML(properties.id, {
+        let testEditormdView = editormd.markdownToHTML(properties.id, {
             markdown: properties.text,//+ "\r\n" + $("#append-test").text(),
             htmlDecode: "style,script,iframe",  // you can filter tags decode
             toc: true,

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import BaseComponent from "./BaseComponent.jsx";
+import BaseComponent from "../component/BaseComponent.jsx";
 
 class ComponentTemplate extends BaseComponent {
     constructor(props) {
