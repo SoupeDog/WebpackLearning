@@ -72,13 +72,13 @@ class BrowseContainer extends BaseComponent {
         if (needCatalog) {
             MarkdownHelper.formatToHtml({
                 text: this.props.article.content,
-                id: "markdown_Reader_TestView",
-                catalogId: "markdown_Reader_Catalog"
+                id: "article_Content",
+                catalogId: "article_Catalog"
             });
         } else {
             MarkdownHelper.formatToHtml({
                 text: this.props.article.content,
-                id: "markdown_Reader_TestView"
+                id: "article_Content"
             });
         }
     }
@@ -106,22 +106,24 @@ class BrowseContainer extends BaseComponent {
                             </iframe>
                         </Grid>
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
-                            <Grid id="article_Catalog" item xs={this.state.catalog_Hide ? false : 2}>
-                                <div id="markdown_Reader_Catalog" className="hyggeWriter_Markdown_Catalog"
-                                     style={{
-                                         width: this.state.markdown_Reader_Catalog_NeedChange ? "16.66%" : "100%",
-                                         position: this.state.markdown_Reader_Catalog_NeedChange ? "fixed" : "static",
-                                         top: "60px",
-                                         height: (window.innerHeight - 60) + "px",
-                                         display: this.state.catalog_Hide ? "none" : "block"
-                                     }}>
+                            <Grid item xs={this.state.catalog_Hide ? null : 2}>
+                                <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
+                                    width: this.state.markdown_Reader_Catalog_NeedChange ? "16.66%" : "100%",
+                                    position: this.state.markdown_Reader_Catalog_NeedChange ? "fixed" : "static",
+                                    top: "60px",
+                                    height: (window.innerHeight - 60) + "px",
+                                    display: this.state.catalog_Hide ? "none" : "block"
+                                }}>
                                 </div>
                             </Grid>
-                            <Grid id="article_Content" item xs={this.state.catalog_Hide ? 12 : 10} container spacing={0}
+                            <Grid id="article_Main" item xs={this.state.catalog_Hide ? 12 : 10} container spacing={0}
                                   justify="center">
                                 <Grid item xs={1}></Grid>
-                                <Grid item xs={10} id="markdown_Reader_TestView" className="hyggeWriter_Markdown_Reader"
-                                      style={{minHeight: window.innerHeight}}>
+                                <Grid item xs={10} container spacing={0} justify="center">
+                                    <Grid id="article_Content" className="hyggeWriter_Markdown_Reader" item
+                                          xs={12}
+                                          style={{minHeight: window.innerHeight}}>
+                                    </Grid>
                                 </Grid>
                                 <Grid item xs={1} container direction="column" justify="flex-start" alignItems="center">
                                     <Grid id="article_RightMenu" item xs={12} container direction="column"
@@ -159,8 +161,7 @@ class BrowseContainer extends BaseComponent {
                     </Grid>
                 </MuiThemeProvider>
             </JssProvider>
-        )
-            ;
+        );
     }
 
     componentDidMount() {
