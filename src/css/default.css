@@ -24,3 +24,7 @@ address, caption, cite, code, dfn, p, em, i, th, var {
     font-style: normal;
     font-weight: normal
 }
+
+.backgroundTransparent {
+    background-color: transparent;
+}

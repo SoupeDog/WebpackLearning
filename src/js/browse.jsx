@@ -1,5 +1,6 @@
 import '../css/default.css';
-import '../css/bootstrap-grid.min.css';
+import '../css/browse.less';
+import '../css/hyggeWriter_Markdown.less';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
