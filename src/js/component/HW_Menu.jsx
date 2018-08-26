@@ -44,8 +44,7 @@ class HW_Menu extends BaseComponent {
                     elevation={this.state.elevation}>
                 <Toolbar>
                     <IconButton color="inherit" aria-label="Menu" onClick={() => {
-                        this.props.updateState({leftMenu_Hide: !this.props.leftMenu_Hide});
-                        alert(JSON.stringify(this.props.WindowsScrollHelper.getFunctionMap()));
+                        alert("菜单");
                     }}>
                         <MenuIcon/>
                     </IconButton>
@@ -100,7 +99,6 @@ class HW_Menu extends BaseComponent {
             this.setState({elevation: 0, appBarClassName: "backgroundTransparent"});
         }
     }
-
 
     componentDidMount() {
         console.log("componentDidMount----------");
