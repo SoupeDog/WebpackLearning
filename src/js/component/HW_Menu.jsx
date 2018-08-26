@@ -32,12 +32,6 @@ class HW_Menu extends BaseComponent {
         };
     }
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        console.log("componentWillReceiveProps----------");
-        console.log("nextProps:" + JSON.stringify(nextProps));
-        console.log("nextContext:" + JSON.stringify(nextContext));
-    }
-
     render() {
         return (
             <AppBar position="fixed" className={this.state.appBarClassName}
@@ -57,7 +51,6 @@ class HW_Menu extends BaseComponent {
                                 aria-owns={Boolean(this.state.anchorEl) ? 'menu-appbar' : null}
                                 aria-haspopup="true"
                                 onClick={
-                                    // alert(window.scrollY);
                                     this.handleUserMenu.bind(this)
 
                                 }
@@ -101,8 +94,6 @@ class HW_Menu extends BaseComponent {
     }
 
     componentDidMount() {
-        console.log("componentDidMount----------");
-        console.log("");
         this.props.WindowsScrollHelper.addCallback("topBar是否隐藏", this.topBarHide.bind(this));
     }
 

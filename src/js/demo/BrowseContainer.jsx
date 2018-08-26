@@ -33,12 +33,12 @@ class BrowseContainer extends BaseComponent {
             callbackTheme: this.StyleHelper.getLightTheme_Blue_Pink(),
             catalog_Hide: false,
             bgm_Stop: false,
-            markdown_Reader_Catalog_NeedChange: false,
+            article_Catalog_NeedChange: false,
             rightMenu_NeedChange: false,
             WindowsScrollHelper: new WindowsScrollHelper()
         }
         console.log("constructor----------");
-        console.log(JSON.stringify(props));
+        // console.log(JSON.stringify(props));
     }
 
     // 初始化子组件
@@ -52,15 +52,19 @@ class BrowseContainer extends BaseComponent {
 
     componentWillReceiveProps(nextProps, nextContext) {
         console.log("componentWillReceiveProps----------");
-        console.log("nextProps:" + JSON.stringify(nextProps));
-        console.log("nextContext:" + JSON.stringify(nextContext));
+        // console.log("nextProps:" + JSON.stringify(nextProps));
+        // console.log("nextContext:" + JSON.stringify(nextContext));
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log("shouldComponentUpdate----------");
-        console.log("nextProps:" + JSON.stringify(nextProps));
-        console.log("nextState:" + JSON.stringify(nextState));
-        console.log("nextContext:" + JSON.stringify(nextContext));
+        // console.log("nextProps:" + JSON.stringify(nextProps));
+        console.log("nextState:" + JSON.stringify(nextState.article_Catalog_NeedChange));
+        console.log("current:" + JSON.stringify(this.state.article_Catalog_NeedChange));
+        // console.log("nextContext:" + JSON.stringify(nextContext));
+        if (this.state.article_Catalog_NeedChange == nextState.article_Catalog_NeedChange || this.state.rightMenu_NeedChange == nextState.rightMenu_NeedChange) {// 需要最小触发时间
+            return false;
+        }
         return true;
     }
 
@@ -108,8 +112,8 @@ class BrowseContainer extends BaseComponent {
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             <Grid item xs={this.state.catalog_Hide ? null : 2}>
                                 <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
-                                    width: this.state.markdown_Reader_Catalog_NeedChange ? "16.66%" : "100%",
-                                    position: this.state.markdown_Reader_Catalog_NeedChange ? "fixed" : "static",
+                                    width: this.state.article_Catalog_NeedChange ? "16.66%" : "100%",
+                                    position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
                                     top: "60px",
                                     height: (window.innerHeight - 60) + "px",
                                     display: this.state.catalog_Hide ? "none" : "block"
@@ -157,7 +161,6 @@ class BrowseContainer extends BaseComponent {
                                 </Grid>
                             </Grid>
                         </Grid>
-
                     </Grid>
                 </MuiThemeProvider>
             </JssProvider>
@@ -175,9 +178,9 @@ class BrowseContainer extends BaseComponent {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log("componentDidUpdate----------");
-        console.log("prevProps:" + JSON.stringify(prevProps));
-        console.log("prevState:" + JSON.stringify(prevState));
-        console.log("snapshot:" + JSON.stringify(snapshot));
+        // console.log("prevProps:" + JSON.stringify(prevProps));
+        // console.log("prevState:" + JSON.stringify(prevState));
+        // console.log("snapshot:" + JSON.stringify(snapshot));
         console.log("");
     }
 
@@ -196,9 +199,9 @@ class BrowseContainer extends BaseComponent {
 
     checkCatalogPosition(currentY) {
         if (currentY > 230 + 80) {
-            this.setState({markdown_Reader_Catalog_NeedChange: true});
+            this.setState({article_Catalog_NeedChange: true});
         } else {
-            this.setState({markdown_Reader_Catalog_NeedChange: false});
+            this.setState({article_Catalog_NeedChange: false});
         }
     }
 
