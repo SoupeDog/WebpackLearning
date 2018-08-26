@@ -13,8 +13,6 @@ import MarkdownHelper from "../utils/MarkdownHelper.jsx";
 import WindowsScrollHelper from "../utils/WindowsScrollHelper.jsx";
 import TOCIcon from '@material-ui/icons/toc';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 
@@ -59,12 +57,11 @@ class BrowseContainer extends BaseComponent {
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log("shouldComponentUpdate----------");
         // console.log("nextProps:" + JSON.stringify(nextProps));
-        console.log("nextState:" + JSON.stringify(nextState.article_Catalog_NeedChange));
-        console.log("current:" + JSON.stringify(this.state.article_Catalog_NeedChange));
+        // console.log("nextState:" + JSON.stringify(nextState));
         // console.log("nextContext:" + JSON.stringify(nextContext));
-        if (this.state.article_Catalog_NeedChange == nextState.article_Catalog_NeedChange || this.state.rightMenu_NeedChange == nextState.rightMenu_NeedChange) {// 需要最小触发时间
-            return false;
-        }
+        // if (this.state.article_Catalog_NeedChange == nextState.article_Catalog_NeedChange || this.state.rightMenu_NeedChange == nextState.rightMenu_NeedChange) {// 需要最小触发时间
+        //     return false;
+        // }
         return true;
     }
 
@@ -170,8 +167,8 @@ class BrowseContainer extends BaseComponent {
     componentDidMount() {
         console.log("componentDidMount----------");
         console.log("");
-        this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
-        this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
+        // this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
+        // this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
         this.state.WindowsScrollHelper.start();
         this.initMDArticle(true);
     }
@@ -199,9 +196,13 @@ class BrowseContainer extends BaseComponent {
 
     checkCatalogPosition(currentY) {
         if (currentY > 230 + 80) {
-            this.setState({article_Catalog_NeedChange: true});
+            if (!this.state.article_Catalog_NeedChange) {
+                this.setState({article_Catalog_NeedChange: true});
+            }
         } else {
-            this.setState({article_Catalog_NeedChange: false});
+            if (this.state.article_Catalog_NeedChange) {
+                this.setState({article_Catalog_NeedChange: false});
+            }
         }
     }
 
