@@ -1,12 +1,13 @@
 import {createMuiTheme} from "@material-ui/core/styles/index";
+
 export default class StyleHelper {
 
-    static createMargin(data) {
-        let half_F_W = Math.floor(data.FatherW / 2);
-        let half_F_H = Math.floor(data.FatherH / 2);
-        let half_S_W = Math.floor(data.SonW / 2);
-        let half_S_H = Math.floor(data.SonH / 2);
-        return (half_F_H - half_S_H) + "px " + (half_F_W - half_S_W) + "px";
+    static createMargin({fatherWidth, fatherHeight, sonWidth, sonHeight}) {
+        let half_FatherWidth = Math.floor(fatherWidth / 2);
+        let half_FatherHeight = Math.floor(fatherHeight / 2);
+        let half_SonWidth = Math.floor(sonWidth / 2);
+        let half_SonHeight = Math.floor(sonHeight / 2);
+        return (half_FatherHeight - half_SonHeight) + "px " + (half_FatherWidth - half_SonWidth) + "px";
     }
 
     static getLightTheme_Blue_Pink() {
@@ -19,6 +20,19 @@ export default class StyleHelper {
 
     static getLightTheme_Green_Orange() {
         return lightTheme_Green_Orange;
+    }
+
+    static getTheme_Custom({primary, secondary}) {
+        return createMuiTheme({
+            palette: {
+                primary: {
+                    main: primary,
+                },
+                secondary: {
+                    main: secondary,
+                }
+            }
+        });
     }
 }
 

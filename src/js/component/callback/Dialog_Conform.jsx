@@ -26,13 +26,7 @@ class Dialog_Conform extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-        };
-        // alert("constructor");
-    }
-
-    componentWillMount() {
-        // alert("componentWillMount");
+        this.state = {};
     }
 
     render() {
@@ -65,28 +59,34 @@ class Dialog_Conform extends React.Component {
         );
     }
 
-    componentDidMount() {
-        // alert("componentDidMount");
-    }
-
     handelEnsure() {
-        if(this.props != null){
-            if (this.props.ensure != null) {
-                this.props.ensure();
-            }
-            this.props.call_Dialog_Conform(false,this.props.transition, this.props.title, this.props.msg, () => {
-            }, () => {
+        if (this.props.ensure != null) {
+            this.props.ensure();
+        }
+        if (this.props != null) {
+            this.props.call_Dialog_Conform({
+                isOpen: false,
+                transition: this.props.transition,
+                title: this.props.title,
+                msg: this.props.msg,
+                ensure: null,
+                cancel: null
             });
         }
     }
 
     handleClose() {
+        if (this.props.cancel != null) {
+            this.props.cancel();
+        }
         if (this.props != null) {
-            if (this.props.cancel != null) {
-                this.props.cancel();
-            }
-            this.props.call_Dialog_Conform(false,this.props.transition, this.props.title, this.props.msg, () => {
-            }, () => {
+            this.props.call_Dialog_Conform({
+                isOpen: false,
+                transition: this.props.transition,
+                title: this.props.title,
+                msg: this.props.msg,
+                ensureCallback: null,
+                cancelCallback: null
             });
         }
     }

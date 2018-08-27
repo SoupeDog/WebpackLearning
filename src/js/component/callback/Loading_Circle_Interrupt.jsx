@@ -17,7 +17,7 @@ class Loading_Circle_Interrupt extends BaseComponent {
         };
 
         this.handleClose = this.handleClose.bind(this);
-        this.initCurrentWindowSize=this.initCurrentWindowSize.bind(this);
+        this.initCurrentWindowSize = this.initCurrentWindowSize.bind(this);
         // alert("constructor");
     }
 
@@ -27,33 +27,28 @@ class Loading_Circle_Interrupt extends BaseComponent {
         $(window).resize(function () {
             _react.initCurrentWindowSize();
         });
-        // alert("componentWillMount");
     }
 
     render() {
         return (
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.props.open == null ? false : this.props.open}
-                >
-                    <CircularProgress style={{
-                        outline: "none",
-                        margin: StyleHelper.createMargin({
-                            FatherW: this.state.currentWidth,
-                            FatherH: this.state.currentHeight,
-                            SonW: this.state.halfProgressCircleDiameter,
-                            SonH: this.state.halfProgressCircleDiameter
-                        })
-                    }} onClose={this.handleClose}
-                                      onClick={this.handleClose}
-                                      size={(this.state.halfProgressCircleDiameter)}/>
-                </Modal>
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.props.open == null ? false : this.props.open}
+            >
+                <CircularProgress style={{
+                    outline: "none",
+                    margin: StyleHelper.createMargin({
+                        fatherWidth: this.state.currentWidth,
+                        fatherHeight: this.state.currentHeight,
+                        sonWidth: this.state.halfProgressCircleDiameter,
+                        sonHeight: this.state.halfProgressCircleDiameter
+                    })
+                }} onClose={this.handleClose}
+                                  onClick={this.handleClose}
+                                  size={(this.state.halfProgressCircleDiameter)}/>
+            </Modal>
         );
-    }
-
-    componentDidMount() {
-        // alert("componentDidMount");
     }
 
     handleClose() {

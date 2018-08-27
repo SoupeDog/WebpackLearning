@@ -71,7 +71,11 @@ class IndexContainer extends BaseComponent {
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                this.mockHttpRequest();
+                                let _react = this;
+                                _react.CallBackView.call_Loading_Circle_Interrupt(true);
+                                setTimeout(function () {
+                                    _react.CallBackView.call_Loading_Circle_Interrupt(false);
+                                }, 3000);
                             }}>
                                 打断型加载
                             </Button>
@@ -86,31 +90,68 @@ class IndexContainer extends BaseComponent {
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 let _react = this;
-                                _react.CallBackView.call_LightTip(true, "success", "这是一条成功提示");
+                                _react.CallBackView.call_LightTip({
+                                    isOpen: true,
+                                    type: "success",
+                                    msg: "这是一条成功提示"
+                                });
                             }}>
                                 成功提示
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 let _react = this;
-                                _react.CallBackView.call_LightTip(true, "warning", "这是一条警告提示");
+                                _react.CallBackView.call_LightTip({
+                                    isOpen: true,
+                                    type: "warning",
+                                    msg: "这是一条警告提示"
+                                });
                             }}>
                                 警告提示
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 let _react = this;
-                                _react.CallBackView.call_LightTip(true, "error", "这是一条错误提示");
+                                _react.CallBackView.call_LightTip({
+                                    isOpen: true,
+                                    type: "error",
+                                    msg: "这是一条错误提示"
+                                });
                             }}>
                                 错误提示
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 let _react = this;
-                                _react.CallBackView.call_Dialog_Conform(true, "zoom", "注意", "这个是一个不可逆操作，请重新确认是否执行。", () => {
-                                    alert("确认")
-                                }, () => {
-                                    alert("取消")
+                                _react.CallBackView.call_Dialog_Conform({
+                                    isOpen: true,
+                                    transaction: "zoom",
+                                    title: "注意",
+                                    msg: "这个是一个不可逆操作，请重新确认是否执行。",
+                                    ensureCallback: () => {
+                                        alert("确认")
+                                    },
+                                    cancelCallback: () => {
+                                        alert("取消")
+                                    }
                                 });
                             }}>
                                 确认弹窗
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_Dialog_Conform({
+                                    isOpen: true,
+                                    transaction: "zoom",
+                                    title: "注意",
+                                    msg: "这个是一个不可逆操作，请重新确认是否执行。",
+                                    ensureCallback: () => {
+                                        alert("确认")
+                                    },
+                                    cancelCallback: () => {
+                                        alert("取消")
+                                    }
+                                });
+                                _react.CallBackView.call_Loading_Circle_Interrupt({isOpen: true});
+                            }}>
+                                Bug Maker
                             </Button>
                         </div>
                     </MuiThemeProvider>

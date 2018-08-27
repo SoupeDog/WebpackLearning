@@ -35,6 +35,16 @@ class BrowseContainer extends BaseComponent {
             rightMenu_NeedChange: false,
             WindowsScrollHelper: new WindowsScrollHelper()
         }
+        this.HttpHelper.httpGet({
+            finalUrl: "http://127.0.0.1:8080/group/1062001c45264f588a5cc71c7fa84521",
+            headers: {
+                appId: "4fa0cba0bcfe4b86a6dfaad01ca23eec",
+                appSecret: "05e30e4e9d4045e884feb8bdf7add55d"
+            },
+            successCallback: (response) => {
+                alert(response);
+            }
+        });
         console.log("constructor----------");
         // console.log(JSON.stringify(props));
     }
@@ -91,11 +101,10 @@ class BrowseContainer extends BaseComponent {
                     <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
                     <HW_Menu WindowsScrollHelper={this.state.WindowsScrollHelper}
                              updateState={this.updateState.bind(this)}/>
-                    <div id="top_backgroundImg"></div>
+                    <div id="top_BackgroundImg"></div>
                     <Grid container spacing={0} justify="center">
                         <Grid id="bgm_Player" item xs={12} style={{
-                            backgroundColor: "#333",
-                            padding: 0
+                            backgroundColor: "#333"
                         }}>
                             <iframe name="wy_music"
                                     style={{
@@ -167,8 +176,8 @@ class BrowseContainer extends BaseComponent {
     componentDidMount() {
         console.log("componentDidMount----------");
         console.log("");
-        // this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
-        // this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
+        this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
+        this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
         this.state.WindowsScrollHelper.start();
         this.initMDArticle(true);
     }
@@ -195,7 +204,8 @@ class BrowseContainer extends BaseComponent {
     }
 
     checkCatalogPosition(currentY) {
-        if (currentY > 230 + 80) {
+        let targetHigh = $("#top_BackgroundImg").height() + $("#bgm_Player").height();
+        if (currentY > targetHigh) {
             if (!this.state.article_Catalog_NeedChange) {
                 this.setState({article_Catalog_NeedChange: true});
             }
@@ -207,7 +217,8 @@ class BrowseContainer extends BaseComponent {
     }
 
     checkRightMenuPosition(currentY) {
-        if (currentY > 230 + 80) {
+        let targetHigh = $("#top_BackgroundImg").height() + $("#bgm_Player").height();
+        if (currentY > targetHigh) {
             this.setState({rightMenu_NeedChange: true});
         } else {
             this.setState({rightMenu_NeedChange: false});

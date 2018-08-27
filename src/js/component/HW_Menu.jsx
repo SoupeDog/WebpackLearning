@@ -43,7 +43,7 @@ class HW_Menu extends BaseComponent {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="title" color="inherit" className={this.props.classes.flex}>
-                        我的小宅子
+                        APP
                     </Typography>
                     {this.state.auth && (
                         <div>
@@ -87,9 +87,13 @@ class HW_Menu extends BaseComponent {
 
     topBarHide(currentY) {
         if (currentY > 230) {
-            this.setState({elevation: 1, appBarClassName: ""});
+            if (this.state.elevation = 0 || this.state.appBarClassName == "backgroundTransparent") {
+                this.setState({elevation: 1, appBarClassName: ""});
+            }
         } else {
-            this.setState({elevation: 0, appBarClassName: "backgroundTransparent"});
+            if (this.state.elevation = 1 || this.state.appBarClassName == "") {
+                this.setState({elevation: 0, appBarClassName: "backgroundTransparent"});
+            }
         }
     }
 

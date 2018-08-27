@@ -18,9 +18,8 @@
 }
 
 .hyggeWriter_Markdown_Catalog {
-  width: 400px;
-  height: 100%;
   background-color: #FFF;
+  padding-right: 60px;
   top: 0px;
   left: 0px;
   overflow-x: hidden;
@@ -29,12 +28,16 @@
 
   ul {
     color: #CC6633;
+    //list-style: decimal;
+  }
+  ul.markdown-toc-list {
     list-style: decimal;
   }
-  a{
+
+  a {
     color: #CC6633;
   }
-  a:hover{
+  a:hover {
     color: #66CCFF;
   }
 }
@@ -44,9 +47,11 @@
   width: 7px;
   background: rgba(0, 0, 0, 0.1);
 }
+
 .hyggeWriter_Markdown_Catalog::-webkit-scrollbar:hover {
   background: rgba(0, 0, 0, 0.2);
 }
+
 .hyggeWriter_Markdown_Catalog::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.3);
   -webkit-border-radius: 6px;
@@ -55,6 +60,7 @@
   -o-border-radius: 6px;
   border-radius: 6px;
 }
+
 .hyggeWriter_Markdown_Catalog::-webkit-scrollbar-thumb:hover {
   -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
   /* Webkit browsers */

@@ -1,6 +1,12 @@
-import $ from 'jquery'
+// 根据项目页面有无 jquery 环境自行决定引入方式
+// import $ from 'jquery'
+import PropertiesHelper from './PropertiesHelper.jsx';
 
 export default class HttpHelper {
+    // 是否开启日志输出
+    static isEnableLog() {
+        return true;
+    }
 
     // url 默认前缀
     static getPrefix() {
@@ -22,143 +28,442 @@ export default class HttpHelper {
         return 5000;
     }
 
-    static httpGet(requestOBJ) {
-        let finalUrl;
-        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
-            if (requestOBJ.customFinally != null) {
-                requestOBJ.customFinally();
+    static httpGet({path, finalUrl, headers, contentType, cache, timeout, requestBefore, successCallback, errorCallback, timeOutCallback, finallyCallback}) {
+        let requestUrl;
+        let needFinallyCallback = false;
+        let needTimeOutCallback = false;
+        let needErrorCallback = false;
+        let needRequestBefore = false;
+        let needLog = this.isEnableLog();
+        let currentTimeOut = timeout == null ? this.getDefaultTimeOut() : timeout;
+        if (finallyCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(finallyCallback)) {
+                needFinallyCallback = true;
+            } else {
+                throw new Error("HttpHelper:[finallyCallback] should be Function ,and it can't be null.");
             }
-            throw new Error("HttpHelper:[path] can't be empty.");
         }
-        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
-            finalUrl = requestOBJ.finalUrl;
+        if (requestBefore != null) {
+            if (PropertiesHelper.isFunctionNotNull(requestBefore)) {
+                needRequestBefore = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[requestBefore] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[requestBefore] should be Function ,and it can't be null.");
+            }
+        }
+        if (!PropertiesHelper.isFunctionNotNull(successCallback)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[successCallback] should be Function ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[successCallback] should be Function ,and it can't be null.");
+        }
+        if (errorCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(errorCallback)) {
+                needErrorCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[errorCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[errorCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (timeOutCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(timeOutCallback)) {
+                needTimeOutCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[timeOutCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[timeOutCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (contentType != null && !PropertiesHelper.isStringNotNull(contentType)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[contentType] should be String ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[contentType] should be String ,and it can't be null.");
+        }
+        if (finalUrl == null) {
+            if (!PropertiesHelper.isStringNotNull(path)) {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[path] should be String ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[path] should be String ,and it can't be null.");
+            }
+            requestUrl = this.getPrefix() + path;
         } else {
-            finalUrl = this.getPrefix() + requestOBJ.path;
+            requestUrl = finalUrl;
+        }
+        if (needRequestBefore) {
+            needRequestBefore();
         }
         $.ajax({
-            url: finalUrl,
-            headers: requestOBJ.headers,
+            url: requestUrl,
+            headers: headers,
             type: 'GET',
-            contentType: this.getDefaultContentType(),
-            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
-            success: function (data) {
-                if (requestOBJ.customFinally != null) {
-                    requestOBJ.customFinally();
+            contentType: contentType != null ? contentType : this.getDefaultContentType(),
+            cache: cache != null ? cache : this.getDefaultCache(),
+            success: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
                 }
-                requestOBJ.success(data);
-                alert("成功")
-                console.log(data);
+                if (needLog) {
+                    console.log(response);
+                }
+                successCallback(response);
             },
-            error: function (data) {
-                if (requestOBJ.customFinally != null) {
-                    requestOBJ.customFinally();
+            error: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
                 }
-                if (data.status == 0 && data.statusText == "timeout") {
-                    alert("超时");
+                if (needLog) {
+                    console.log("HttpHelper(error):" + response);
+                }
+                if (response.status === 0 && response.statusText === "timeout") {
+                    if (needTimeOutCallback) {
+                        timeOutCallback(response);
+                    } else {
+                        alert("HttpHelper:请求超时(" + currentTimeOut + "ms).");
+                    }
                 } else {
-                    console.log(data);
+                    if (needErrorCallback) {
+                        errorCallback(response);
+                    }
                 }
             },
-            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
+            timeout: currentTimeOut
         });
     }
 
-    static httpPost(requestOBJ) {
-        let finalUrl;
-        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
-            throw new Error("HttpHelper:[path] can't be empty.");
+    static httpPost({path, finalUrl, headers, contentType, cache, timeout, requestData, requestBefore, successCallback, errorCallback, timeOutCallback, finallyCallback}) {
+        let requestUrl;
+        let needFinallyCallback = false;
+        let needTimeOutCallback = false;
+        let needErrorCallback = false;
+        let needRequestBefore = false;
+        let needLog = this.isEnableLog();
+        let currentTimeOut = timeout == null ? this.getDefaultTimeOut() : timeout;
+        if (finallyCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(finallyCallback)) {
+                needFinallyCallback = true;
+            } else {
+                throw new Error("HttpHelper:[finallyCallback] should be Function ,and it can't be null.");
+            }
         }
-        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
-            finalUrl = requestOBJ.finalUrl;
+        if (requestBefore != null) {
+            if (PropertiesHelper.isFunctionNotNull(requestBefore)) {
+                needRequestBefore = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[requestBefore] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[requestBefore] should be Function ,and it can't be null.");
+            }
+        }
+        if (!PropertiesHelper.isFunctionNotNull(successCallback)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[successCallback] should be Function ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[successCallback] should be Function ,and it can't be null.");
+        }
+        if (errorCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(errorCallback)) {
+                needErrorCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[errorCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[errorCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (timeOutCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(timeOutCallback)) {
+                needTimeOutCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[timeOutCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[timeOutCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (contentType != null && !PropertiesHelper.isStringNotNull(contentType)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[contentType] should be String ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[contentType] should be String ,and it can't be null.");
+        }
+        if (finalUrl == null) {
+            if (!PropertiesHelper.isStringNotNull(path)) {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[path] should be String ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[path] should be String ,and it can't be null.");
+            }
+            requestUrl = this.getPrefix() + path;
         } else {
-            finalUrl = this.getPrefix() + requestOBJ.path;
+            requestUrl = finalUrl;
+        }
+        if (needRequestBefore) {
+            needRequestBefore();
         }
         $.ajax({
-            url: finalUrl,
-            headers: requestOBJ.headers,
+            url: requestUrl,
+            headers: headers,
             type: 'POST',
-            contentType: this.getDefaultContentType(),
-            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
-            data: requestOBJ.requestData,
-            success: function (data) {
-                // requestOBJ.success(data);
-                console.log(data);
+            contentType: contentType != null ? contentType : this.getDefaultContentType(),
+            cache: cache != null ? cache : this.getDefaultCache(),
+            data: requestData == null ? null : JSON.stringify(requestData),
+            success: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
+                }
+                if (needLog) {
+                    console.log(response);
+                }
+                successCallback(response);
             },
-            error: function (data) {
-                // requestOBJ.error(status);
-                if (data.status == 0 && data.statusText == "timeout") {
-                    alert("超时");
+            error: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
+                }
+                if (needLog) {
+                    console.log("HttpHelper(error):" + response);
+                }
+                if (response.status === 0 && response.statusText === "timeout") {
+                    if (needTimeOutCallback) {
+                        timeOutCallback(response);
+                    } else {
+                        alert("HttpHelper:请求超时(" + currentTimeOut + "ms).");
+                    }
                 } else {
-                    console.log(data);
+                    if (needErrorCallback) {
+                        errorCallback(response);
+                    }
                 }
             },
-            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
+            timeout: currentTimeOut
         });
     }
 
-    static httpPut(requestOBJ) {
-        let finalUrl;
-        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
-            throw new Error("HttpHelper:[path] can't be empty.");
+    static httpPut({path, finalUrl, headers, contentType, cache, timeout, requestData, requestBefore, successCallback, errorCallback, timeOutCallback, finallyCallback}) {
+        let requestUrl;
+        let needFinallyCallback = false;
+        let needTimeOutCallback = false;
+        let needErrorCallback = false;
+        let needRequestBefore = false;
+        let needLog = this.isEnableLog();
+        let currentTimeOut = timeout == null ? this.getDefaultTimeOut() : timeout;
+        if (finallyCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(finallyCallback)) {
+                needFinallyCallback = true;
+            } else {
+                throw new Error("HttpHelper:[finallyCallback] should be Function ,and it can't be null.");
+            }
         }
-        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
-            finalUrl = requestOBJ.finalUrl;
+        if (requestBefore != null) {
+            if (PropertiesHelper.isFunctionNotNull(requestBefore)) {
+                needRequestBefore = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[requestBefore] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[requestBefore] should be Function ,and it can't be null.");
+            }
+        }
+        if (!PropertiesHelper.isFunctionNotNull(successCallback)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[successCallback] should be Function ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[successCallback] should be Function ,and it can't be null.");
+        }
+        if (errorCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(errorCallback)) {
+                needErrorCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[errorCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[errorCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (timeOutCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(timeOutCallback)) {
+                needTimeOutCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[timeOutCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[timeOutCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (contentType != null && !PropertiesHelper.isStringNotNull(contentType)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[contentType] should be String ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[contentType] should be String ,and it can't be null.");
+        }
+        if (finalUrl == null) {
+            if (!PropertiesHelper.isStringNotNull(path)) {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[path] should be String ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[path] should be String ,and it can't be null.");
+            }
+            requestUrl = this.getPrefix() + path;
         } else {
-            finalUrl = this.getPrefix() + requestOBJ.path;
+            requestUrl = finalUrl;
+        }
+        if (needRequestBefore) {
+            needRequestBefore();
         }
         $.ajax({
-            url: finalUrl,
-            headers: requestOBJ.headers,
+            url: requestUrl,
+            headers: headers,
             type: 'PUT',
-            contentType: this.getDefaultContentType(),
-            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
-            data: requestOBJ.requestData,
-            success: function (data) {
-                // requestOBJ.success(data);
-                console.log(data);
+            contentType: contentType != null ? contentType : this.getDefaultContentType(),
+            cache: cache != null ? cache : this.getDefaultCache(),
+            data: requestData == null ? null : JSON.stringify(requestData),
+            success: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
+                }
+                if (needLog) {
+                    console.log(response);
+                }
+                successCallback(response);
             },
-            error: function (data) {
-                // requestOBJ.error(status);
-                if (data.status == 0 && data.statusText == "timeout") {
-                    alert("超时");
+            error: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
+                }
+                if (needLog) {
+                    console.log("HttpHelper(error):" + response);
+                }
+                if (response.status === 0 && response.statusText === "timeout") {
+                    if (needTimeOutCallback) {
+                        timeOutCallback(response);
+                    } else {
+                        alert("HttpHelper:请求超时(" + currentTimeOut + "ms).");
+                    }
                 } else {
-                    console.log(data);
+                    if (needErrorCallback) {
+                        errorCallback(response);
+                    }
                 }
             },
-            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
+            timeout: currentTimeOut
         });
     }
 
-    static httpDelete(requestOBJ) {
-        let finalUrl;
-        if ((requestOBJ.path == null || requestOBJ.path.trim() == "") && requestOBJ.finalUrl == null) {
-            throw new Error("HttpHelper:[path] can't be empty.");
+    static httpDelete({path, finalUrl, headers, contentType, cache, timeout, requestData, requestBefore, successCallback, errorCallback, timeOutCallback, finallyCallback}) {
+        let requestUrl;
+        let needFinallyCallback = false;
+        let needTimeOutCallback = false;
+        let needErrorCallback = false;
+        let needRequestBefore = false;
+        let needLog = this.isEnableLog();
+        let currentTimeOut = timeout == null ? this.getDefaultTimeOut() : timeout;
+        if (finallyCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(finallyCallback)) {
+                needFinallyCallback = true;
+            } else {
+                throw new Error("HttpHelper:[finallyCallback] should be Function ,and it can't be null.");
+            }
         }
-        if (requestOBJ.finalUrl != null && requestOBJ.finalUrl.trim() != "") {
-            finalUrl = requestOBJ.finalUrl;
+        if (requestBefore != null) {
+            if (PropertiesHelper.isFunctionNotNull(requestBefore)) {
+                needRequestBefore = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[requestBefore] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[requestBefore] should be Function ,and it can't be null.");
+            }
+        }
+        if (!PropertiesHelper.isFunctionNotNull(successCallback)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[successCallback] should be Function ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[successCallback] should be Function ,and it can't be null.");
+        }
+        if (errorCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(errorCallback)) {
+                needErrorCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[errorCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[errorCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (timeOutCallback != null) {
+            if (PropertiesHelper.isFunctionNotNull(timeOutCallback)) {
+                needTimeOutCallback = true;
+            } else {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[timeOutCallback] should be Function ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[timeOutCallback] should be Function ,and it can't be null.");
+            }
+        }
+        if (contentType != null && !PropertiesHelper.isStringNotNull(contentType)) {
+            if (needFinallyCallback) {
+                finallyCallback({httpHelperMsg: "HttpHelper:[contentType] should be String ,and it can't be null."})
+            }
+            throw new Error("HttpHelper:[contentType] should be String ,and it can't be null.");
+        }
+        if (finalUrl == null) {
+            if (!PropertiesHelper.isStringNotNull(path)) {
+                if (needFinallyCallback) {
+                    finallyCallback({httpHelperMsg: "HttpHelper:[path] should be String ,and it can't be null."})
+                }
+                throw new Error("HttpHelper:[path] should be String ,and it can't be null.");
+            }
+            requestUrl = this.getPrefix() + path;
         } else {
-            finalUrl = this.getPrefix() + requestOBJ.path;
+            requestUrl = finalUrl;
+        }
+        if (needRequestBefore) {
+            needRequestBefore();
         }
         $.ajax({
-            url: finalUrl,
-            headers: requestOBJ.headers,
+            url: requestUrl,
+            headers: headers,
             type: 'DELETE',
-            contentType: this.getDefaultContentType(),
-            cache: requestOBJ.cache != null ? requestOBJ.cache : this.getDefaultCache(),
-            success: function (data) {
-                // requestOBJ.success(data);
-                console.log(data);
+            contentType: contentType != null ? contentType : this.getDefaultContentType(),
+            cache: cache != null ? cache : this.getDefaultCache(),
+            data: requestData == null ? null : JSON.stringify(requestData),
+            success: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
+                }
+                if (needLog) {
+                    console.log(response);
+                }
+                successCallback(response);
             },
-            error: function (data) {
-                // requestOBJ.error(status);
-                if (data.status == 0 && data.statusText == "timeout") {
-                    alert("超时");
+            error: function (response) {
+                if (needFinallyCallback) {
+                    needFinallyCallback(response);
+                }
+                if (needLog) {
+                    console.log("HttpHelper(error):" + response);
+                }
+                if (response.status === 0 && response.statusText === "timeout") {
+                    if (needTimeOutCallback) {
+                        timeOutCallback(response);
+                    } else {
+                        alert("HttpHelper:请求超时(" + currentTimeOut + "ms).");
+                    }
                 } else {
-                    console.log(data);
+                    if (needErrorCallback) {
+                        errorCallback(response);
+                    }
                 }
             },
-            timeout: requestOBJ.timeout != null ? requestOBJ.timeout : this.getDefaultTimeOut()
+            timeout: currentTimeOut
         });
     }
-
 }
