@@ -136,12 +136,15 @@ class IndexContainer extends BaseComponent {
                                     msg: "这个是一个不可逆操作，请重新确认是否执行。",
                                     ensureCallback: () => {
                                         alert("确认")
+                                        _react.CallBackView.call_Loading_Circle_Interrupt({isOpen: true});
+                                        window.setTimeout(()=>{
+                                            _react.CallBackView.call_Loading_Circle_Interrupt({isOpen: false});
+                                        },3000);
                                     },
                                     cancelCallback: () => {
                                         alert("取消")
                                     }
                                 });
-                                _react.CallBackView.call_Loading_Circle_Interrupt({isOpen: true});
                             }}>
                                 Bug Maker
                             </Button>

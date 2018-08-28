@@ -6,12 +6,20 @@ class ComponentTemplate extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            show: true
+            childrenNode: {}
         }
         console.log("constructor----------");
         console.log(JSON.stringify(props));
 
     }
+
+    setParentNode({componentName, target}) {
+        this[componentName] = target;
+    }
+
+    updateState(data) {
+        this.setState(data);
+    };
 
     componentWillMount() {
         console.log("componentWillMount----------");
@@ -33,10 +41,7 @@ class ComponentTemplate extends BaseComponent {
 
     render() {
         return (
-            <div onClick={() => {
-                this.setState({show: !this.state.show});
-            }}>
-                {JSON.stringify(this.state.show)}
+            <div>
             </div>
         );
     }

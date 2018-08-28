@@ -40,6 +40,6 @@ class Loading_Linear_Unknown extends React.Component {
 
 export default withStyles(styles)(Loading_Linear_Unknown);
 
-Loading_Linear_Unknown.propTypes = {
-    open: PropTypes.bool
-};
+// Loading_Linear_Unknown.propTypes = {
+//     open: PropTypes.bool
+// };

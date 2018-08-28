@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Dialog from "@material-ui/core/es/Dialog/Dialog";
 import DialogTitle from "@material-ui/core/es/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
@@ -94,11 +94,11 @@ class Dialog_Conform extends React.Component {
 
 export default Dialog_Conform;
 
-Dialog_Conform.propTypes = {
-    open: PropTypes.bool,
-    transition: PropTypes.string,
-    title: PropTypes.string,
-    msg: PropTypes.string,
-    ensure: PropTypes.func,
-    cancel: PropTypes.func
-};
+// Dialog_Conform.propTypes = {
+//     open: PropTypes.bool,
+//     transition: PropTypes.string,
+//     title: PropTypes.string,
+//     msg: PropTypes.string,
+//     ensure: PropTypes.func,
+//     cancel: PropTypes.func
+// };
