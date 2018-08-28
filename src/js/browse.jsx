@@ -14,7 +14,7 @@ const article = {
     uId: "U00000001",
     statementId: "c8b7eeccc15349b2bbcf57f302915be5",
     summary: "摘要",
-    content: "---\n" +
+    content:
     "title: 小书匠语法使用手册\n" +
     "tags: 小书匠,语法,MARKDOWN,帮助\n" +
     "# 常用语法\n" +
@@ -853,4 +853,4 @@ const article2 = {
 }
 
 
-ReactDOM.render(<BrowseContainer article={article}/>, document.getElementById('root'));
+ReactDOM.render(<BrowseContainer article={article2}/>, document.getElementById('root'));

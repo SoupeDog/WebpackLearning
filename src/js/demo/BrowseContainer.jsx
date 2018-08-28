@@ -130,7 +130,7 @@ class BrowseContainer extends BaseComponent {
                         <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
                             width: this.state.article_Catalog_NeedChange ? "16.66666%" : "100%",
                             position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
-                            top: this.state.finalProperties.topMenuBarHeight + "px",
+                            top: this.state.finalProperties.topMenuBarHeight+2 + "px",
                             height: (window.innerHeight - this.state.finalProperties.topMenuBarHeight) + "px",
                         }} dangerouslySetInnerHTML={{__html: $("#catLogSource").html()}}>
                         </div>
@@ -187,7 +187,7 @@ class BrowseContainer extends BaseComponent {
 
     renderMain(catalogHide) {
         return (
-            <Grid id="article_Main" item xs={12} sm={catalogHide ? 12 : 10} container spacing={0} justify="center">
+            <Grid id="article_Main" item xs={12} sm={catalogHide ? 12 : 10} container spacing={0} justify="center" style={{minHeight:window.innerHeight - this.state.finalProperties.topMenuBarHeight}}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10} container spacing={0} justify="center">
                     <div id="article_Content" className="hyggeWriter_Markdown_Reader">
