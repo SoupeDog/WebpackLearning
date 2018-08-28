@@ -48,7 +48,7 @@ export default class TimeHelper {
     }
 
     // 目标毫秒级时间戳格式化成字符串,默认格式为 yyyy-mm-dd hh:mm:ss
-    static formatTimeStampToString(target, type) {
+    static formatTimeStampToString({target, type}) {
         if (typeof target != "number") {
             throw new Error("TimeHelper:[target] of formatTimeStampToString(target, type) should be number.");
         }

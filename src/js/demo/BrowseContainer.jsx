@@ -16,6 +16,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 import Hidden from "@material-ui/core/es/Hidden/Hidden";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -29,11 +30,16 @@ class BrowseContainer extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            callbackTheme: this.StyleHelper.getLightTheme_Blue_Pink(),
+            finalProperties: {
+                topMenuBarHeight: 60,
+                topMenuBarChangeLimitY: 270,
+                articleUIChangeLimitY: 380
+            },
+            mainTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             catalog_Hide: true,
             bgm_Stop: false,
             article_Catalog_NeedChange: false,
-            rightMenu_NeedChange: true,
+            rightMenu_NeedChange: false,
             WindowsScrollHelper: new WindowsScrollHelper()
         }
         console.log("constructor----------");
@@ -84,15 +90,15 @@ class BrowseContainer extends BaseComponent {
     render() {
         return (
             <JssProvider jss={jss} generateClassName={generateClassName}>
-                <MuiThemeProvider theme={this.state.callbackTheme}>
+                <MuiThemeProvider theme={this.state.mainTheme}>
                     <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
-                    <HW_Menu WindowsScrollHelper={this.state.WindowsScrollHelper}
+                    <HW_Menu id="topMenuBar"
+                             changeLimitY={this.state.finalProperties.topMenuBarChangeLimitY}
+                             WindowsScrollHelper={this.state.WindowsScrollHelper}
                              updateState={this.updateState.bind(this)}/>
-                    <div id="top_BackgroundImg"></div>
-                    <Grid container spacing={0} justify="center">
-                        <Grid id="bgm_Player" item xs={12} style={{
-                            backgroundColor: "#333"
-                        }}>
+                    <Grid id="banner" container spacing={0} justify="center">
+                        <Grid id="top_BackgroundImg" item xs={12}></Grid>
+                        <Grid id="bgm_Player" item xs={12}>
                             <iframe name="wy_music"
                                     style={{
                                         margin: 0,
@@ -100,9 +106,10 @@ class BrowseContainer extends BaseComponent {
                                         padding: "0",
                                         width: "100%",
                                         height: "80px"
-                                    }} src="//music.163.com/outchain/player?type=2&id=571541787&auto=0&height=66">
+                                    }} src="//music.163.com/outchain/player?type=2&id=571541787&auto=1&height=66">
                             </iframe>
                         </Grid>
+                        {this.renderArticleTitle({title: "测试用 Title 需要比较长", lastUpdateTs: 1535472165000})}
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             {this.renderArticleCatLog(this.state.catalog_Hide)}
                             {this.renderMain(this.state.catalog_Hide)}
@@ -118,19 +125,64 @@ class BrowseContainer extends BaseComponent {
             return (null);
         } else {
             return (
-                <Hidden only="xs">
+                <Hidden only={["xs", "sm"]}>
                     <Grid item xs={2}>
                         <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
                             width: this.state.article_Catalog_NeedChange ? "16.66666%" : "100%",
                             position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
-                            top: "60px",
-                            height: (window.innerHeight - 60) + "px",
+                            top: this.state.finalProperties.topMenuBarHeight + "px",
+                            height: (window.innerHeight - this.state.finalProperties.topMenuBarHeight) + "px",
                         }} dangerouslySetInnerHTML={{__html: $("#catLogSource").html()}}>
                         </div>
                     </Grid>
                 </Hidden>
             );
         }
+    }
+
+    renderArticleTitle({title, lastUpdateTs}) {
+        return (
+            <Grid item xs={12} container spacing={0} direction="column" justify="flex-start" alignItems="center">
+                <Grid item xs={8}>
+                    <Typography variant="display3" secondary="1564897">{title}-{this.TimeHelper.formatTimeStampToString({target:lastUpdateTs,type:"yyyy-mm-dd"})}</Typography>
+                </Grid>
+            </Grid>
+        );
+    }
+
+    renderArticleMenu() {
+        return (
+            <Hidden only={["xs", "sm"]}>
+                <div id="article_RightMenu" style={{
+                    position: this.state.rightMenu_NeedChange ? "fixed" : "static",
+                    marginTop: this.state.rightMenu_NeedChange ? "0px" : "400px"
+                }}>
+                    <Grid item xs={12} container spacing={0} direction="column" justify="flex-start">
+                        <Grid item>
+                            <Tooltip title="目录" placement="left">
+                                <IconButton variant="outlined" color="secondary"
+                                            style={{display: "block", margin: "0px auto"}}
+                                            onClick={this.catalogTrigger.bind(this)}>
+                                    <TOCIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
+                        <Grid item>
+                            <Tooltip title="返回顶部" placement="left">
+                                <IconButton variant="outlined" color="secondary"
+                                            style={{display: "block", margin: "0px auto"}}
+                                            onClick={() => {
+                                                window.scrollTo(0, 330);
+                                            }
+                                            }>
+                                    <ArrowUpwardIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </div>
+            </Hidden>
+        );
     }
 
     renderMain(catalogHide) {
@@ -142,36 +194,7 @@ class BrowseContainer extends BaseComponent {
                     </div>
                 </Grid>
                 <Grid item xs={1} container spacing={0} direction="column" justify="flex-start" alignItems="center">
-                    <Hidden only="xs">
-                        <div id="article_RightMenu" style={{
-                            position: this.state.rightMenu_NeedChange ? "fixed" : "static",
-                            marginTop: this.state.rightMenu_NeedChange ? "0px" : "400px"
-                        }}>
-                            <Grid item xs={12} container spacing={0} direction="column" justify="flex-start">
-                                <Grid item>
-                                    <Tooltip title="目录" placement="left">
-                                        <IconButton variant="outlined" color="secondary"
-                                                    style={{display: "block", margin: "0px auto"}}
-                                                    onClick={this.catalogTrigger.bind(this)}>
-                                            <TOCIcon/>
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid>
-                                <Grid item>
-                                    <Tooltip title="返回顶部" placement="left">
-                                        <IconButton variant="outlined" color="secondary"
-                                                    style={{display: "block", margin: "0px auto"}}
-                                                    onClick={() => {
-                                                        window.scrollTo(0, 330);
-                                                    }
-                                                    }>
-                                            <ArrowUpwardIcon/>
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid>
-                            </Grid>
-                        </div>
-                    </Hidden>
+                    {this.renderArticleMenu()}
                 </Grid>
             </Grid>
         );
@@ -208,9 +231,8 @@ class BrowseContainer extends BaseComponent {
         }
     }
 
-    checkCatalogPosition(currentY) {
-        let targetHigh = $("#top_BackgroundImg").height() + $("#bgm_Player").height();
-        if (currentY > targetHigh) {
+    checkCatalogPosition(currentY) {// 与上次状态不同才更新
+        if (currentY > this.state.finalProperties.articleUIChangeLimitY) {
             if (!this.state.article_Catalog_NeedChange) {
                 this.setState({article_Catalog_NeedChange: true});
             }
@@ -221,12 +243,15 @@ class BrowseContainer extends BaseComponent {
         }
     }
 
-    checkRightMenuPosition(currentY) {
-        let targetHigh = $("#top_BackgroundImg").height() + $("#bgm_Player").height();
-        if (currentY > targetHigh) {
-            this.setState({rightMenu_NeedChange: true});
+    checkRightMenuPosition(currentY) {// 与上次状态不同才更新
+        if (currentY > this.state.finalProperties.articleUIChangeLimitY) {
+            if (!this.state.rightMenu_NeedChange) {
+                this.setState({rightMenu_NeedChange: true});
+            }
         } else {
-            this.setState({rightMenu_NeedChange: false});
+            if (this.state.rightMenu_NeedChange) {
+                this.setState({rightMenu_NeedChange: false});
+            }
         }
     }
 }

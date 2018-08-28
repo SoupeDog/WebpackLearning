@@ -23,8 +23,9 @@ const styles = {
     root: {
         flexGrow: 1,
     },
-    flex: {
+    text: {
         flexGrow: 1,
+        fontWeight:800
     }
 };
 
@@ -88,8 +89,8 @@ class HW_Menu extends BaseComponent {
                         }}>
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="title" color="inherit" className={this.props.classes.flex}>
-                            APP
+                        <Typography variant="title" color="inherit" className={this.props.classes.text}>
+                            Bridge for You
                         </Typography>
                         {this.state.auth && (
                             <div>
@@ -133,7 +134,7 @@ class HW_Menu extends BaseComponent {
     }
 
     topBarHide(currentY) {
-        if (currentY > 230) {
+        if (currentY > this.props.changeLimitY) {
             if (this.state.elevation == 0 || this.state.appBarClassName == "backgroundTransparent") {
                 this.setState({elevation: 1, appBarClassName: ""});
             }
