@@ -15,6 +15,8 @@ import TOCIcon from '@material-ui/icons/toc';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
+import Slide from "@material-ui/core/es/Slide/Slide";
+import Hidden from "@material-ui/core/es/Hidden/Hidden";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -32,19 +34,10 @@ class BrowseContainer extends BaseComponent {
             catalog_Hide: false,
             bgm_Stop: false,
             article_Catalog_NeedChange: false,
-            rightMenu_NeedChange: false,
+            rightMenu_NeedChange: true,
+            editorMd: null,
             WindowsScrollHelper: new WindowsScrollHelper()
         }
-        this.HttpHelper.httpGet({
-            finalUrl: "http://127.0.0.1:8080/group/1062001c45264f588a5cc71c7fa84521",
-            headers: {
-                appId: "4fa0cba0bcfe4b86a6dfaad01ca23eec",
-                appSecret: "05e30e4e9d4045e884feb8bdf7add55d"
-            },
-            successCallback: (response) => {
-                alert(response);
-            }
-        });
         console.log("constructor----------");
         // console.log(JSON.stringify(props));
     }
@@ -79,19 +72,12 @@ class BrowseContainer extends BaseComponent {
         this.setState(data);
     }
 
-    initMDArticle(needCatalog) {
-        if (needCatalog) {
-            MarkdownHelper.formatToHtml({
-                text: this.props.article.content,
-                id: "article_Content",
-                catalogId: "article_Catalog"
-            });
-        } else {
-            MarkdownHelper.formatToHtml({
-                text: this.props.article.content,
-                id: "article_Content"
-            });
-        }
+    freshArticle() {
+        let mdObj = MarkdownHelper.formatToHtml({
+            text: this.props.article.content,
+            id: "article_Content",
+            catalogId: "catLogSource"
+        });
     }
 
     render() {
@@ -112,58 +98,62 @@ class BrowseContainer extends BaseComponent {
                                         border: "0",
                                         width: "100%",
                                         height: "80px"
-                                    }} src="//music.163.com/outchain/player?type=2&id=571541787&auto=1&height=66">
+                                    }} src="//music.163.com/outchain/player?type=2&id=571541787&auto=0&height=66">
                             </iframe>
                         </Grid>
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             <Grid item xs={this.state.catalog_Hide ? null : 2}>
-                                <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
-                                    width: this.state.article_Catalog_NeedChange ? "16.66%" : "100%",
-                                    position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
-                                    top: "60px",
-                                    height: (window.innerHeight - 60) + "px",
-                                    display: this.state.catalog_Hide ? "none" : "block"
-                                }}>
-                                </div>
+                                <Hidden only={"xs"}>
+                                    <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
+                                        width: this.state.article_Catalog_NeedChange ? "16.66%" : "100%",
+                                        position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
+                                        top: "60px",
+                                        height: (window.innerHeight - 60) + "px",
+                                        display: this.state.catalog_Hide ? "none" : "block"
+                                    }} dangerouslySetInnerHTML={{__html: $("#catLogSource").html()}}>
+                                    </div>
+                                </Hidden>
                             </Grid>
                             <Grid id="article_Main" item xs={this.state.catalog_Hide ? 12 : 10} container spacing={0}
                                   justify="center">
-                                <Grid item xs={1}></Grid>
+                                <Grid item xs={1}  ></Grid>
                                 <Grid item xs={10} container spacing={0} justify="center">
-                                    <Grid id="article_Content" className="hyggeWriter_Markdown_Reader" item
-                                          xs={12}
-                                          style={{minHeight: window.innerHeight}}>
-                                    </Grid>
+                                    <div id="article_Content" className="hyggeWriter_Markdown_Reader"
+                                         style={{width: "100%", minHeight: window.innerHeight}}>
+                                    </div>
                                 </Grid>
-                                <Grid item xs={1} container direction="column" justify="flex-start" alignItems="center">
-                                    <Grid id="article_RightMenu" item xs={12} container direction="column"
-                                          justify="flex-start"
-                                          style={{
-                                              position: this.state.rightMenu_NeedChange ? "fixed" : "static",
-                                              marginTop: this.state.rightMenu_NeedChange ? "0px" : "400px"
-                                          }}>
-                                        <Grid item>
-                                            <Tooltip title="目录" placement="left">
-                                                <IconButton variant="outlined" color="secondary"
-                                                            style={{display: "block", margin: "0px auto"}}
-                                                            onClick={this.catalogTrigger.bind(this)}>
-                                                    <TOCIcon/>
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Grid>
-                                        <Grid item>
-                                            <Tooltip title="返回顶部" placement="left">
-                                                <IconButton variant="outlined" color="secondary"
-                                                            style={{display: "block", margin: "0px auto"}}
-                                                            onClick={() => {
-                                                                window.scrollTo(0, 320);
-                                                            }
-                                                            }>
-                                                    <ArrowUpwardIcon/>
-                                                </IconButton>
-                                            </Tooltip>
-                                        </Grid>
-                                    </Grid>
+                                <Grid item xs={1} container direction="column" justify="flex-start" alignItems="center"
+                                      style={{backgroundColor: "red"}}>
+                                    <Hidden only={"xs"}>
+                                        <div id="article_RightMenu" style={{
+                                            position: this.state.rightMenu_NeedChange ? "fixed" : "static",
+                                            marginTop: this.state.rightMenu_NeedChange ? "0px" : "400px"
+                                        }}>
+                                            <Grid item xs={12} container direction="column" justify="flex-start">
+                                                <Grid item>
+                                                    <Tooltip title="目录" placement="left">
+                                                        <IconButton variant="outlined" color="secondary"
+                                                                    style={{display: "block", margin: "0px auto"}}
+                                                                    onClick={this.catalogTrigger.bind(this)}>
+                                                            <TOCIcon/>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Tooltip title="返回顶部" placement="left">
+                                                        <IconButton variant="outlined" color="secondary"
+                                                                    style={{display: "block", margin: "0px auto"}}
+                                                                    onClick={() => {
+                                                                        window.scrollTo(0, 330);
+                                                                    }
+                                                                    }>
+                                                            <ArrowUpwardIcon/>
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    </Hidden>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -179,7 +169,7 @@ class BrowseContainer extends BaseComponent {
         this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
         this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
         this.state.WindowsScrollHelper.start();
-        this.initMDArticle(true);
+        this.freshArticle();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -187,6 +177,7 @@ class BrowseContainer extends BaseComponent {
         // console.log("prevProps:" + JSON.stringify(prevProps));
         // console.log("prevState:" + JSON.stringify(prevState));
         // console.log("snapshot:" + JSON.stringify(snapshot));
+        // this.freshArticle(!this.state.catalog_Hide);
         console.log("");
     }
 
@@ -224,7 +215,6 @@ class BrowseContainer extends BaseComponent {
             this.setState({rightMenu_NeedChange: false});
         }
     }
-
 }
 
 export default withStyles(styles)(BrowseContainer);

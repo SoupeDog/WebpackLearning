@@ -36,14 +36,6 @@ const jss = create(jssPreset());
 //     alert("Socket发生了错误");
 //     //此时可以尝试刷新页面
 // }
-
-const customerTheme = createMuiTheme({
-    palette: {
-        primary: lightGreen,
-        secondary: yellow,
-    },
-});
-
 class IndexContainer extends BaseComponent {
 
     constructor(props) {

@@ -119,7 +119,7 @@ export default class HttpHelper {
                     needFinallyCallback(response);
                 }
                 if (needLog) {
-                    console.log("HttpHelper(error):" + response);
+                    console.log("HttpHelper(error):" + JSON.stringify(response));
                 }
                 if (response.status === 0 && response.statusText === "timeout") {
                     if (needTimeOutCallback) {
@@ -229,7 +229,7 @@ export default class HttpHelper {
                     needFinallyCallback(response);
                 }
                 if (needLog) {
-                    console.log("HttpHelper(error):" + response);
+                    console.log("HttpHelper(error):" + JSON.stringify(response));
                 }
                 if (response.status === 0 && response.statusText === "timeout") {
                     if (needTimeOutCallback) {
@@ -339,7 +339,7 @@ export default class HttpHelper {
                     needFinallyCallback(response);
                 }
                 if (needLog) {
-                    console.log("HttpHelper(error):" + response);
+                    console.log("HttpHelper(error):" + JSON.stringify(response));
                 }
                 if (response.status === 0 && response.statusText === "timeout") {
                     if (needTimeOutCallback) {
@@ -449,7 +449,7 @@ export default class HttpHelper {
                     needFinallyCallback(response);
                 }
                 if (needLog) {
-                    console.log("HttpHelper(error):" + response);
+                    console.log("HttpHelper(error):" + JSON.stringify(response));
                 }
                 if (response.status === 0 && response.statusText === "timeout") {
                     if (needTimeOutCallback) {
