@@ -20,6 +20,16 @@ export default class PropertiesHelper {
         return result;
     }
 
+    static isBooleanNotNull(target) {
+        let result = false;
+        if (target != null) {
+            if (typeof target == "boolean") {
+                result = true;
+            }
+        }
+        return result;
+    }
+
     static isObjectNotNull(target) {
         let result = false;
         if (target != null) {

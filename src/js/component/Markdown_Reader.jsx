@@ -818,8 +818,8 @@ export default class Markdown_Reader extends React.Component {
 
 
         MarkdownHelper.formatToHtml({
-            text:text,
-            id:"markdown_Reader_TestView",
+            content:text,
+            containerId:"markdown_Reader_TestView",
             catalogId:"custom-toc-container"
         });
     }

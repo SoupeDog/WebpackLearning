@@ -21,7 +21,6 @@ import Hidden from "@material-ui/core/es/Hidden/Hidden";
 import Chip from "@material-ui/core/es/Chip/Chip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import Slide from "@material-ui/core/es/Slide/Slide";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -118,9 +117,10 @@ class BrowseContainer extends BaseComponent {
 
     freshArticle() {
         MarkdownHelper.formatToHtml({
-            text: this.props.article.content,
-            id: "article_Content",
-            catalogId: "catLogSource"
+            content: this.props.article.content,
+            containerId: "article_Content",
+            catalogId: "catLogSource",
+            useCatalog: true
         });
     }
 
@@ -253,7 +253,7 @@ class BrowseContainer extends BaseComponent {
                 }}>
                     <Grid item xs={12} container spacing={0} direction="column" justify="flex-start">
                         <Grid item>
-                            <Tooltip title="目录" placement="left">
+                            <Tooltip title={this.state.catalog_Hide ? "展开目录" : "收起目录"} placement="left">
                                 <IconButton variant="outlined" color="secondary"
                                             style={{display: "block", margin: "0px auto"}}
                                             onClick={this.catalogTrigger.bind(this)}>

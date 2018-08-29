@@ -70,7 +70,7 @@ export default class TimeHelper {
     }
 
     // 获取目标时间戳 ± x 个自然天的 00:00:00 时刻时间戳
-    static getNaturalDayTimeStamp(target, x) {
+    static getNaturalDayTimeStamp({target, x}) {
         let currentDate = new Date(target);
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth();

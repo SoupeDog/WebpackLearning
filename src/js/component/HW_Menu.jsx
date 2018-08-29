@@ -17,7 +17,9 @@ import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import ListItemIcon from "@material-ui/core/es/ListItemIcon/ListItemIcon";
-import SettingsIcon from '@material-ui/icons/Settings';
+import HomeIcon from '@material-ui/icons/Home';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import LinkIcon from '@material-ui/icons/Link';
 
 const styles = {
     root: {
@@ -25,7 +27,7 @@ const styles = {
     },
     text: {
         flexGrow: 1,
-        fontWeight:800
+        fontWeight: 800
     }
 };
 
@@ -62,20 +64,25 @@ class HW_Menu extends BaseComponent {
                             <List>
                                 <ListItem button>
                                     <ListItemIcon>
-                                        <SettingsIcon/>
+                                        <HomeIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary="Inbox"/>
+                                    <ListItemText primary="主页"/>
                                 </ListItem>
                                 <Divider/>
-                                <ListItem button divider>
-                                    <ListItemText primary="Drafts"/>
-                                </ListItem>
                                 <ListItem button>
-                                    <ListItemText primary="Trash"/>
+                                    <ListItemIcon>
+                                        <LinkIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="友链" onClick={() => {
+                                        alert("不存在的");
+                                    }}/>
                                 </ListItem>
                                 <Divider light/>
                                 <ListItem button>
-                                    <ListItemText primary="Spam"/>
+                                    <ListItemIcon>
+                                        <LiveHelpIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="关于"/>
                                 </ListItem>
                             </List>
                         </Grid>

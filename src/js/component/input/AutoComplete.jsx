@@ -30,7 +30,7 @@ const styles = theme => ({
     },
     inputRoot: {
         flexWrap: 'wrap',
-        minHeight:"40px"
+        minHeight: "40px"
     },
     divider: {
         height: theme.spacing.unit * 2,
@@ -41,6 +41,7 @@ class AutoComplete extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
+            isShow: false,
             inputValue: "",
             selectedItem: [],
             suggestions_Final: this.initSuggestionsData(this.props.suggestions)
@@ -100,11 +101,11 @@ class AutoComplete extends BaseComponent {
                                     )),
                                     onChange: this.handleInputChange.bind(this),
                                     onKeyDown: this.handleKeyDown.bind(this),
-                                    placeholder:this.props.placeholder,
+                                    placeholder: this.props.placeholder,
                                 }),
                                 label: this.props.label
                             })}
-                            {isOpen ? (
+                            {this.finalNeedShowSuggestions(isOpen, this.state.isShow) ? (
                                 <Paper className={this.props.classes.paper} square>
                                     {this.getSuggestions(inputValue2).map((suggestion, index) =>
                                         this.renderSuggestion({
@@ -136,7 +137,7 @@ class AutoComplete extends BaseComponent {
                                 label: this.props.label
                             })
                             }
-                            {isOpen ? (
+                            {this.finalNeedShowSuggestions(isOpen, this.state.isShow) ? (
                                 <Paper className={this.props.classes.paper} square>
                                     {this.getSuggestions(inputValue).map((suggestion, index) =>
                                         this.renderSuggestion({
@@ -160,11 +161,12 @@ class AutoComplete extends BaseComponent {
         let {InputProps, classes, ref, ...other} = inputProps;
         if (this.props.isMultiple == null ? false : this.props.isMultiple) {
             this.props.valueHandler(this.state.selectedItem);
-        }else {
+        } else {
             this.props.valueHandler(inputProps.InputProps.value);
         }
         return (
             <TextField
+                onClick={this.isShowTrigger.bind(this)}
                 InputProps={{
                     inputRef: ref,
                     classes: {
@@ -240,6 +242,26 @@ class AutoComplete extends BaseComponent {
             return {selectedItem};
         });
     };
+
+    isShowTrigger() {
+        if (this.state.isShow) {
+            this.setState({isShow: false});
+        } else {
+            this.setState({isShow: true});
+        }
+    }
+
+    finalNeedShowSuggestions(main, unit) {
+        let result = false;
+        if (!main) {
+            if (unit) {
+                result = true;
+            }
+        } else {
+            result = true;
+        }
+        return result;
+    }
 
     componentDidMount() {
         // console.log("componentDidMount----------");
