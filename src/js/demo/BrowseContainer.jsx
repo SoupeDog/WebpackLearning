@@ -12,17 +12,54 @@ import HW_Menu from "../component/HW_Menu.jsx";
 import MarkdownHelper from "../utils/MarkdownHelper.jsx";
 import WindowsScrollHelper from "../utils/WindowsScrollHelper.jsx";
 import TOCIcon from '@material-ui/icons/toc';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import CommentIcon from '@material-ui/icons/Comment';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 import Hidden from "@material-ui/core/es/Hidden/Hidden";
-import Typography from "@material-ui/core/es/Typography/Typography";
+import Chip from "@material-ui/core/es/Chip/Chip";
+import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import Slide from "@material-ui/core/es/Slide/Slide";
+import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
 
 
-const styles = theme => ({});
+const styles = theme => ({
+    articleHeaderRow: {
+        display: "inline-block",
+        float: "left"
+    },
+    articleTitle: {
+        fontSize: "60px",
+        fontWeight: 800,
+        color: "#000",
+        lineHeight: "100px"
+    },
+    articleTitle_Phone: {
+        fontSize: "24px",
+        fontWeight: 800,
+        color: "#000",
+        lineHeight: "60px"
+    },
+    articleInfo: {
+        fontSize: "14px",
+        color: "#aaa",
+        lineHeight: "40px"
+    },
+    tag_Box: {},
+    tag: {
+        marginTop: "10px",
+        marginBottom: "10px",
+        marginRight: "16px"
+    },
+    tag_Avatar: {
+        width: "40px",
+        height: "40px"
+    }
+});
 
 
 class BrowseContainer extends BaseComponent {
@@ -33,7 +70,7 @@ class BrowseContainer extends BaseComponent {
             finalProperties: {
                 topMenuBarHeight: 60,
                 topMenuBarChangeLimitY: 270,
-                articleUIChangeLimitY: 380
+                articleUIChangeLimitY: 370
             },
             mainTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             catalog_Hide: true,
@@ -109,7 +146,6 @@ class BrowseContainer extends BaseComponent {
                                     }} src="//music.163.com/outchain/player?type=2&id=571541787&auto=1&height=66">
                             </iframe>
                         </Grid>
-                        {this.renderArticleTitle({title: "测试用 Title 需要比较长", lastUpdateTs: 1535472165000})}
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             {this.renderArticleCatLog(this.state.catalog_Hide)}
                             {this.renderMain(this.state.catalog_Hide)}
@@ -127,13 +163,15 @@ class BrowseContainer extends BaseComponent {
             return (
                 <Hidden only={["xs", "sm"]}>
                     <Grid item xs={2}>
-                        <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
-                            width: this.state.article_Catalog_NeedChange ? "16.66666%" : "100%",
-                            position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
-                            top: this.state.finalProperties.topMenuBarHeight+2 + "px",
-                            height: (window.innerHeight - this.state.finalProperties.topMenuBarHeight) + "px",
-                        }} dangerouslySetInnerHTML={{__html: $("#catLogSource").html()}}>
-                        </div>
+                        <Slide direction="right" in={!this.state.catalog_Hide} mountOnEnter unmountOnExit>
+                            <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
+                                width: this.state.article_Catalog_NeedChange ? "16.66666%" : "100%",
+                                position: this.state.article_Catalog_NeedChange ? "fixed" : "static",
+                                top: this.state.finalProperties.topMenuBarHeight + "px",
+                                height: (window.innerHeight - this.state.finalProperties.topMenuBarHeight) + "px",
+                            }} dangerouslySetInnerHTML={{__html: $("#catLogSource").html()}}>
+                            </div>
+                        </Slide>
                     </Grid>
                 </Hidden>
             );
@@ -142,9 +180,65 @@ class BrowseContainer extends BaseComponent {
 
     renderArticleTitle({title, lastUpdateTs}) {
         return (
-            <Grid item xs={12} container spacing={0} direction="column" justify="flex-start" alignItems="center">
-                <Grid item xs={8}>
-                    <Typography variant="display3" secondary="1564897">{title}-{this.TimeHelper.formatTimeStampToString({target:lastUpdateTs,type:"yyyy-mm-dd"})}</Typography>
+            <Grid item xs={12} container direction="row" justify="flex-start" alignItems="baseline">
+                <Hidden mdDown>
+                    <Grid id="title" className={this.props.classes.articleTitle} item xs={12}>{title}</Grid>
+                </Hidden>
+                <Hidden lgUp>
+                    <div id="title" className={this.props.classes.articleTitle_Phone}>{title}</div>
+                </Hidden>
+                <Grid id="articleTags" className={this.props.classes.tag_Box} item xs={12} container>
+                    <Chip className={this.props.classes.tag} clickable label="MD 快速入门" color="secondary"
+                          avatar={<Avatar className={this.props.classes.tag_Avatar}
+                                          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
+                    <Chip className={this.props.classes.tag} clickable label="写作" color="secondary"
+                          avatar={<Avatar className={this.props.classes.tag_Avatar}
+                                          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
+                    <Chip className={this.props.classes.tag} clickable label="搞事情" color="secondary"
+                          avatar={<Avatar className={this.props.classes.tag_Avatar}
+                                          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
+                </Grid>
+                <Grid id="articleInfo" item xs={12} className={this.props.classes.articleInfo} container direction="row"
+                      justify="flex-start" alignItems="baseline">
+                    <Grid item xs={12} lg={4}>
+                        <span id="articlePlates">
+                            {"技术"}
+                        </span>
+                        <span className="separate" style={{marginLeft: "5px"}}>
+                            /
+                        </span>
+                        <span id="articlePlates" style={{marginLeft: "5px"}}>
+                            {"软件使用"}
+                        </span>
+                        <span id="articleDate" style={{marginLeft: "20px"}}>
+                            {this.TimeHelper.formatTimeStampToString({
+                                target: lastUpdateTs,
+                                type: "yyyy-mm-dd"
+                            })}
+                        </span>
+                    </Grid>
+                    <Grid item xs={12} lg={8}>
+                        <Tooltip title={"浏览量"}>
+                    <span id="articlePageViewsCount">
+                        <VisibilityIcon style={{
+                            fontSize: "12px",
+                            color: "#aaa",
+                            lineHeight: "40px"
+                        }}/>&nbsp;
+                        {"1k以内"}
+                    </span>
+                        </Tooltip>
+                        <Tooltip title={"评论数"}>
+                    <span id="articleCommentCount" style={{marginLeft: "40px"}}>
+                        <CommentIcon style={{
+                            fontSize: "12px",
+                            color: "#aaa",
+                            lineHeight: "40px"
+                        }}/>&nbsp;
+                        {0}
+                    </span>
+                        </Tooltip>
+                    </Grid>
                 </Grid>
             </Grid>
         );
@@ -187,9 +281,11 @@ class BrowseContainer extends BaseComponent {
 
     renderMain(catalogHide) {
         return (
-            <Grid id="article_Main" item xs={12} sm={catalogHide ? 12 : 10} container spacing={0} justify="center" style={{minHeight:window.innerHeight - this.state.finalProperties.topMenuBarHeight}}>
+            <Grid id="article_Main" item xs={12} sm={catalogHide ? 12 : 10} container spacing={0} justify="center"
+                  style={{minHeight: window.innerHeight - this.state.finalProperties.topMenuBarHeight}}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10} container spacing={0} justify="center">
+                    {this.renderArticleTitle({title: "MD 语法样例，标题要长，这样够长了吗？", lastUpdateTs: 1535472165000})}
                     <div id="article_Content" className="hyggeWriter_Markdown_Reader">
                     </div>
                 </Grid>

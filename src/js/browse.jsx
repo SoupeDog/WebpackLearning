@@ -853,4 +853,4 @@ const article2 = {
 }
 
 
-ReactDOM.render(<BrowseContainer article={article2}/>, document.getElementById('root'));
+ReactDOM.render(<BrowseContainer article={article}/>, document.getElementById('root'));
