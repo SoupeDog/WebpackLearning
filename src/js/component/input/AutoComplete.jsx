@@ -71,12 +71,13 @@ class AutoComplete extends BaseComponent {
         if (this.props.isMultiple == null ? false : this.props.isMultiple) {
             return (
                 <Downshift
-                    isOpen={this.state.isShow}
-                    onOuterClick={this.closeShow.bind(this)}
                     id="downshift-multiple"
+                    isOpen={this.state.isShow}
                     inputValue={this.state.inputValue}
-                    onChange={this.handleChange.bind(this)}
                     selectedItem={this.state.selectedItem}
+                    onChange={this.handleChange.bind(this)}
+                    onInputValueChange={this.closeShow.bind(this)}
+                    onOuterClick={this.closeShow.bind(this)}
                 >
                     {({
                           getInputProps,
@@ -128,7 +129,7 @@ class AutoComplete extends BaseComponent {
             return (
                 <Downshift id="downshift-simple"
                            isOpen={this.state.isShow}
-                           onChange={this.closeShow.bind(this)}
+                           onInputValueChange={this.closeShow.bind(this)}
                            onOuterClick={this.closeShow.bind(this)}>
                     {({getInputProps, getItemProps, isOpen, inputValue, selectedItem, highlightedIndex}) => (
                         <div className={this.props.classes.container}>
@@ -234,7 +235,6 @@ class AutoComplete extends BaseComponent {
             selectedItem = [...selectedItem, item];
         }
         this.setState({
-            isShow: false,
             inputValue: '',
             selectedItem
         });
