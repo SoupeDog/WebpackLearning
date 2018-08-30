@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import {withStyles} from "@material-ui/core/styles/index";
 import AutoComplete from "../component/input/AutoComplete.jsx";
+import Button from "@material-ui/core/es/Button/Button";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -38,6 +39,10 @@ class ResponsiveContainer extends BaseComponent {
         console.log("constructor----------");
         console.log(JSON.stringify(props));
 
+    }
+
+    setParentNode({componentName, target}) {
+        this[componentName] = target;
     }
 
     // 初始化子组件
@@ -75,20 +80,32 @@ class ResponsiveContainer extends BaseComponent {
                                     <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=12</Paper>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <AutoComplete fullWidth error={false} label={"姓名"} isMultiple={false}
+                                    <AutoComplete componentName={"AutoComplete_1"}
+                                                  setParentNode={this.setParentNode.bind(this)} fullWidth
+                                                  error={false} label={"姓名"} isMultiple={false}
                                                   placeholder={null}
                                                   suggestions={["张三", "李四"]}
-                                                  valueHandler={(x) => {
-                                                      console.log(x)
-                                                  }}/>
+                                    />
+                                    <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                        // this.AutoComplete_1.cleanVal();
+                                        alert(this.AutoComplete_1.getVal());
+                                    }}>
+                                        清除
+                                    </Button>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <AutoComplete fullWidth error={false} label={"姓名"} isMultiple={true}
+                                    <AutoComplete componentName={"AutoComplete_2"}
+                                                  setParentNode={this.setParentNode.bind(this)} fullWidth
+                                                  error={false} label={"姓名"} isMultiple={true}
                                                   placeholder={null}
                                                   suggestions={["张三", "李四"]}
-                                                  valueHandler={(x) => {
-                                                      console.log(x)
-                                                  }}/>
+                                    />
+                                    <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                        // this.AutoComplete_2.cleanVal();
+                                        alert(this.AutoComplete_2.getVal());
+                                    }}>
+                                        清除
+                                    </Button>
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=3</Paper>

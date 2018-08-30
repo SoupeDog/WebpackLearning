@@ -14,7 +14,7 @@ class ComponentTemplate extends BaseComponent {
     }
 
     setParentNode({componentName, target}) {
-        this[componentName] = target;
+        this[componentName]=target;
     }
 
     updateState(data) {

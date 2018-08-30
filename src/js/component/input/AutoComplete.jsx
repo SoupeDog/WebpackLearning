@@ -46,6 +46,7 @@ class AutoComplete extends BaseComponent {
             selectedItem: [],
             suggestions_Final: this.initSuggestionsData(this.props.suggestions)
         };
+        this.props.setParentNode({componentName: this.props.componentName, target: this});
         // console.log("constructor----------");
     }
 
@@ -72,12 +73,11 @@ class AutoComplete extends BaseComponent {
             return (
                 <Downshift
                     id="downshift-multiple"
-                    isOpen={this.state.isShow}
                     inputValue={this.state.inputValue}
                     selectedItem={this.state.selectedItem}
                     onChange={this.handleChange.bind(this)}
-                    onInputValueChange={this.closeShow.bind(this)}
-                    onOuterClick={this.closeShow.bind(this)}
+                    onInputValueChange={this.updateSuggestionState.bind(this, false)}
+                    onOuterClick={this.updateSuggestionState.bind(this, false)}
                 >
                     {({
                           getInputProps,
@@ -108,13 +108,15 @@ class AutoComplete extends BaseComponent {
                                 }),
                                 label: this.props.label
                             })}
-                            {isOpen? (
+                            {this.finalNeedShowSuggestions(this.state.isShow, isOpen) ? (
                                 <Paper className={this.props.classes.paper} square>
                                     {this.getSuggestions(inputValue2).map((suggestion, index) =>
                                         this.renderSuggestion({
                                             suggestion,
                                             index,
-                                            itemProps: getItemProps({item: suggestion.label}),
+                                            itemProps: getItemProps({
+                                                item: suggestion.label
+                                            }),
                                             highlightedIndex,
                                             selectedItem: selectedItem2,
                                         }),
@@ -128,9 +130,11 @@ class AutoComplete extends BaseComponent {
         } else {
             return (
                 <Downshift id="downshift-simple"
-                           isOpen={this.state.isShow}
-                           onInputValueChange={this.closeShow.bind(this)}
-                           onOuterClick={this.closeShow.bind(this)}>
+                           // isOpen={this.state.isShow}
+                           onChange={this.handleChange.bind(this)}
+                           inputValue={this.state.inputValue}
+                           onInputValueChange={this.updateSuggestionState.bind(this, false)}
+                           onOuterClick={this.updateSuggestionState.bind(this, false)}>
                     {({getInputProps, getItemProps, isOpen, inputValue, selectedItem, highlightedIndex}) => (
                         <div className={this.props.classes.container}>
                             {this.renderInput({
@@ -138,12 +142,14 @@ class AutoComplete extends BaseComponent {
                                 classes: this.props.classes,
                                 error: this.props.error,
                                 InputProps: getInputProps({
+                                    onKeyDown: this.handleKeyDown.bind(this),
+                                    onChange: this.handleInputChange.bind(this),
                                     placeholder: this.props.placeholder,
                                 }),
                                 label: this.props.label
                             })
                             }
-                            {isOpen? (
+                            {this.finalNeedShowSuggestions(this.state.isShow, isOpen) ? (
                                 <Paper className={this.props.classes.paper} square>
                                     {this.getSuggestions(inputValue).map((suggestion, index) =>
                                         this.renderSuggestion({
@@ -165,11 +171,6 @@ class AutoComplete extends BaseComponent {
 
     renderInput(inputProps) {
         let {InputProps, classes, ref, ...other} = inputProps;
-        if (this.props.isMultiple == null ? false : this.props.isMultiple) {
-            this.props.valueHandler(this.state.selectedItem);
-        } else {
-            this.props.valueHandler(inputProps.InputProps.value);
-        }
         return (
             <TextField
                 onClick={this.isShowTrigger.bind(this)}
@@ -217,27 +218,42 @@ class AutoComplete extends BaseComponent {
     }
 
     handleKeyDown(event) {
-        let {inputValue, selectedItem} = this.state;
-        if (selectedItem.length && !inputValue.length && keycode(event) === 'backspace') {
-            this.setState({
-                selectedItem: selectedItem.slice(0, selectedItem.length - 1),
-            });
+        if (this.props.isMultiple == null ? false : this.props.isMultiple) {
+            let {inputValue, selectedItem} = this.state;
+            if (selectedItem.length && !inputValue.length && keycode(event) === 'backspace') {
+                this.setState({
+                    selectedItem: selectedItem.slice(0, selectedItem.length - 1),
+                });
+            }
+        } else {
+            if (this.state.isShow == false) {
+                this.setState({
+                    isShow: true
+                });
+            }
         }
     };
 
     handleInputChange(event) {
-        this.setState({inputValue: event.target.value,isShow:false});
+        this.setState({isShow: true, inputValue: event.target.value});
     };
 
     handleChange(item) {
-        let {selectedItem} = this.state;
-        if (selectedItem.indexOf(item) === -1) {
-            selectedItem = [...selectedItem, item];
+        if (this.props.isMultiple == null ? false : this.props.isMultiple) {
+            let {selectedItem} = this.state;
+            if (selectedItem.indexOf(item) === -1) {
+                selectedItem = [...selectedItem, item];
+            }
+            this.setState({
+                inputValue: '',
+                selectedItem
+            });
+        } else {
+            this.setState({
+                inputValue: item,
+                selectedItem: []
+            });
         }
-        this.setState({
-            inputValue: '',
-            selectedItem
-        });
     };
 
     handleDelete(item) {
@@ -249,7 +265,7 @@ class AutoComplete extends BaseComponent {
     };
 
     isShowTrigger() {
-        let _react=this;
+        let _react = this;
         if (_react.state.isShow) {
             _react.setState({isShow: false});
         } else {
@@ -257,17 +273,29 @@ class AutoComplete extends BaseComponent {
         }
     }
 
-    closeShow() {
-        this.setState({isShow: false});
+    updateSuggestionState(isShow) {
+        this.setState({isShow: isShow});
+    }
+
+    finalNeedShowSuggestions(main, unit) {
+        let result = false;
+        if (!main) {
+            if (unit) {
+                result = true;
+            }
+        } else {
+            result = true;
+        }
+        return result;
     }
 
     componentDidMount() {
-        // console.log("componentDidMount----------");
+        console.log("componentDidMount----------");
         // console.log("");
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // console.log("componentDidUpdate----------");
+        console.log("componentDidUpdate----------");
         // console.log("prevProps:" + JSON.stringify(prevProps));
         // console.log("prevState:" + JSON.stringify(prevState));
         // console.log("snapshot:" + JSON.stringify(snapshot));
@@ -276,6 +304,21 @@ class AutoComplete extends BaseComponent {
 
     componentWillUnmount() {
         // console.log("componentWillUnmount----------");
+    }
+
+    getVal() {
+        if (this.state.selectedItem.length > 0) {
+            return this.state.selectedItem;
+        } else {
+            return this.state.inputValue;
+        }
+    }
+
+    cleanVal() {
+        this.setState({
+            inputValue: "",
+            selectedItem: [],
+        });
     }
 
     initSuggestionsData(array) {
