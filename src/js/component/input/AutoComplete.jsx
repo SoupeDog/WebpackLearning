@@ -43,8 +43,7 @@ class AutoComplete extends BaseComponent {
         this.state = {
             isShow: false,
             inputValue: "",
-            selectedItem: [],
-            suggestions_Final: this.initSuggestionsData(this.props.suggestions)
+            selectedItem: []
         };
         this.props.setParentNode({componentName: this.props.componentName, target: this});
         // console.log("constructor----------");
@@ -65,6 +64,7 @@ class AutoComplete extends BaseComponent {
         // console.log("nextProps:" + JSON.stringify(nextProps));
         // console.log("nextState:" + JSON.stringify(nextState));
         // console.log("nextContext:" + JSON.stringify(nextContext));
+        nextState.suggestions_Final = this.initSuggestionsData(this.props.suggestions);
         return true;
     }
 
@@ -130,7 +130,7 @@ class AutoComplete extends BaseComponent {
         } else {
             return (
                 <Downshift id="downshift-simple"
-                           // isOpen={this.state.isShow}
+                    // isOpen={this.state.isShow}
                            onChange={this.handleChange.bind(this)}
                            inputValue={this.state.inputValue}
                            onInputValueChange={this.updateSuggestionState.bind(this, false)}

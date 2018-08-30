@@ -36,7 +36,7 @@ const jss = create(jssPreset());
 //     alert("Socket发生了错误");
 //     //此时可以尝试刷新页面
 // }
-class IndexContainer extends BaseComponent {
+class CallbackTestContainer extends BaseComponent {
 
     constructor(props) {
         super(props)
@@ -173,4 +173,4 @@ class IndexContainer extends BaseComponent {
     }
 }
 
-export default IndexContainer;
+export default CallbackTestContainer;

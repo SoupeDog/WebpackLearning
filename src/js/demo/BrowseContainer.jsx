@@ -15,6 +15,8 @@ import TOCIcon from '@material-ui/icons/toc';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CommentIcon from '@material-ui/icons/Comment';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import EditIcon from '@material-ui/icons/Edit';
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 import Hidden from "@material-ui/core/es/Hidden/Hidden";
@@ -201,35 +203,58 @@ class BrowseContainer extends BaseComponent {
                         <span id="articlePlates" style={{marginLeft: "5px"}}>
                             {"软件使用"}
                         </span>
-                        <span id="articleDate" style={{marginLeft: "20px"}}>
-                            {this.TimeHelper.formatTimeStampToString({
-                                target: lastUpdateTs,
-                                type: "yyyy-mm-dd"
-                            })}
-                        </span>
+                        <Tooltip title={"最后修改日期"}>
+                            <span id="articleDate" style={{marginLeft: "20px"}}>
+                                <AccessTimeIcon style={{
+                                    fontSize: "12px",
+                                    color: "#aaa",
+                                    lineHeight: "40px"
+                                }}/>&nbsp;
+                                {this.TimeHelper.formatTimeStampToString({
+                                    target: lastUpdateTs,
+                                    type: "yyyy-mm-dd"
+                                })}
+                            </span>
+                        </Tooltip>
                     </Grid>
                     <Grid item xs={12} lg={8}>
+                        <Tooltip title={"字数统计"}>
+                        <span id="articleWordCount">
+                            <EditIcon style={{
+                                fontSize: "12px",
+                                color: "#aaa",
+                                lineHeight: "40px"
+                            }}/>&nbsp;
+                            约&nbsp;{1500}&nbsp;字
+                        </span>
+                        </Tooltip>
                         <Tooltip title={"浏览量"}>
-                    <span id="articlePageViewsCount">
-                        <VisibilityIcon style={{
-                            fontSize: "12px",
-                            color: "#aaa",
-                            lineHeight: "40px"
-                        }}/>&nbsp;
-                        {"1k以内"}
-                    </span>
+                        <span id="articlePageViewsCount" style={{marginLeft: "40px"}}>
+                            <VisibilityIcon style={{
+                                fontSize: "12px",
+                                color: "#aaa",
+                                lineHeight: "40px"
+                            }}/>&nbsp;
+                            {"1k以内"}
+                        </span>
                         </Tooltip>
                         <Tooltip title={"评论数"}>
-                    <span id="articleCommentCount" style={{marginLeft: "40px"}}>
-                        <CommentIcon style={{
-                            fontSize: "12px",
-                            color: "#aaa",
-                            lineHeight: "40px"
-                        }}/>&nbsp;
-                        {0}
-                    </span>
+                        <span id="articleCommentCount" style={{marginLeft: "40px"}}>
+                            <CommentIcon style={{
+                                fontSize: "12px",
+                                color: "#aaa",
+                                lineHeight: "40px"
+                            }}/>&nbsp;
+                            {0}
+                        </span>
                         </Tooltip>
                     </Grid>
+                    <Tooltip title={"毕竟口头说不许转载也没多大约束力，上版权印之类的也很麻烦 (〜￣△￣)〜"}>
+                        <Grid item xs={12} className={"autoWrap"} style={{lineHeight: "20px"}}>
+                            版权声明：本文为 Xavier 原创文章，允许转载，请声明来源---
+                            {window.location.href}
+                        </Grid>
+                    </Tooltip>
                 </Grid>
             </Grid>
         );

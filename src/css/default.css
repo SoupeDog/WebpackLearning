@@ -28,3 +28,8 @@ address, caption, cite, code, dfn, p, em, i, th, var {
 .backgroundTransparent {
     background-color: transparent;
 }
+
+.autoWrap{
+    word-wrap:break-word
+}
+
