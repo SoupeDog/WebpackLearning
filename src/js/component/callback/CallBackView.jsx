@@ -24,7 +24,7 @@ class CallBackView extends BaseComponent {
             lightTip_Msg: "这是一条成功信息！",
             lightTip_variant: "success"
         }
-        this.props.initCallBackView(this);
+        this.props.setParentNode({componentName: this.props.componentName, target: this});
     }
 
     renderLoading_Linear_Unknown() {

@@ -37,12 +37,6 @@ class MenuContainer extends BaseComponent {
         }
         console.log("constructor----------");
         console.log(JSON.stringify(props));
-
-    }
-
-    // 初始化子组件
-    initCallBackView(CallBackView) {
-        this.CallBackView = CallBackView;
     }
 
     componentWillMount() {
@@ -68,7 +62,7 @@ class MenuContainer extends BaseComponent {
             <div>
                 <JssProvider jss={jss} generateClassName={generateClassName}>
                     <MuiThemeProvider theme={this.state.callbackTheme}>
-                        <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
+                        <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
                         <div className={this.props.classes.root}>
                             <Grid container spacing={0}>
                                 <Grid item xs={12}>

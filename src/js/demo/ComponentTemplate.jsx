@@ -5,21 +5,10 @@ import BaseComponent from "../component/BaseComponent.jsx";
 class ComponentTemplate extends BaseComponent {
     constructor(props) {
         super(props)
-        this.state = {
-            childrenNode: {}
-        }
         console.log("constructor----------");
         console.log(JSON.stringify(props));
 
     }
-
-    setParentNode({componentName, target}) {
-        this[componentName]=target;
-    }
-
-    updateState(data) {
-        this.setState(data);
-    };
 
     componentWillMount() {
         console.log("componentWillMount----------");

@@ -1,4 +1,4 @@
-export default class QueryStringHelper {
+export default class URLHelper {
 
     static getQueryString(key) {
         var hash = window.location.href;

@@ -82,11 +82,6 @@ class BrowseContainer extends BaseComponent {
         // console.log(JSON.stringify(props));
     }
 
-    // 初始化子组件
-    initCallBackView(CallBackView) {
-        this.CallBackView = CallBackView;
-    }
-
     componentWillMount() {
         console.log("componentWillMount----------");
     }
@@ -111,10 +106,6 @@ class BrowseContainer extends BaseComponent {
         return true;
     }
 
-    updateState(data) {
-        this.setState(data);
-    }
-
     freshArticle() {
         MarkdownHelper.formatToHtml({
             content: this.props.article.content,
@@ -128,7 +119,7 @@ class BrowseContainer extends BaseComponent {
         return (
             <JssProvider jss={jss} generateClassName={generateClassName}>
                 <MuiThemeProvider theme={this.state.mainTheme}>
-                    <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
+                    <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
                     <HW_Menu id="topMenuBar"
                              changeLimitY={this.state.finalProperties.topMenuBarChangeLimitY}
                              WindowsScrollHelper={this.state.WindowsScrollHelper}

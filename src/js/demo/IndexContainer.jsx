@@ -46,11 +46,6 @@ class IndexContainer extends BaseComponent {
         }
     }
 
-    // 初始化子组件
-    initCallBackView(CallBackView) {
-        this.CallBackView = CallBackView;
-    }
-
     componentWillMount() {
     }
 
@@ -59,7 +54,7 @@ class IndexContainer extends BaseComponent {
             <div>
                 <JssProvider jss={jss} generateClassName={generateClassName}>
                     <MuiThemeProvider theme={this.state.theme}>
-                        <CallBackView initCallBackView={this.initCallBackView.bind(this)}/>
+                        <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {

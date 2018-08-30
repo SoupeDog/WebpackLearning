@@ -5,7 +5,7 @@ export default class TimeHelper {
     }
 
     // 填充 target 为 size 位数
-    static formatNumber(target, size) {
+    static formatNumber({target, size}) {
         if (typeof target != "number") {
             throw new Error("TimeHelper:[target] of formatNumber(target, size) should be number.");
         }
@@ -61,11 +61,26 @@ export default class TimeHelper {
         var second = currentDate.getSeconds();
         switch (type) {
             case "yyyy-mm-dd":
-                return year + "-" + this.formatNumber(month, 2) + "-" + this.formatNumber(day, 2);
+                return year + "-" + this.formatNumber({target: month, size: 2}) + "-" + this.formatNumber({
+                    target: day,
+                    size: 2
+                });
             case "hh:mm:ss":
-                return this.formatNumber(hour, 2) + ":" + this.formatNumber(minute, 2) + ":" + this.formatNumber(second, 2);
+                return this.formatNumber({target: hour, size: 2}) + ":" +
+                    this.formatNumber({
+                        target: minute,
+                        size: 2
+                    }) + ":" +
+                    this.formatNumber({target: second, size: 2});
             default:
-                return year + "-" + this.formatNumber(month, 2) + "-" + this.formatNumber(day, 2) + " " + this.formatNumber(hour, 2) + ":" + this.formatNumber(minute, 2) + ":" + this.formatNumber(second, 2);
+                return year + "-" + this.formatNumber({target: month, size: 2}) + "-" + this.formatNumber({
+                        target: day,
+                        size: 2
+                    }) + " " +
+                    this.formatNumber({target: hour, size: 2}) + ":" + this.formatNumber({
+                        target: minute,
+                        size: 2
+                    }) + ":" + this.formatNumber({target: second, size: 2});
         }
     }
 
