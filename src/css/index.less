@@ -1,5 +1,156 @@
 body {
-  h1 {
-    color: red;
+  .appBarLeftMenu {
+    position: absolute;
+    left: 0px;
+    animation: appBarLeftMenu_ToStrait 0.5s
+  }
+  .appBarLeftMenu_Wide {
+    position: absolute;
+    left: 140px;
+    animation: appBarLeftMenu_ToWide 0.5s
+  }
+  .appBarTitle {
+    margin-left: 26px;
+    animation: appBarTitle_ToStrait 0.5s
+  }
+  .appBarTitle_Wide {
+    margin-left: 200px;
+    animation: appBarTitle_ToWide 0.5s
+  }
+  .leftMenu {
+    position: relative;
+    width: 48px;
+    margin-left: -48px;
+    color: #757575;
+    animation: rightMenu_ToStrait 0.5s
+  }
+  .leftMenu_Wide {
+    position: relative;
+    width: 200px;
+    margin-left: -200px;
+    color: #757575;
+    animation: rightMenu_ToWide 0.5s
+  }
+  .leftMenuContainer {
+    margin-top: 64px;
+    padding-left: 48px;
+    padding-right: 200px;
+    animation: rightMenuContainer_ToStrait 0.5s
+  }
+  .leftMenuContainer_Wide {
+    margin-top: 64px;
+    padding-left: 200px;
+    padding-right: 200px;
+    animation: rightMenuContainer_ToWide 0.5s
+  }
+  .xavierHeadIcon {
+    width: 40px;
+    height: 40px;
+    margin: 0px auto;
+    animation: xavierHeadIcon_ToStrait 0.5s
+  }
+  .xavierHeadIcon_Wide {
+    width: 128px;
+    height: 128px;
+    margin: 0px auto;
+    animation: xavierHeadIcon_ToWide 0.5s
+  }
+}
+
+@keyframes leftMenuContainer_ToStrait {
+  100% {
+    padding-left: 48px;
+  }
+  0% {
+    padding-left: 200px;
+  }
+}
+
+@keyframes leftMenuContainer_ToWide {
+  0% {
+    padding-left: 48px;
+  }
+  100% {
+    padding-left: 200px;
+  }
+}
+
+@keyframes leftMenu_ToStrait {
+  0% {
+    width: 200px;
+    margin-left: -200px
+  }
+  100% {
+    width: 48px;
+    margin-left: -48px
+  }
+}
+
+@keyframes leftMenu_ToWide {
+  0% {
+    width: 48px;
+    margin-left: -48px
+  }
+  100% {
+    width: 200px;
+    margin-left: -200px
+  }
+}
+
+@keyframes xavierHeadIcon_ToStrait {
+  0% {
+    width: 128px;
+    height: 128px;
+  }
+  100% {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@keyframes xavierHeadIcon_ToWide {
+  0% {
+    width: 40px;
+    height: 40px;
+  }
+  100% {
+    width: 128px;
+    height: 128px;
+  }
+}
+
+@keyframes appBarLeftMenu_ToStrait {
+  0% {
+    left: 140px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+
+@keyframes appBarLeftMenu_ToWide {
+  0% {
+    left: 0px;
+  }
+  100% {
+    left: 140px;
+  }
+}
+
+@keyframes appBarTitle_ToStrait {
+  0% {
+    margin-left: 200px;
+  }
+  100% {
+    margin-left: 26px;
+  }
+}
+
+@keyframes appBarTitle_ToWide {
+  0% {
+    margin-left: 26px;
+  }
+  100% {
+    margin-left: 200px;
   }
 }

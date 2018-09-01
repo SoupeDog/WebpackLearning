@@ -25,11 +25,37 @@ address, caption, cite, code, dfn, p, em, i, th, var {
     font-weight: normal
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+.floatLeft {
+    display: inline-block;
+    float: left;
+}
+
+.floatRight {
+    display: inline-block;
+    float: right;
+}
+
+.clearFix:after {
+    content: "";
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both
+}
+
+.clearFix {
+    *zoom: 1
+}
+
 .backgroundTransparent {
     background-color: transparent;
 }
 
-.autoWrap{
-    word-wrap:break-word
+.autoWrap {
+    word-wrap: break-word
 }
 
