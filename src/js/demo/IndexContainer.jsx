@@ -40,6 +40,9 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import AppBar from "@material-ui/core/es/AppBar/AppBar";
 import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
 import Typography from "@material-ui/core/es/Typography/Typography";
+import Tabs from "@material-ui/core/es/Tabs/Tabs";
+import Tab from "@material-ui/core/es/Tab/Tab";
+import SwipeableViews from 'react-swipeable-views';
 
 const styles = theme => ({});
 
@@ -49,7 +52,8 @@ class IndexContainer extends BaseComponent {
         super(props)
         this.state = {
             leftMenu_WideMode: true,
-            currentTheme: this.StyleHelper.getLightTheme_Black_Purple()
+            currentTheme: this.StyleHelper.getLightTheme_Black_Purple(),
+            currentBoard: 0
         }
 
         // console.log("constructor----------");
@@ -148,7 +152,7 @@ class IndexContainer extends BaseComponent {
                             fontSize: "12px",
                             lineHeight: "30px"
                         }}>
-                            <div className="textCenter clearBoth">假装在思考的复读机</div>
+                            <div className="textCenter clearBoth">“假装在思考的复读机”</div>
                             <div className="textCenter clearBoth">
                             </div>
                             <div className="textCenter clearBoth">
@@ -167,31 +171,29 @@ class IndexContainer extends BaseComponent {
                         >
                             <Grid item xs={2}>
                                 <Tooltip title="GitHub" placement="right">
-                                    <Avatar className="pointer linkIcon" src={gitHubLog}/>
+                                    <Avatar className="pointer linkIcon" src={gitHubLog} onClick={() => {
+                                        window.open("https://github.com/SoupeDog");
+                                    }
+                                    }/>
                                 </Tooltip>
                             </Grid>
                             <Grid item xs={2}>
                                 <Tooltip title="CSDN" placement="right">
-                                    <Avatar className="pointer linkIcon" src={csdnLogo}/>
+                                    <Avatar className="pointer linkIcon" src={csdnLogo} onClick={() => {
+                                        window.open("https://blog.csdn.net/u014430366");
+                                    }
+                                    }/>
                                 </Tooltip>
                             </Grid>
                         </Grid>
-
                         <List>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <HomeIcon/>
-                                </ListItemIcon>
-                                <ListItemText primary="主页"/>
-                            </ListItem>
-                            <Divider/>
-                            <ListItem button>
+                            <ListItem button onClick={() => {
+                                alert("不存在的");
+                            }}>
                                 <ListItemIcon>
                                     <LinkIcon/>
                                 </ListItemIcon>
-                                <ListItemText primary="友链" onClick={() => {
-                                    alert("不存在的");
-                                }}/>
+                                <ListItemText primary="友链"/>
                             </ListItem>
                             <Divider light/>
                             <ListItem button>
@@ -202,7 +204,6 @@ class IndexContainer extends BaseComponent {
                             </ListItem>
                         </List>
                     </div>
-
                 </div>
             );
         } else {
@@ -214,13 +215,10 @@ class IndexContainer extends BaseComponent {
                             className={"pointer " + (this.state.leftMenu_WideMode ? "xavierHeadIcon_Wide" : "xavierHeadIcon")}
                             src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
                     </Tooltip>
-                    <Tooltip title="主页" placement="right">
-                        <IconButton color="inherit">
-                            <HomeIcon/>
-                        </IconButton>
-                    </Tooltip>
                     <Tooltip title="友链" placement="right">
-                        <IconButton color="inherit">
+                        <IconButton color="inherit" onClick={() => {
+                            alert("不存在的");
+                        }}>
                             <LinkIcon/>
                         </IconButton>
                     </Tooltip>
@@ -251,17 +249,32 @@ class IndexContainer extends BaseComponent {
                             <Paper id="main" elevation={12}>
                                 {this.renderAPPBar(this.state.leftMenu_WideMode)}
                                 <div
-                                    className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}
-                                    // style={{
-                                    //     marginTop: "64px",
-                                    //     paddingLeft: this.state.leftMenu_WideMode ? "200px" : "48px",
-                                    //     paddingRight: "200px"
-                                    // }}
-                                >
+                                    className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
                                     {this.renderRightMenu(this.state.leftMenu_WideMode)}
                                     <div id="main_Center" className="floatLeft"
-                                         style={{width: "100%", backgroundColor: "red", height: "200px"}}>
-                                        b
+                                         style={{width: "100%", height: "200px"}}>
+                                        <MuiThemeProvider theme={this.StyleHelper.getLightTheme_Blue_Pink()}>
+                                            <Tabs
+                                                value={this.state.currentBoard}
+                                                onChange={this.boardTagClick.bind(this)}
+                                                indicatorColor="primary"
+                                                textColor="primary"
+                                                fullWidth
+                                            >
+                                                <Tab label="技术"/>
+                                                <Tab label="非技术"/>
+                                            </Tabs>
+                                            <SwipeableViews
+                                                index={this.state.currentBoard}
+                                            >
+                                                <Typography component="div" style={{padding: 8 * 3}}>
+                                                    1
+                                                </Typography>
+                                                <Typography component="div" style={{padding: 8 * 3}}>
+                                                    2
+                                                </Typography>
+                                            </SwipeableViews>
+                                        </MuiThemeProvider>
                                     </div>
                                     <div id="main_Right" className="floatRight"
                                          style={{
@@ -282,6 +295,10 @@ class IndexContainer extends BaseComponent {
                 </MuiThemeProvider>
             </JssProvider>
         );
+    }
+
+    boardTagClick(event, value) {
+        this.setState({currentBoard: value});
     }
 
     componentDidMount() {
