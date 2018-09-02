@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const Path = require("path");
+import gitHubLog from "../../img/gitHubLogo.png";
+import csdnLogo from "../../img/csdnLogo.png";
+
 import BaseComponent from "../component/BaseComponent.jsx";
-import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import CallBackView from "../component/callback/CallBackView.jsx";
-import Grid from "@material-ui/core/es/Grid/Grid";
-import AppBar from "@material-ui/core/es/AppBar/AppBar";
-import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
-import Typography from "@material-ui/core/es/Typography/Typography";
 
 import MenuIcon from '@material-ui/icons/Menu';
+import EmailIcon from '@material-ui/icons/Email';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
+import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
+import {withStyles} from '@material-ui/core/styles';
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
@@ -21,12 +21,11 @@ import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
 
-import {withStyles} from '@material-ui/core/styles';
+
 import Button from "@material-ui/core/es/Button/Button";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import Hidden from "@material-ui/core/es/Hidden/Hidden";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
-import Slide from "@material-ui/core/es/Slide/Slide";
 import List from "@material-ui/core/es/List/List";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import ListItemIcon from "@material-ui/core/es/ListItemIcon/ListItemIcon";
@@ -37,6 +36,10 @@ import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import Divider from "@material-ui/core/es/Divider/Divider";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import AppBar from "@material-ui/core/es/AppBar/AppBar";
+import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 const styles = theme => ({});
 
@@ -140,7 +143,40 @@ class IndexContainer extends BaseComponent {
                             className={"pointer " + (this.state.leftMenu_WideMode ? "xavierHeadIcon_Wide" : "xavierHeadIcon")}
                             src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
                     </Tooltip>
-                    <div style={{width:"200px"}}>
+                    <div>
+                        <div style={{
+                            fontSize: "12px",
+                            lineHeight: "30px"
+                        }}>
+                            <div className="textCenter clearBoth">假装在思考的复读机</div>
+                            <div className="textCenter clearBoth">
+                            </div>
+                            <div className="textCenter clearBoth">
+                                <EmailIcon style={{
+                                    fontSize: "12px",
+                                    lineHeight: "40px"
+                                }}/>{"　"}xavierpe@qq.com
+                            </div>
+                        </div>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                            spacing={0}
+                        >
+                            <Grid item xs={2}>
+                                <Tooltip title="GitHub" placement="right">
+                                    <Avatar className="pointer linkIcon" src={gitHubLog}/>
+                                </Tooltip>
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Tooltip title="CSDN" placement="right">
+                                    <Avatar className="pointer linkIcon" src={csdnLogo}/>
+                                </Tooltip>
+                            </Grid>
+                        </Grid>
+
                         <List>
                             <ListItem button>
                                 <ListItemIcon>

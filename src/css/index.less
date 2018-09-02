@@ -31,6 +31,10 @@ body {
     color: #757575;
     animation: rightMenu_ToWide 0.5s
   }
+  .textInfoRow {
+    width: 200px;
+    line-height: 20px;
+  }
   .leftMenuContainer {
     margin-top: 64px;
     padding-left: 48px;
@@ -46,29 +50,33 @@ body {
   .xavierHeadIcon {
     width: 40px;
     height: 40px;
-    margin: 0px auto;
+    margin: 10px auto 0px auto;
     animation: xavierHeadIcon_ToStrait 0.5s
   }
   .xavierHeadIcon_Wide {
     width: 128px;
     height: 128px;
-    margin: 0px auto;
+    margin: 20px auto 0px auto;
     animation: xavierHeadIcon_ToWide 0.5s
+  }
+  .linkIcon {
+    width: 24px;
+    height: 24px;
   }
 }
 
-@keyframes leftMenuContainer_ToStrait {
-  100% {
-    padding-left: 48px;
-  }
+@keyframes rightMenuContainer_ToStrait {
   0% {
     padding-left: 200px;
   }
+  100% {
+    padding-left: 48px;
+  }
 }
 
-@keyframes leftMenuContainer_ToWide {
+@keyframes rightMenuContainer_ToWide {
   0% {
-    padding-left: 48px;
+    padding-left: 180px;
   }
   100% {
     padding-left: 200px;
@@ -89,11 +97,13 @@ body {
 @keyframes leftMenu_ToWide {
   0% {
     width: 48px;
-    margin-left: -48px
+    margin-left: -48px;
+    opacity: 0;
   }
   100% {
     width: 200px;
-    margin-left: -200px
+    margin-left: -200px;
+    opacity: 50%;
   }
 }
 
@@ -112,10 +122,12 @@ body {
   0% {
     width: 40px;
     height: 40px;
+    margin: 10px auto 0px auto;
   }
   100% {
     width: 128px;
     height: 128px;
+    margin: 20px auto 0px auto;
   }
 }
 

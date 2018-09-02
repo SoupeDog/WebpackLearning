@@ -3,6 +3,7 @@ const Path = require("path");
 // npm 外部安装插件
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         index: "./src/js/index.jsx",
@@ -68,9 +69,20 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ["react", "es2015","stage-3"]
+                        presets: ["react", "es2015", "stage-3"]
                     }
                 }
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -78,12 +90,13 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: __dirname + "/src/plugin/", to: "./plugin/"}
         ]),
+        new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             filename: "index.html",
             title: "引导页",
             favicon: "./src/img/icon.ico",
             template: "./src/html/template.html",
-            chunks:["index"],
+            chunks: ["index","commons"],
             inject: "body",
             minify: {
                 removeComments: true,
@@ -95,12 +108,19 @@ module.exports = {
             title: "浏览页",
             favicon: "./src/img/icon.ico",
             template: "./src/html/browse.html",
-            chunks:["browse"],
+            chunks: ["browse","commons"],
             inject: "body",
             minify: {
-                // removeComments: true,
-                // collapseWhitespace: true
+                removeComments: true,
+                collapseWhitespace: true
             }
         })
-    ]
+    ],
+    optimization: {
+        splitChunks: {
+           // 打包公共依赖
+            chunks: 'all',
+            name: "commons"
+        }
+    }
 };

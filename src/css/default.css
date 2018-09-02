@@ -59,3 +59,11 @@ address, caption, cite, code, dfn, p, em, i, th, var {
     word-wrap: break-word
 }
 
+.clearBoth{
+    clear: both;
+}
+
+.textCenter{
+    text-align: center;
+}
+
