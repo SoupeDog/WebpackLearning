@@ -10,6 +10,6 @@ import HW_Menu from "./component/HW_Menu.jsx";
 import BrowseContainer from "./demo/BrowseContainer.jsx";
 import IndexContainer from "./demo/IndexContainer.jsx";
 
-ReactDOM.render(<CallbackTestContainer />, document.getElementById('root'));
+ReactDOM.render(<IndexContainer />, document.getElementById('root'));
 // ReactDOM.render(<BrowseContainer />, document.getElementById('root'));
 

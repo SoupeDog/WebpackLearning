@@ -43,6 +43,7 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 import Tabs from "@material-ui/core/es/Tabs/Tabs";
 import Tab from "@material-ui/core/es/Tab/Tab";
 import SwipeableViews from 'react-swipeable-views';
+import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
 
 const styles = theme => ({});
 
@@ -262,13 +263,13 @@ class IndexContainer extends BaseComponent {
                                                 fullWidth
                                             >
                                                 <Tab label="技术"/>
-                                                <Tab label="非技术"/>
+                                                <Tab label="随笔"/>
                                             </Tabs>
                                             <SwipeableViews
                                                 index={this.state.currentBoard}
                                             >
                                                 <Typography component="div" style={{padding: 8 * 3}}>
-                                                    1
+                                                    <ArticleSummaryItem/>
                                                 </Typography>
                                                 <Typography component="div" style={{padding: 8 * 3}}>
                                                     2

@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
-import AccountCircle from "@material-ui/icons/es/AccountCircle";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import Menu from "@material-ui/core/es/Menu/Menu";
 import MenuIcon from '@material-ui/icons/Menu';
 import BaseComponent from "./BaseComponent.jsx";
