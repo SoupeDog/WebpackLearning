@@ -77,7 +77,9 @@ class CallbackTestContainer extends BaseComponent {
                                 _react.CallBackView.call_LightTip({
                                     isOpen: true,
                                     type: "success",
-                                    msg: "这是一条成功提示"
+                                    msg: "这是一条成功提示",
+                                    vertical:"bottom",
+                                    horizontal:"center"
                                 });
                             }}>
                                 成功提示
@@ -87,7 +89,9 @@ class CallbackTestContainer extends BaseComponent {
                                 _react.CallBackView.call_LightTip({
                                     isOpen: true,
                                     type: "warning",
-                                    msg: "这是一条警告提示"
+                                    msg: "这是一条警告提示",
+                                    vertical:"top",
+                                    horizontal:"center"
                                 });
                             }}>
                                 警告提示
@@ -97,7 +101,9 @@ class CallbackTestContainer extends BaseComponent {
                                 _react.CallBackView.call_LightTip({
                                     isOpen: true,
                                     type: "error",
-                                    msg: "这是一条错误提示"
+                                    msg: "这是一条错误提示",
+                                    vertical:"top",
+                                    horizontal:"left"
                                 });
                             }}>
                                 错误提示

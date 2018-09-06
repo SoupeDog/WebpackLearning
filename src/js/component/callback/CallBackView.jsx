@@ -20,9 +20,11 @@ class CallBackView extends BaseComponent {
             dialog_Msg: "内容",
             dialog_Ensure: null,
             dialog_Cancel: null,
+            lightTip_Vertical: "bottom",
+            lightTip_Horizontal: "center",
             lightTip_Visible: false,
             lightTip_Msg: "这是一条成功信息！",
-            lightTip_variant: "success"
+            lightTip_Variant: "success"
         }
         this.props.setParentNode({componentName: this.props.componentName, target: this});
     }
@@ -68,24 +70,24 @@ class CallBackView extends BaseComponent {
         return (
             <Snackbar
                 anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                    vertical: this.state.lightTip_Vertical,
+                    horizontal: this.state.lightTip_Horizontal,
                 }}
                 open={this.state.lightTip_Visible}
                 autoHideDuration={3000}
                 onClose={this.call_LightTip.bind(this, {
                     isOpen: false,
-                    type: this.state.lightTip_variant,
+                    type: this.state.lightTip_Variant,
                     msg: this.state.lightTip_Msg
                 })}
             >
                 <LightTip
                     onClose={this.call_LightTip.bind(this, {
                         isOpen: false,
-                        type: this.state.lightTip_variant,
+                        type: this.state.lightTip_Variant,
                         msg: this.state.lightTip_Msg
                     })}
-                    variant={this.state.lightTip_variant}
+                    variant={this.state.lightTip_Variant}
                     message={this.state.lightTip_Msg}
                 />
             </Snackbar>
@@ -122,12 +124,19 @@ class CallBackView extends BaseComponent {
         });
     }
 
-    call_LightTip({isOpen, type, msg}) {
-        this.setState({
+    call_LightTip({isOpen, type, msg, vertical, horizontal}) {
+        let config = {
             lightTip_Visible: isOpen,
-            lightTip_variant: type,
+            lightTip_Variant: type,
             lightTip_Msg: msg
-        });
+        };
+        if (vertical != null) {
+            config.lightTip_Vertical = vertical;
+        }
+        if (horizontal != null) {
+            config.lightTip_Horizontal = horizontal;
+        }
+        this.setState(config);
     }
 }
 
