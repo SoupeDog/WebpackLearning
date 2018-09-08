@@ -39,36 +39,28 @@ class ArticleSummaryItem extends BaseComponent {
 
     render() {
         return (
-            <Card>
-                <CardActionArea style={{width:"100%"}}>
+            <Card style={{marginBottom: "20px"}}>
+                <CardActionArea style={{width: "100%", minHeight: "200px"}}>
                     <CardMedia
-                        // image="https://s1.ax2x.com/2018/08/26/5Dk82K.jpg"
-                        image="https://s1.ax2x.com/2018/08/26/5Dk82K.jpg"
-                        title="Contemplative Reptile"
-                        style={{height:"150px", objectFit: 'cover'}}
+                        image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}
+                        title={this.props.title}
+                        style={{height: "150px", objectFit: 'cover'}}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="headline" component="h2">
-                            MD 语法样例，标题要长，这样够长了吗？
+                            {this.props.title == null ? "未命名标题" : this.props.title}
                         </Typography>
-                        {/*<Typography component="p" style={{textIndent:"2em"}}>*/}
-                            {/*示例文档，其实就是测试下 MD 语法解析器是否有什么毛病，目前看来没有什么大问题*/}
-                            {/*示例文档，其实就是测试下 MD 语法解析器是否有什么毛病，目前看来没有什么大问题*/}
-                            {/*示例文档，其实就是测试下 MD 语法解析器是否有什么毛病，目前看来没有什么大问题*/}
-                            {/*示例文档，其实就是测试下 MD 语法解析器是否有什么毛病，目前看来没有什么大问题*/}
-                            {/*示例文档，其实就是测试下 MD 语法解析器是否有什么毛病，目前看来没有什么大问题*/}
-                        {/*</Typography>*/}
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
                      <span id="articlePlates">
-                            {"技术"}
+                            {this.props.boardName == null ? "未命名板块" : this.props.boardName}
                         </span>
                     <span className="separate" style={{marginLeft: "5px"}}>
                             /
                         </span>
                     <span id="articlePlates" style={{marginLeft: "5px"}}>
-                            {"软件使用"}
+                    {this.props.articleCategoryName == null ? "未命名文章类别" : this.props.title}
                         </span>
                     <Tooltip title={"最后修改日期"}>
                             <span id="articleDate" style={{marginLeft: "20px"}}>
@@ -78,7 +70,7 @@ class ArticleSummaryItem extends BaseComponent {
                                     lineHeight: "40px"
                                 }}/>&nbsp;
                                 {this.TimeHelper.formatTimeStampToString({
-                                    target: new Date().getTime(),
+                                    target: this.props.lastUpdateTs,
                                     type: "yyyy-mm-dd"
                                 })}
                             </span>
@@ -100,7 +92,7 @@ class ArticleSummaryItem extends BaseComponent {
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            {"1k以内"}
+                            {this.props.worldCount < 1000 ? "1k以内" : this.props.worldCount}
                         </span>
                     </Tooltip>
                     <Tooltip title={"评论数"}>
@@ -110,7 +102,7 @@ class ArticleSummaryItem extends BaseComponent {
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            {0}
+                            {"暂无评论"}
                         </span>
                     </Tooltip>
                 </CardActions>

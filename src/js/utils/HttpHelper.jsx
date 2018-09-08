@@ -10,7 +10,7 @@ export default class HttpHelper {
 
     // url 默认前缀
     static getPrefix() {
-        return "";
+        return "http://localhost:8080/";
     }
 
     // ajax 请求缓存是否开启标识(false:不开启)
@@ -97,7 +97,7 @@ export default class HttpHelper {
             requestUrl = finalUrl;
         }
         if (needRequestBefore) {
-            needRequestBefore();
+            requestBefore();
         }
         $.ajax({
             url: requestUrl,
@@ -107,7 +107,7 @@ export default class HttpHelper {
             cache: cache != null ? cache : this.getDefaultCache(),
             success: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log(response);
@@ -116,7 +116,7 @@ export default class HttpHelper {
             },
             error: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log("HttpHelper(error):" + JSON.stringify(response));
@@ -206,7 +206,7 @@ export default class HttpHelper {
             requestUrl = finalUrl;
         }
         if (needRequestBefore) {
-            needRequestBefore();
+            requestBefore();
         }
         $.ajax({
             url: requestUrl,
@@ -217,7 +217,7 @@ export default class HttpHelper {
             data: requestData == null ? null : JSON.stringify(requestData),
             success: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log(response);
@@ -226,7 +226,7 @@ export default class HttpHelper {
             },
             error: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log("HttpHelper(error):" + JSON.stringify(response));
@@ -316,7 +316,7 @@ export default class HttpHelper {
             requestUrl = finalUrl;
         }
         if (needRequestBefore) {
-            needRequestBefore();
+            requestBefore();
         }
         $.ajax({
             url: requestUrl,
@@ -327,7 +327,7 @@ export default class HttpHelper {
             data: requestData == null ? null : JSON.stringify(requestData),
             success: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log(response);
@@ -336,7 +336,7 @@ export default class HttpHelper {
             },
             error: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log("HttpHelper(error):" + JSON.stringify(response));
@@ -426,7 +426,7 @@ export default class HttpHelper {
             requestUrl = finalUrl;
         }
         if (needRequestBefore) {
-            needRequestBefore();
+            requestBefore();
         }
         $.ajax({
             url: requestUrl,
@@ -437,7 +437,7 @@ export default class HttpHelper {
             data: requestData == null ? null : JSON.stringify(requestData),
             success: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log(response);
@@ -446,7 +446,7 @@ export default class HttpHelper {
             },
             error: function (response) {
                 if (needFinallyCallback) {
-                    needFinallyCallback(response);
+                    finallyCallback(response);
                 }
                 if (needLog) {
                     console.log("HttpHelper(error):" + JSON.stringify(response));

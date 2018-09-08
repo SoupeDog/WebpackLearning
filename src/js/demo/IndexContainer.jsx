@@ -44,6 +44,7 @@ import Tabs from "@material-ui/core/es/Tabs/Tabs";
 import Tab from "@material-ui/core/es/Tab/Tab";
 import SwipeableViews from 'react-swipeable-views';
 import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
+import APIOperator_Board from "./APIOperator_Board.jsx";
 
 const styles = theme => ({});
 
@@ -52,8 +53,29 @@ class IndexContainer extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
+            headers: {
+                uId: "U00000000",
+                token: "0",
+                scope: "web"
+            },
             leftMenu_WideMode: true,
             currentTheme: this.StyleHelper.getLightTheme_Black_Purple(),
+            allBoardInfo: [
+                {
+                    boardId: "41e889e2d05e47c1b4b2f6014f5023ff",
+                    uId: "U00000001",
+                    boardName: "技术改",
+                    lastUpdateTs: 1536042312334,
+                    ts: 1536042312334
+                },
+                {
+                    boardId: "b8830d7546384553abc441f56ea209b9",
+                    uId: "U00000001",
+                    boardName: "随笔改",
+                    lastUpdateTs: 1536042327931,
+                    ts: 1536042327931
+                }
+            ],
             currentBoard: 0
         }
 
@@ -253,7 +275,7 @@ class IndexContainer extends BaseComponent {
                                     className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
                                     {this.renderRightMenu(this.state.leftMenu_WideMode)}
                                     <div id="main_Center" className="floatLeft"
-                                         style={{width: "100%", height: "200px"}}>
+                                         style={{width: "100%"}}>
                                         <MuiThemeProvider theme={this.StyleHelper.getLightTheme_Blue_Pink()}>
                                             <Tabs
                                                 value={this.state.currentBoard}
@@ -262,14 +284,32 @@ class IndexContainer extends BaseComponent {
                                                 textColor="primary"
                                                 fullWidth
                                             >
-                                                <Tab label="技术"/>
-                                                <Tab label="随笔"/>
+                                                {this.state.allBoardInfo.map((board, index) => {
+                                                    return (
+                                                        <Tab key={index} id={board.boardId} label={board.boardName}/>
+                                                    )
+                                                })}
                                             </Tabs>
                                             <SwipeableViews
                                                 index={this.state.currentBoard}
                                             >
                                                 <Typography component="div" style={{padding: 8 * 3}}>
-                                                    <ArticleSummaryItem/>
+                                                    <ArticleSummaryItem
+                                                        worldCount={0}
+                                                        lastUpdateTs={new Date().getTime()}
+                                                    />
+                                                    <ArticleSummaryItem
+                                                        worldCount={0}
+                                                        lastUpdateTs={new Date().getTime()}
+                                                    />
+                                                    <ArticleSummaryItem
+                                                        worldCount={0}
+                                                        lastUpdateTs={new Date().getTime()}
+                                                    />
+                                                    <ArticleSummaryItem
+                                                        worldCount={0}
+                                                        lastUpdateTs={new Date().getTime()}
+                                                    />
                                                 </Typography>
                                                 <Typography component="div" style={{padding: 8 * 3}}>
                                                     2
@@ -302,9 +342,26 @@ class IndexContainer extends BaseComponent {
         this.setState({currentBoard: value});
     }
 
+    freshAllBoard() {
+        let _react = this;
+        APIOperator_Board.getAllBoard({
+            headers: this.state.headers,
+            requestBefore: function () {
+                _react.CallBackView.call_Loading_Linear_Unknown(true);
+            },
+            successCallback: function (response) {
+                _react.setState({allBoardInfo: response.data});
+            },
+            finallyCallback: function () {
+                _react.CallBackView.call_Loading_Linear_Unknown(false);
+            }
+        });
+    }
+
     componentDidMount() {
         console.log("componentDidMount----------");
         console.log("");
+        this.freshAllBoard();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
