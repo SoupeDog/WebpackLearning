@@ -40,7 +40,7 @@ class ArticleSummaryItem extends BaseComponent {
     render() {
         return (
             <Card style={{marginBottom: "20px"}}>
-                <CardActionArea style={{width: "100%", minHeight: "200px"}}>
+                <CardActionArea style={{width: "100%", minHeight: "200px"}}  onClick={()=>{alert(this.props.articleId)}}>
                     <CardMedia
                         image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}
                         title={this.props.title}
@@ -56,13 +56,13 @@ class ArticleSummaryItem extends BaseComponent {
                      <span id="articlePlates">
                             {this.props.boardName == null ? "未命名板块" : this.props.boardName}
                         </span>
-                    <span className="separate" style={{marginLeft: "5px"}}>
+                    <span  className="separate" style={{marginLeft: "5px"}}>
                             /
                         </span>
                     <span id="articlePlates" style={{marginLeft: "5px"}}>
-                    {this.props.articleCategoryName == null ? "未命名文章类别" : this.props.title}
+                    {this.props.articleCategoryName == null ? "未命名文章类别" : this.props.articleCategoryName}
                         </span>
-                    <Tooltip title={"最后修改日期"}>
+                    {/*<Tooltip title={"最后修改日期"}>*/}
                             <span id="articleDate" style={{marginLeft: "20px"}}>
                                 <AccessTimeIcon style={{
                                     fontSize: "12px",
@@ -74,29 +74,29 @@ class ArticleSummaryItem extends BaseComponent {
                                     type: "yyyy-mm-dd"
                                 })}
                             </span>
-                    </Tooltip>
-                    <Tooltip title={"字数统计"}>
+                    {/*</Tooltip>*/}
+                    {/*<Tooltip title={"字数统计"}>*/}
                         <span id="articleWordCount">
                             <EditIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            约&nbsp;{1500}&nbsp;字
+                            约&nbsp;{this.props.wordCount}&nbsp;字
                         </span>
-                    </Tooltip>
-                    <Tooltip title={"浏览量"}>
+                    {/*</Tooltip>*/}
+                    {/*<Tooltip title={"浏览量"}>*/}
                         <span id="articlePageViewsCount" style={{marginLeft: "40px"}}>
                             <VisibilityIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            {this.props.worldCount < 1000 ? "1k以内" : this.props.worldCount}
+                            {this.props.pageViews < 1000 ? "1k以内" : this.props.pageViews}
                         </span>
-                    </Tooltip>
-                    <Tooltip title={"评论数"}>
-                        <span id="articleCommentCount" style={{marginLeft: "40px"}}>
+                    {/*</Tooltip>*/}
+                    {/*<Tooltip title={"评论数"}>*/}
+                        <span className="articleCommentCount" style={{marginLeft: "40px"}}>
                             <CommentIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
@@ -104,7 +104,7 @@ class ArticleSummaryItem extends BaseComponent {
                             }}/>&nbsp;
                             {"暂无评论"}
                         </span>
-                    </Tooltip>
+                    {/*</Tooltip>*/}
                 </CardActions>
             </Card>
         );

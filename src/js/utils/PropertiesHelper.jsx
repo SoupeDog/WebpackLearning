@@ -59,4 +59,24 @@ export default class PropertiesHelper {
         }
         return result;
     }
+
+    static arrayToString({isStandard, array, targetVal}) {
+        let arrayStringVal = "";
+        if (isStandard) {
+            arrayStringVal += "["
+        }
+        for (let item of array) {
+            if (targetVal != null) {
+                arrayStringVal += item[targetVal] + ","
+            } else {
+                arrayStringVal += item + ","
+            }
+        }
+        arrayStringVal = arrayStringVal.substring(0, arrayStringVal.length - 1);
+        if (isStandard) {
+            arrayStringVal += "]"
+        }
+        return arrayStringVal;
+    }
+
 }

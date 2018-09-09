@@ -45,6 +45,7 @@ import Tab from "@material-ui/core/es/Tab/Tab";
 import SwipeableViews from 'react-swipeable-views';
 import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
 import APIOperator_Board from "./APIOperator_Board.jsx";
+import Badge from "@material-ui/core/es/Badge/Badge";
 
 const styles = theme => ({});
 
@@ -56,26 +57,13 @@ class IndexContainer extends BaseComponent {
             headers: {
                 uId: "U00000000",
                 token: "0",
-                scope: "web"
+                scope: "web",
+                secretKey:""
             },
             leftMenu_WideMode: true,
             currentTheme: this.StyleHelper.getLightTheme_Black_Purple(),
-            allBoardInfo: [
-                {
-                    boardId: "41e889e2d05e47c1b4b2f6014f5023ff",
-                    uId: "U00000001",
-                    boardName: "技术改",
-                    lastUpdateTs: 1536042312334,
-                    ts: 1536042312334
-                },
-                {
-                    boardId: "b8830d7546384553abc441f56ea209b9",
-                    uId: "U00000001",
-                    boardName: "随笔改",
-                    lastUpdateTs: 1536042327931,
-                    ts: 1536042327931
-                }
-            ],
+            allBoardInfo: [],
+            allSummary: {},
             currentBoard: 0
         }
 
@@ -255,6 +243,72 @@ class IndexContainer extends BaseComponent {
         }
     }
 
+    renderArticleList(allBoardInfo, allSummary, currentBoard) {
+        return (
+            <MuiThemeProvider theme={this.StyleHelper.getLightTheme_Blue_Pink()}>
+                <Tabs
+                    value={currentBoard}
+                    onChange={this.boardTagClick.bind(this)}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    fullWidth
+                >
+                    {this.renderArticleList_TagItem(allBoardInfo)}
+                </Tabs>
+                <SwipeableViews
+                    index={currentBoard}
+                >
+                    {this.renderArticleList_TagContainer(allBoardInfo, allSummary)}
+                </SwipeableViews>
+            </MuiThemeProvider>
+        )
+    }
+
+    renderArticleList_TagItem(allBoard) {
+        return (
+            allBoard.map((board, index) => {
+                return (
+                    <Tab key={index} id={board.boardId} label={board.boardName}/>
+                )
+            })
+        )
+    }
+
+    renderArticleList_TagContainer(allBoardInfo, allSummary) {
+        return (
+            allBoardInfo.map((boardInfo, index) => {
+                return (
+                    <Typography key={index} component="div" style={{padding: 24}}>
+                        {this.renderArticleSummary(allSummary[boardInfo.boardId])}
+                    </Typography>
+                );
+            })
+        )
+    }
+
+    renderArticleSummary(ArticleSummaryPageQueryResult) {
+        if (ArticleSummaryPageQueryResult != null) {
+            return (
+                ArticleSummaryPageQueryResult.resultSet.map((articleSummary, index) => {
+                    return (
+                        <ArticleSummaryItem
+                                            key={index}
+                                            articleId={articleSummary.articleId}
+                                            boardName={articleSummary.boardName}
+                                            title={articleSummary.title}
+                                            articleCategoryName={articleSummary.articleCategoryName}
+                                            wordCount={articleSummary.wordCount}
+                                            pageViews={articleSummary.pageViews}
+                                            lastUpdateTs={articleSummary.lastUpdateTs}
+                        />
+                    );
+                })
+            );
+        } else {
+            return null;
+        }
+    }
+
     render() {
         return (
             <JssProvider jss={jss} generateClassName={generateClassName}>
@@ -276,46 +330,7 @@ class IndexContainer extends BaseComponent {
                                     {this.renderRightMenu(this.state.leftMenu_WideMode)}
                                     <div id="main_Center" className="floatLeft"
                                          style={{width: "100%"}}>
-                                        <MuiThemeProvider theme={this.StyleHelper.getLightTheme_Blue_Pink()}>
-                                            <Tabs
-                                                value={this.state.currentBoard}
-                                                onChange={this.boardTagClick.bind(this)}
-                                                indicatorColor="primary"
-                                                textColor="primary"
-                                                fullWidth
-                                            >
-                                                {this.state.allBoardInfo.map((board, index) => {
-                                                    return (
-                                                        <Tab key={index} id={board.boardId} label={board.boardName}/>
-                                                    )
-                                                })}
-                                            </Tabs>
-                                            <SwipeableViews
-                                                index={this.state.currentBoard}
-                                            >
-                                                <Typography component="div" style={{padding: 8 * 3}}>
-                                                    <ArticleSummaryItem
-                                                        worldCount={0}
-                                                        lastUpdateTs={new Date().getTime()}
-                                                    />
-                                                    <ArticleSummaryItem
-                                                        worldCount={0}
-                                                        lastUpdateTs={new Date().getTime()}
-                                                    />
-                                                    <ArticleSummaryItem
-                                                        worldCount={0}
-                                                        lastUpdateTs={new Date().getTime()}
-                                                    />
-                                                    <ArticleSummaryItem
-                                                        worldCount={0}
-                                                        lastUpdateTs={new Date().getTime()}
-                                                    />
-                                                </Typography>
-                                                <Typography component="div" style={{padding: 8 * 3}}>
-                                                    2
-                                                </Typography>
-                                            </SwipeableViews>
-                                        </MuiThemeProvider>
+                                        {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
                                     </div>
                                     <div id="main_Right" className="floatRight"
                                          style={{
@@ -340,6 +355,36 @@ class IndexContainer extends BaseComponent {
 
     boardTagClick(event, value) {
         this.setState({currentBoard: value});
+        let queryBoardList = new Array;
+        queryBoardList.push(this.state.allBoardInfo[value]);
+        if (queryBoardList.length > 0) {
+            this.freshSummary({boardList: queryBoardList, headers: this.state.headers});
+        }
+    }
+
+    freshSummary({boardList, headers}) {
+        let _react = this;
+        APIOperator_Board.getSummaryOfBoard({
+            boardList,
+            headers,
+            requestBefore: function () {
+                _react.CallBackView.call_Loading_Linear_Unknown(true);
+            },
+            successCallback: function (response) {
+                let currentSummary = _react.state.allSummary;
+                let boardId = _react.PropertiesHelper.arrayToString({
+                    isStandard: false,
+                    array: boardList,
+                    targetVal: "boardId"
+                });
+                currentSummary[boardId] = response.data;
+                _react.setState({allSummary: currentSummary});
+            },
+            finallyCallback: function () {
+                _react.CallBackView.call_Loading_Linear_Unknown(false);
+            }
+        });
+
     }
 
     freshAllBoard() {
@@ -351,6 +396,15 @@ class IndexContainer extends BaseComponent {
             },
             successCallback: function (response) {
                 _react.setState({allBoardInfo: response.data});
+                window.setTimeout(function () {
+                    let queryBoardList = new Array;
+                    queryBoardList.push(response.data[_react.state.currentBoard]);
+                    // 刷新文章摘要
+                    _react.freshSummary({
+                        boardList: queryBoardList,
+                        headers: _react.state.headers
+                    });
+                }, 500);
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);
