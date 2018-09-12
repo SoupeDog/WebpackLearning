@@ -26,6 +26,8 @@ export default class MarkdownHelper {
         if (useTex != null && !PropertiesHelper.isBooleanNotNull(useTex)) {
             throw new Error("MarkdownHelper:[useTex] should be Boolean.");
         }
+        $("#"+containerId).empty();
+        $("#"+catalogId).empty();
         let testEditormdView = editormd.markdownToHTML(containerId, {
             markdown: content,// md 文字内容
             htmlDecode: "style,script,iframe",  // you can filter tags decode

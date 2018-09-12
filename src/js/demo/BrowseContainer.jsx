@@ -11,6 +11,7 @@ import {withStyles} from "@material-ui/core/styles/index";
 import HW_Menu from "../component/HW_Menu.jsx";
 import MarkdownHelper from "../utils/MarkdownHelper.jsx";
 import WindowsScrollHelper from "../utils/WindowsScrollHelper.jsx";
+import APIOperator_Article from "./APIOperator_Article.jsx";
 import TOCIcon from '@material-ui/icons/toc';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CommentIcon from '@material-ui/icons/Comment';
@@ -73,6 +74,30 @@ class BrowseContainer extends BaseComponent {
                 topMenuBarChangeLimitY: 270,
                 articleUIChangeLimitY: 370
             },
+            headers: {
+                uId: "U00000000",
+                token: "0",
+                scope: "web",
+                secretKey: ""
+            },
+            articleObj: {
+                // articleId: "848aa75a9baa4b019f8bf152e6b4ed17",
+                // boardName: "技术",
+                // title: "Java 快速入门---基本语法",
+                // articleCategoryId: "9f4703e7a3954e19b6284d5c5a41817c",
+                // articleCategoryName: "Java",
+                // uId: "U00000001",
+                // statementId: "",
+                // summary: "Java 从入门到跑路",
+                content: "# 1。12",
+                // wordCount: 12,
+                // articleRetainType: "DEFAULT",
+                // articlePath: null,
+                // pageViews: 0,
+                // legal_Flag: true,
+                // lastUpdateTs: 1536494132974,
+                // ts: 1536494132974
+            },
             mainTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             catalog_Hide: true,
             bgm_Stop: false,
@@ -110,7 +135,7 @@ class BrowseContainer extends BaseComponent {
 
     freshArticle() {
         MarkdownHelper.formatToHtml({
-            content: this.props.article.content,
+            content: this.state.articleObj.content == null ? "" : this.state.articleObj.content,
             containerId: "article_Content",
             catalogId: "catLogSource",
             useCatalog: true
@@ -141,7 +166,7 @@ class BrowseContainer extends BaseComponent {
                         </Grid>
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             {this.renderArticleCatLog(this.state.catalog_Hide)}
-                            {this.renderMain(this.state.catalog_Hide)}
+                            {this.renderMain(this.state.catalog_Hide, this.state.articleObj)}
                         </Grid>
                     </Grid>
                 </MuiThemeProvider>
@@ -171,23 +196,17 @@ class BrowseContainer extends BaseComponent {
         }
     }
 
-    renderArticleTitle({title, lastUpdateTs}) {
+    renderArticleTitle(articleObj) {
         return (
             <Grid item xs={12} container direction="row" justify="flex-start" alignItems="baseline">
                 <Hidden mdDown>
-                    <Grid id="title" className={this.props.classes.articleTitle} item xs={12}>{title}</Grid>
+                    <Grid id="title" className={this.props.classes.articleTitle} item xs={12}>{articleObj.title}</Grid>
                 </Hidden>
                 <Hidden lgUp>
-                    <div id="title" className={this.props.classes.articleTitle_Phone}>{title}</div>
+                    <div id="title" className={this.props.classes.articleTitle_Phone}>{articleObj.title}</div>
                 </Hidden>
                 <Grid id="articleTags" className={this.props.classes.tag_Box} item xs={12} container>
-                    <Chip className={this.props.classes.tag} clickable label="MD 快速入门" color="secondary"
-                          avatar={<Avatar className={this.props.classes.tag_Avatar}
-                                          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
-                    <Chip className={this.props.classes.tag} clickable label="写作" color="secondary"
-                          avatar={<Avatar className={this.props.classes.tag_Avatar}
-                                          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
-                    <Chip className={this.props.classes.tag} clickable label="搞事情" color="secondary"
+                    <Chip className={this.props.classes.tag} clickable label="Tag 功能待上线" color="secondary"
                           avatar={<Avatar className={this.props.classes.tag_Avatar}
                                           src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
                 </Grid>
@@ -195,13 +214,13 @@ class BrowseContainer extends BaseComponent {
                       justify="flex-start" alignItems="baseline">
                     <Grid item xs={12} lg={4}>
                         <span id="articlePlates">
-                            {"技术"}
+                            {articleObj.boardName}
                         </span>
                         <span className="separate" style={{marginLeft: "5px"}}>
                             /
                         </span>
                         <span id="articlePlates" style={{marginLeft: "5px"}}>
-                            {"软件使用"}
+                            {articleObj.articleCategoryName}
                         </span>
                         <Tooltip title={"最后修改日期"}>
                             <span id="articleDate" style={{marginLeft: "20px"}}>
@@ -211,7 +230,7 @@ class BrowseContainer extends BaseComponent {
                                     lineHeight: "40px"
                                 }}/>&nbsp;
                                 {this.TimeHelper.formatTimeStampToString({
-                                    target: lastUpdateTs,
+                                    target: articleObj.lastUpdateTs == null ? 0 : articleObj.lastUpdateTs,
                                     type: "yyyy-mm-dd"
                                 })}
                             </span>
@@ -225,7 +244,7 @@ class BrowseContainer extends BaseComponent {
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            约&nbsp;{1500}&nbsp;字
+                            约&nbsp;{articleObj.wordCount}&nbsp;字
                         </span>
                         </Tooltip>
                         <Tooltip title={"浏览量"}>
@@ -235,7 +254,7 @@ class BrowseContainer extends BaseComponent {
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            {"1k以内"}
+                            {articleObj.pageViews < 1000 ? "1k以内" : articleObj.pageViews}
                         </span>
                         </Tooltip>
                         <Tooltip title={"评论数"}>
@@ -295,13 +314,13 @@ class BrowseContainer extends BaseComponent {
         );
     }
 
-    renderMain(catalogHide) {
+    renderMain(catalogHide, articleObj) {
         return (
             <Grid id="article_Main" item xs={12} sm={catalogHide ? 12 : 10} container spacing={0} justify="center"
                   style={{minHeight: window.innerHeight - this.state.finalProperties.topMenuBarHeight}}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10} container spacing={0} justify="center">
-                    {this.renderArticleTitle({title: "MD 语法样例，标题要长，这样够长了吗？", lastUpdateTs: 1535472165000})}
+                    {this.renderArticleTitle(articleObj)}
                     <div id="article_Content" className="hyggeWriter_Markdown_Reader">
                     </div>
                 </Grid>
@@ -319,6 +338,7 @@ class BrowseContainer extends BaseComponent {
         this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
         this.state.WindowsScrollHelper.start();
         this.freshArticle();
+        this.freshArticleData({articleId: "bf1f3fd0c89b4cfb807be7769ff35c1b", headers: this.state.headers});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -341,6 +361,26 @@ class BrowseContainer extends BaseComponent {
         } else {
             this.setState({catalog_Hide: true});
         }
+    }
+
+    freshArticleData({articleId, headers}) {
+        let _react = this;
+        APIOperator_Article.getArticleInfo({
+            headers: headers,
+            articleId: articleId,
+            requestBefore: function () {
+                _react.CallBackView.call_Loading_Linear_Unknown(true);
+            },
+            successCallback: function (response) {
+                _react.setState({articleObj: response.data[0]});
+                window.setTimeout(function () {// 确保 articleObj 被更新再刷新 MD 显示内容
+                    _react.freshArticle();
+                }, 500);
+            },
+            finallyCallback: function () {
+                _react.CallBackView.call_Loading_Linear_Unknown(false);
+            }
+        });
     }
 
     checkCatalogPosition(currentY) {// 与上次状态不同才更新

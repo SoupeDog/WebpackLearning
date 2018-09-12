@@ -40,7 +40,9 @@ class ArticleSummaryItem extends BaseComponent {
     render() {
         return (
             <Card style={{marginBottom: "20px"}}>
-                <CardActionArea style={{width: "100%", minHeight: "200px"}}  onClick={()=>{alert(this.props.articleId)}}>
+                <CardActionArea style={{width: "100%", minHeight: "200px"}}  onClick={()=>{
+                    this.URLHelper.openNewPage({path:"http://localhost:9000/browse.html?"+this.props.articleId});
+                }}>
                     <CardMedia
                         image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}
                         title={this.props.title}

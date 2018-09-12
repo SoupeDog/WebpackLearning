@@ -1221,5 +1221,4 @@ const article3 = {
     ts: 1532621329861
 }
 
-
-ReactDOM.render(<BrowseContainer article={article}/>, document.getElementById('root'));
+ReactDOM.render(<BrowseContainer/>, document.getElementById('root'));
