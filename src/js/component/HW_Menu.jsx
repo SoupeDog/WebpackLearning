@@ -66,7 +66,9 @@ class HW_Menu extends BaseComponent {
                                     <ListItemIcon>
                                         <HomeIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary="主页"/>
+                                    <ListItemText primary="主页" onClick={()=>{
+                                        window.location.href = "index.html";
+                                    }}/>
                                 </ListItem>
                                 <Divider/>
                                 <ListItem button>

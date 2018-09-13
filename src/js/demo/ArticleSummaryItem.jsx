@@ -41,7 +41,7 @@ class ArticleSummaryItem extends BaseComponent {
         return (
             <Card style={{marginBottom: "20px"}}>
                 <CardActionArea style={{width: "100%", minHeight: "200px"}}  onClick={()=>{
-                    this.URLHelper.openNewPage({path:"http://localhost:9000/browse.html?"+this.props.articleId});
+                    this.URLHelper.openNewPage({path:"http://localhost:9000/browse.html?id="+this.props.articleId});
                 }}>
                     <CardMedia
                         image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}

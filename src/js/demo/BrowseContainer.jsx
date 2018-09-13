@@ -74,6 +74,7 @@ class BrowseContainer extends BaseComponent {
                 topMenuBarChangeLimitY: 270,
                 articleUIChangeLimitY: 370
             },
+            articleId: this.URLHelper.getQueryString("id"),
             headers: {
                 uId: "U00000000",
                 token: "0",
@@ -268,12 +269,12 @@ class BrowseContainer extends BaseComponent {
                         </span>
                         </Tooltip>
                     </Grid>
-                    <Tooltip title={"毕竟口头说不许转载也没多大约束力，上版权印之类的也很麻烦 (〜￣△￣)〜"}>
-                        <Grid item xs={12} className={"autoWrap"} style={{lineHeight: "20px"}}>
-                            版权声明：本文为 Xavier 原创文章，允许转载，请声明来源---
-                            {window.location.href}
-                        </Grid>
-                    </Tooltip>
+                    {/*<Tooltip title={"毕竟口头说不许转载也没多大约束力，上版权印之类的也很麻烦 (〜￣△￣)〜"}>*/}
+                    {/*<Grid item xs={12} className={"autoWrap"} style={{lineHeight: "20px"}}>*/}
+                    {/*版权声明：本文为 Xavier 原创文章，如需转载，请先联系我，并声明文章来源---*/}
+                    {/*{window.location.href}*/}
+                    {/*</Grid>*/}
+                    {/*</Tooltip>*/}
                 </Grid>
             </Grid>
         );
@@ -338,7 +339,7 @@ class BrowseContainer extends BaseComponent {
         this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
         this.state.WindowsScrollHelper.start();
         this.freshArticle();
-        this.freshArticleData({articleId: "bf1f3fd0c89b4cfb807be7769ff35c1b", headers: this.state.headers});
+        this.freshArticleData({articleId: this.state.articleId, headers: this.state.headers});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -372,10 +373,14 @@ class BrowseContainer extends BaseComponent {
                 _react.CallBackView.call_Loading_Linear_Unknown(true);
             },
             successCallback: function (response) {
-                _react.setState({articleObj: response.data[0]});
-                window.setTimeout(function () {// 确保 articleObj 被更新再刷新 MD 显示内容
-                    _react.freshArticle();
-                }, 500);
+                if (response.data.length > 0) {// 确保已查询到结果
+                    _react.setState({articleObj: response.data[0]});
+                    window.setTimeout(function () {// 确保 articleObj 被更新再刷新 MD 显示内容
+                        _react.freshArticle();
+                    }, 500);
+                } else {
+                    _react.CallBackView.call_LightTip({isOpen: true, type: "error", msg: "未检索到文章内容，将在3秒内为您跳转回主页"});
+                }
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);

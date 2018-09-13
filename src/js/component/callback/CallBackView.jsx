@@ -20,7 +20,7 @@ class CallBackView extends BaseComponent {
             dialog_Msg: "内容",
             dialog_Ensure: null,
             dialog_Cancel: null,
-            lightTip_Vertical: "bottom",
+            lightTip_Vertical: "top",
             lightTip_Horizontal: "center",
             lightTip_Visible: false,
             lightTip_Msg: "这是一条成功信息！",
