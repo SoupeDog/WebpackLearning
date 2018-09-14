@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/es/MenuItem/MenuItem";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Menu from "@material-ui/core/es/Menu/Menu";
 import MenuIcon from '@material-ui/icons/Menu';
-import BaseComponent from "./BaseComponent.jsx";
+import BaseComponent from "../component/BaseComponent.jsx";
 import {withStyles} from "@material-ui/core/styles/index";
 import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
 import List from "@material-ui/core/es/List/List";

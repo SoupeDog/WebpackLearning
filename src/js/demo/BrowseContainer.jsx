@@ -8,7 +8,7 @@ import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import {withStyles} from "@material-ui/core/styles/index";
-import HW_Menu from "../component/HW_Menu.jsx";
+import HW_Menu from "./HW_Menu.jsx";
 import MarkdownHelper from "../utils/MarkdownHelper.jsx";
 import WindowsScrollHelper from "../utils/WindowsScrollHelper.jsx";
 import APIOperator_Article from "./APIOperator_Article.jsx";
@@ -90,7 +90,7 @@ class BrowseContainer extends BaseComponent {
                 // uId: "U00000001",
                 // statementId: "",
                 // summary: "Java 从入门到跑路",
-                content: "# 1。12",
+                // content: "# 1。12",
                 // wordCount: 12,
                 // articleRetainType: "DEFAULT",
                 // articlePath: null,

@@ -59,6 +59,10 @@ address, caption, cite, code, dfn, p, em, i, th, var {
     word-wrap: break-word
 }
 
+.autoOmit{
+     text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
+ }
+
 .clearBoth{
     clear: both;
 }

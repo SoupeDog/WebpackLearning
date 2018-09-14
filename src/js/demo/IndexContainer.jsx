@@ -45,7 +45,15 @@ import Tab from "@material-ui/core/es/Tab/Tab";
 import SwipeableViews from 'react-swipeable-views';
 import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
 import APIOperator_Board from "./APIOperator_Board.jsx";
-import Badge from "@material-ui/core/es/Badge/Badge";
+import BottomNavigation from "@material-ui/core/es/BottomNavigation/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/es/BottomNavigationAction/BottomNavigationAction";
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import CommentIcon from '@material-ui/icons/Comment';
+import ChatIcon from '@material-ui/icons/Chat';
+
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const styles = theme => ({});
 
@@ -58,13 +66,21 @@ class IndexContainer extends BaseComponent {
                 uId: "U00000000",
                 token: "0",
                 scope: "web",
-                secretKey:""
+                secretKey: ""
             },
             leftMenu_WideMode: true,
             currentTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             allBoardInfo: [],
             allSummary: {},
-            currentBoard: 0
+            hotArticle: [{
+                title: "如何理解人的本质就是\"复读机\"？",
+                pageViews: 10
+            }, {
+                title: "EditorMD 效果展示",
+                pageViews: 10
+            }],
+            currentBoard: 0,
+            currentRightMenu: 0
         }
 
         // console.log("constructor----------");
@@ -125,7 +141,7 @@ class IndexContainer extends BaseComponent {
                                         style={{marginLeft: isWideMod ? "200px" : "26px"}}>
                                 Bridge for You
                             </Typography>
-                            <Button color="secondary">登录</Button>
+                            {/*<Button color="secondary">登录</Button>*/}
                         </Toolbar>
                     </AppBar>
                 </Hidden>
@@ -140,7 +156,7 @@ class IndexContainer extends BaseComponent {
                             <Typography variant="title" color="inherit">
                                 Bridge for You
                             </Typography>
-                            <Button color="secondary">登录</Button>
+                            {/*<Button color="secondary">登录</Button>*/}
                         </Toolbar>
                     </AppBar>
                 </Hidden>
@@ -148,7 +164,7 @@ class IndexContainer extends BaseComponent {
         )
     }
 
-    renderRightMenu(isWideMod) {
+    renderLeftMenu(isWideMod) {
         if (isWideMod) {
             return (
                 <div id="main_Left"
@@ -243,6 +259,113 @@ class IndexContainer extends BaseComponent {
         }
     }
 
+    renderRightMenu() {
+        return (
+            <MuiThemeProvider theme={this.StyleHelper.getLightTheme_Blue_Pink()}>
+                <div id="main_Right" className="floatRight"
+                     style={{
+                         marginRight: "-200px",
+                         width: "200px",
+                         height: "inherit"
+                     }}>
+                    <BottomNavigation
+                        value={this.state.currentRightMenu}
+                        onChange={(event, value) => {
+                            this.updateState({currentRightMenu: value})
+                        }}
+                        showLabels
+                    >
+                        <BottomNavigationAction label="热门" icon={<WhatshotIcon/>}/>
+                        <BottomNavigationAction label="最新评论" icon={<ChatIcon/>}/>
+                    </BottomNavigation>
+                    {this.renderRightMenuContent(this.state.currentRightMenu)}
+                </div>
+            </MuiThemeProvider>
+        );
+    }
+
+    renderRightMenuContent(currentRightMenuTagIndex) {
+        switch (currentRightMenuTagIndex) {
+            case 0:// 热门文章
+                return (
+                    <List>
+                        {
+                            this.state.hotArticle.map((hotArticleItem, index) => {
+                                return (
+                                    <ListItem key={index} button>
+                                        <div className="hotItem">
+                                            <div className="hotTitle clearBoth">
+                                                {hotArticleItem.title}
+                                            </div>
+                                            <div className="hotMoreInfo clearBoth">
+                                            <span id="articlePageViewsCount">
+                                                <VisibilityIcon style={{
+                                                    fontSize: "12px",
+                                                    color: "#aaa",
+                                                    lineHeight: "40px"
+                                                }}/>&nbsp;
+                                                {hotArticleItem.pageViews < 1000 ? "1k以内" : hotArticleItem.pageViews}
+                                            </span>
+                                                <span className="articleCommentCount" style={{marginLeft: "20px"}}>
+                                        <CommentIcon style={{
+                                            fontSize: "12px",
+                                            color: "#aaa",
+                                            lineHeight: "40px"
+                                        }}/>&nbsp;
+                                                    {"暂无评论"}
+                                              </span>
+                                            </div>
+                                        </div>
+                                    </ListItem>
+                                )
+                            })
+                        }
+                    </List>
+                );
+            case 1:// 最新评论
+                return (
+                    <List>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <Avatar src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
+                            </ListItemIcon>
+                            <div className="commentBox">
+                                <div className="commentArticleTitle autoOmit">
+                                    如何理解"人的本质就是复读机"?
+                                </div>
+                                <div className="commentContent autoWrap">
+                                    <p>
+                                        {"没木有搞错"}：
+                                    </p>
+                                    <p style={{textIndent:"2em"}}>
+                                        评论的样例，假装评论系统已完成，实际上评论模块都不存在
+                                    </p>
+                                </div>
+                            </div>
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <Avatar src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
+                            </ListItemIcon>
+                            <div className="commentBox">
+                                <div className="commentArticleTitle autoOmit">
+                                    如何理解"人的本质就是复读机"?
+                                </div>
+                                <div className="commentContent autoWrap">
+                                    <p>
+                                        {"没木有搞错"}：
+                                    </p>
+                                    <p style={{textIndent:"2em"}}>
+                                        评论的样例，假装评论系统已完成，实际上评论模块都不存在
+                                    </p>
+                                </div>
+                            </div>
+                        </ListItem>
+                    </List>
+                );
+        }
+    }
+
     renderArticleList(allBoardInfo, allSummary, currentBoard) {
         return (
             <MuiThemeProvider theme={this.StyleHelper.getLightTheme_Blue_Pink()}>
@@ -292,14 +415,14 @@ class IndexContainer extends BaseComponent {
                 ArticleSummaryPageQueryResult.resultSet.map((articleSummary, index) => {
                     return (
                         <ArticleSummaryItem
-                                            key={index}
-                                            articleId={articleSummary.articleId}
-                                            boardName={articleSummary.boardName}
-                                            title={articleSummary.title}
-                                            articleCategoryName={articleSummary.articleCategoryName}
-                                            wordCount={articleSummary.wordCount}
-                                            pageViews={articleSummary.pageViews}
-                                            lastUpdateTs={articleSummary.lastUpdateTs}
+                            key={index}
+                            articleId={articleSummary.articleId}
+                            boardName={articleSummary.boardName}
+                            title={articleSummary.title}
+                            articleCategoryName={articleSummary.articleCategoryName}
+                            wordCount={articleSummary.wordCount}
+                            pageViews={articleSummary.pageViews}
+                            lastUpdateTs={articleSummary.lastUpdateTs}
                         />
                     );
                 })
@@ -327,20 +450,12 @@ class IndexContainer extends BaseComponent {
                                 {this.renderAPPBar(this.state.leftMenu_WideMode)}
                                 <div
                                     className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
-                                    {this.renderRightMenu(this.state.leftMenu_WideMode)}
+                                    {this.renderLeftMenu(this.state.leftMenu_WideMode)}
                                     <div id="main_Center" className="floatLeft"
                                          style={{width: "100%"}}>
                                         {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
                                     </div>
-                                    <div id="main_Right" className="floatRight"
-                                         style={{
-                                             backgroundColor: "blue",
-                                             marginRight: "-200px",
-                                             width: "200px",
-                                             height: "inherit"
-                                         }}>
-                                        c
-                                    </div>
+                                    {this.renderRightMenu()}
                                     <div className="clearFix"></div>
                                 </div>
                             </Paper>
