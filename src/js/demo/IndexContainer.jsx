@@ -337,7 +337,7 @@ class IndexContainer extends BaseComponent {
                                     <p>
                                         {"没木有搞错"}：
                                     </p>
-                                    <p style={{textIndent:"2em"}}>
+                                    <p style={{textIndent: "2em"}}>
                                         评论的样例，假装评论系统已完成，实际上评论模块都不存在
                                     </p>
                                 </div>
@@ -355,7 +355,7 @@ class IndexContainer extends BaseComponent {
                                     <p>
                                         {"没木有搞错"}：
                                     </p>
-                                    <p style={{textIndent:"2em"}}>
+                                    <p style={{textIndent: "2em"}}>
                                         评论的样例，假装评论系统已完成，实际上评论模块都不存在
                                     </p>
                                 </div>
