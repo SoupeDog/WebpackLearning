@@ -238,14 +238,14 @@ class BrowseContainer extends BaseComponent {
                         </Tooltip>
                     </Grid>
                     <Grid item xs={12} lg={8}>
-                        <Tooltip title={"字数统计"}>
+                        <Tooltip title={"字数统计(近似值)"}>
                         <span id="articleWordCount">
                             <EditIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            约&nbsp;{articleObj.wordCount}&nbsp;字
+                            &nbsp;{articleObj.wordCount}&nbsp;字
                         </span>
                         </Tooltip>
                         <Tooltip title={"浏览量"}>

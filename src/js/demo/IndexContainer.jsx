@@ -132,7 +132,7 @@ class IndexContainer extends BaseComponent {
     renderAPPBar(isWideMod) {
         return (
             <div>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <AppBar id="appBar" position="fixed" style={{height: "64px", width: "83.33333%", left: "8.33333%"}}>
                         <Toolbar>
                             {this.renderAPPBar_Menu(isWideMod)}
@@ -145,13 +145,11 @@ class IndexContainer extends BaseComponent {
                         </Toolbar>
                     </AppBar>
                 </Hidden>
-                <Hidden smUp>
+                <Hidden mdUp>
                     <AppBar position="fixed">
                         <Toolbar>
-                            <IconButton color="inherit" onClick={() => {
-                                this.setState({leftMenu_WideMode: !this.state.leftMenu_WideMode})
-                            }}>
-                                <MenuIcon/>
+                            <IconButton color="inherit">
+                                <HomeIcon/>
                             </IconButton>
                             <Typography variant="title" color="inherit">
                                 Bridge for You
@@ -215,7 +213,7 @@ class IndexContainer extends BaseComponent {
                         </Grid>
                         <List>
                             <ListItem button onClick={() => {
-                                alert("不存在的");
+                                this.CallBackView.call_LightTip({isOpen:true,type:"success",vertical:"top",horizontal:"center",msg:"暂时还没有，是谁在期待着一场 PY 交易呢~"});
                             }}>
                                 <ListItemIcon>
                                     <LinkIcon/>
@@ -244,7 +242,7 @@ class IndexContainer extends BaseComponent {
                     </Tooltip>
                     <Tooltip title="友链" placement="right">
                         <IconButton color="inherit" onClick={() => {
-                            alert("不存在的");
+                            this.CallBackView.call_LightTip({isOpen:true,type:"success",vertical:"top",horizontal:"center",msg:"暂时还没有，是谁在期待着一场 PY 交易呢~"});
                         }}>
                             <LinkIcon/>
                         </IconButton>
@@ -460,16 +458,24 @@ class IndexContainer extends BaseComponent {
                         <Grid item xs={12} sm={10}>
                             <Paper id="main" elevation={12}>
                                 {this.renderAPPBar(this.state.leftMenu_WideMode)}
-                                <div
-                                    className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
-                                    {this.renderLeftMenu(this.state.leftMenu_WideMode)}
+                                <Hidden smDown={true}>
+                                    <div
+                                        className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
+                                        {this.renderLeftMenu(this.state.leftMenu_WideMode)}
+                                        <div id="main_Center" className="floatLeft"
+                                             style={{width: "100%"}}>
+                                            {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
+                                        </div>
+                                        {this.renderRightMenu()}
+                                        <div className="clearFix" style={{marginBottom: "20px"}}></div>
+                                    </div>
+                                </Hidden>
+                                <Hidden mdUp={true}>
                                     <div id="main_Center" className="floatLeft"
-                                         style={{width: "100%"}}>
+                                         style={{width: "100%", marginTop: "60px"}}>
                                         {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
                                     </div>
-                                    {this.renderRightMenu()}
-                                    <div className="clearFix" style={{marginBottom: "20px"}}></div>
-                                </div>
+                                </Hidden>
                             </Paper>
                         </Grid>
                         <Grid className="blank" item xs={false} sm={1}>
@@ -557,7 +563,6 @@ class IndexContainer extends BaseComponent {
                     pageCount: totalCount,
                     activeCls: 'active',
                     callback: function (api) {
-                        alert(api.getCurrent())
                         let boardList = new Array();
                         boardList.push(boardInfo);
                         _react.freshSummary({
@@ -575,6 +580,13 @@ class IndexContainer extends BaseComponent {
         console.log("componentDidMount----------");
         console.log("");
         this.freshAllBoard();
+        this.CallBackView.call_Dialog_Conform({
+            isOpen: true,
+            title: "本站须知",
+            ensureCallback:()=>{},
+            cancelCallback:()=>{},
+            msg: "本站开发过程中测试设备极其短缺，很可能产生客户端兼容性问题。本站原定应用场景为 PC 端浏览器，因 MD 文档阅读的部分特性，触屏设备无法生效，故推荐使用 PC 端访问本站。出于某种考虑，为移动端(竖屏)提供少许功能，进行了简单适配。若您正在使用移动端(横屏)、平板设备，极可能影响使用，请尝试更换访问本站的设备。"
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
