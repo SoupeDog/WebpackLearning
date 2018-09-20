@@ -51,8 +51,6 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CommentIcon from '@material-ui/icons/Comment';
 import ChatIcon from '@material-ui/icons/Chat';
 
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const styles = theme => ({});
@@ -68,6 +66,8 @@ class IndexContainer extends BaseComponent {
                 scope: "web",
                 secretKey: ""
             },
+            currentPageSize: 5,
+            currentPage: 1,
             leftMenu_WideMode: true,
             currentTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             allBoardInfo: [],
@@ -403,10 +403,22 @@ class IndexContainer extends BaseComponent {
                 return (
                     <Typography key={index} component="div" style={{padding: 24}}>
                         {this.renderArticleSummary(allSummary[boardInfo.boardId])}
+                        {this.renderPageMenu(boardInfo)}
                     </Typography>
                 );
             })
         )
+    }
+
+    renderPageMenu(boardInfo) {
+        window.setTimeout(() => {
+            this.freshPageController(boardInfo);
+        }, 100);
+        return (
+            <div style={{width: "100%", minHeight: "40px"}}>
+                <div id={"pageMenu_" + boardInfo.boardId} className="pageControl"></div>
+            </div>
+        );
     }
 
     renderArticleSummary(ArticleSummaryPageQueryResult) {
@@ -456,7 +468,7 @@ class IndexContainer extends BaseComponent {
                                         {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
                                     </div>
                                     {this.renderRightMenu()}
-                                    <div className="clearFix"></div>
+                                    <div className="clearFix" style={{marginBottom: "20px"}}></div>
                                 </div>
                             </Paper>
                         </Grid>
@@ -477,10 +489,12 @@ class IndexContainer extends BaseComponent {
         }
     }
 
-    freshSummary({boardList, headers}) {
+    freshSummary({boardList, currentPage, currentPageSize, headers}) {
         let _react = this;
         APIOperator_Board.getSummaryOfBoard({
             boardList,
+            currentPage: currentPage == null ? _react.state.currentPage : currentPage,
+            pageSize: currentPageSize == null ? _react.state.currentPageSize : currentPageSize,
             headers,
             requestBefore: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(true);
@@ -493,7 +507,10 @@ class IndexContainer extends BaseComponent {
                     targetVal: "boardId"
                 });
                 currentSummary[boardId] = response.data;
-                _react.setState({allSummary: currentSummary});
+                _react.setState({
+                    allSummary: currentSummary,
+                    currentPage: (currentPage == null ? _react.state.currentPage : currentPage)
+                });
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);
@@ -511,20 +528,47 @@ class IndexContainer extends BaseComponent {
             },
             successCallback: function (response) {
                 _react.setState({allBoardInfo: response.data});
-                window.setTimeout(function () {
+                window.setTimeout(() => {
                     let queryBoardList = new Array;
                     queryBoardList.push(response.data[_react.state.currentBoard]);
                     // 刷新文章摘要
-                    _react.freshSummary({
-                        boardList: queryBoardList,
-                        headers: _react.state.headers
-                    });
+                    _react.freshSummary({boardList: queryBoardList, headers: _react.state.headers});
                 }, 500);
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);
             }
         });
+    }
+
+    freshPageController(boardInfo) {
+        let _react = this;
+        if (_react.state.allSummary[boardInfo.boardId] != null) {
+            let totalCount = _react.state.allSummary[boardInfo.boardId].totalCount;
+            totalCount = Math.ceil(totalCount / _react.state.currentPageSize);
+            if (totalCount > 0) {
+                $("#pageMenu_" + boardInfo.boardId).pagination({
+                    coping: false,
+                    jump: false,
+                    prevContent: '上一页',
+                    nextContent: '下一页',
+                    current: _react.state.currentPage,
+                    count: 2,
+                    pageCount: totalCount,
+                    activeCls: 'active',
+                    callback: function (api) {
+                        alert(api.getCurrent())
+                        let boardList = new Array();
+                        boardList.push(boardInfo);
+                        _react.freshSummary({
+                            boardList: boardList,
+                            headers: _react.state.headers,
+                            currentPage: api.getCurrent()
+                        });
+                    }
+                });
+            }
+        }
     }
 
     componentDidMount() {
