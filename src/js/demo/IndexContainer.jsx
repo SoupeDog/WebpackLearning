@@ -64,6 +64,8 @@ class IndexContainer extends BaseComponent {
                 scope: "web",
                 secretKey: ""
             },
+            currentPageSize: 5,
+            currentPage: 1,
             leftMenu_WideMode: true,
             currentTheme: this.StyleHelper.getLightTheme_Black_Purple(),
             allBoardInfo: [],
@@ -127,7 +129,7 @@ class IndexContainer extends BaseComponent {
     renderAPPBar(isWideMod) {
         return (
             <div>
-                <Hidden xsDown>
+                <Hidden smDown>
                     <AppBar id="appBar" position="fixed" style={{height: "64px", width: "83.33333%", left: "8.33333%"}}>
                         <Toolbar>
                             {this.renderAPPBar_Menu(isWideMod)}
@@ -140,13 +142,11 @@ class IndexContainer extends BaseComponent {
                         </Toolbar>
                     </AppBar>
                 </Hidden>
-                <Hidden smUp>
+                <Hidden mdUp>
                     <AppBar position="fixed">
                         <Toolbar>
-                            <IconButton color="inherit" onClick={() => {
-                                this.setState({leftMenu_WideMode: !this.state.leftMenu_WideMode})
-                            }}>
-                                <MenuIcon/>
+                            <IconButton color="inherit">
+                                <HomeIcon/>
                             </IconButton>
                             <Typography variant="title" color="inherit">
                                 Bridge for You
@@ -210,7 +210,7 @@ class IndexContainer extends BaseComponent {
                         </Grid>
                         <List>
                             <ListItem button onClick={() => {
-                                alert("不存在的");
+                                this.CallBackView.call_LightTip({isOpen:true,type:"success",vertical:"top",horizontal:"center",msg:"暂时还没有，是谁在期待着一场 PY 交易呢~"});
                             }}>
                                 <ListItemIcon>
                                     <LinkIcon/>
@@ -239,7 +239,7 @@ class IndexContainer extends BaseComponent {
                     </Tooltip>
                     <Tooltip title="友链" placement="right">
                         <IconButton color="inherit" onClick={() => {
-                            alert("不存在的");
+                            this.CallBackView.call_LightTip({isOpen:true,type:"success",vertical:"top",horizontal:"center",msg:"暂时还没有，是谁在期待着一场 PY 交易呢~"});
                         }}>
                             <LinkIcon/>
                         </IconButton>
@@ -398,10 +398,22 @@ class IndexContainer extends BaseComponent {
                 return (
                     <Typography key={index} component="div" style={{padding: 24}}>
                         {this.renderArticleSummary(allSummary[boardInfo.boardId])}
+                        {this.renderPageMenu(boardInfo)}
                     </Typography>
                 );
             })
         )
+    }
+
+    renderPageMenu(boardInfo) {
+        window.setTimeout(() => {
+            this.freshPageController(boardInfo);
+        }, 100);
+        return (
+            <div style={{width: "100%", minHeight: "40px"}}>
+                <div id={"pageMenu_" + boardInfo.boardId} className="pageControl"></div>
+            </div>
+        );
     }
 
     renderArticleSummary(ArticleSummaryPageQueryResult) {
@@ -443,16 +455,24 @@ class IndexContainer extends BaseComponent {
                         <Grid item xs={12} sm={10}>
                             <Paper id="main" elevation={12}>
                                 {this.renderAPPBar(this.state.leftMenu_WideMode)}
-                                <div
-                                    className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
-                                    {this.renderLeftMenu(this.state.leftMenu_WideMode)}
+                                <Hidden smDown={true}>
+                                    <div
+                                        className={this.state.leftMenu_WideMode ? "leftMenuContainer_Wide" : "leftMenuContainer"}>
+                                        {this.renderLeftMenu(this.state.leftMenu_WideMode)}
+                                        <div id="main_Center" className="floatLeft"
+                                             style={{width: "100%"}}>
+                                            {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
+                                        </div>
+                                        {this.renderRightMenu()}
+                                        <div className="clearFix" style={{marginBottom: "20px"}}></div>
+                                    </div>
+                                </Hidden>
+                                <Hidden mdUp={true}>
                                     <div id="main_Center" className="floatLeft"
-                                         style={{width: "100%"}}>
+                                         style={{width: "100%", marginTop: "60px"}}>
                                         {this.renderArticleList(this.state.allBoardInfo, this.state.allSummary, this.state.currentBoard)}
                                     </div>
-                                    {this.renderRightMenu()}
-                                    <div className="clearFix"></div>
-                                </div>
+                                </Hidden>
                             </Paper>
                         </Grid>
                         <Grid className="blank" item xs={false} sm={1}>
@@ -472,10 +492,12 @@ class IndexContainer extends BaseComponent {
         }
     }
 
-    freshSummary({boardList, headers}) {
+    freshSummary({boardList, currentPage, currentPageSize, headers}) {
         let _react = this;
         APIOperator_Board.getSummaryOfBoard({
             boardList,
+            currentPage: currentPage == null ? _react.state.currentPage : currentPage,
+            pageSize: currentPageSize == null ? _react.state.currentPageSize : currentPageSize,
             headers,
             requestBefore: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(true);
@@ -488,7 +510,10 @@ class IndexContainer extends BaseComponent {
                     targetVal: "boardId"
                 });
                 currentSummary[boardId] = response.data;
-                _react.setState({allSummary: currentSummary});
+                _react.setState({
+                    allSummary: currentSummary,
+                    currentPage: (currentPage == null ? _react.state.currentPage : currentPage)
+                });
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);
@@ -506,14 +531,11 @@ class IndexContainer extends BaseComponent {
             },
             successCallback: function (response) {
                 _react.setState({allBoardInfo: response.data});
-                window.setTimeout(function () {
+                window.setTimeout(() => {
                     let queryBoardList = new Array;
                     queryBoardList.push(response.data[_react.state.currentBoard]);
                     // 刷新文章摘要
-                    _react.freshSummary({
-                        boardList: queryBoardList,
-                        headers: _react.state.headers
-                    });
+                    _react.freshSummary({boardList: queryBoardList, headers: _react.state.headers});
                 }, 500);
             },
             finallyCallback: function () {
@@ -522,10 +544,46 @@ class IndexContainer extends BaseComponent {
         });
     }
 
+    freshPageController(boardInfo) {
+        let _react = this;
+        if (_react.state.allSummary[boardInfo.boardId] != null) {
+            let totalCount = _react.state.allSummary[boardInfo.boardId].totalCount;
+            totalCount = Math.ceil(totalCount / _react.state.currentPageSize);
+            if (totalCount > 0) {
+                $("#pageMenu_" + boardInfo.boardId).pagination({
+                    coping: false,
+                    jump: false,
+                    prevContent: '上一页',
+                    nextContent: '下一页',
+                    current: _react.state.currentPage,
+                    count: 2,
+                    pageCount: totalCount,
+                    activeCls: 'active',
+                    callback: function (api) {
+                        let boardList = new Array();
+                        boardList.push(boardInfo);
+                        _react.freshSummary({
+                            boardList: boardList,
+                            headers: _react.state.headers,
+                            currentPage: api.getCurrent()
+                        });
+                    }
+                });
+            }
+        }
+    }
+
     componentDidMount() {
         this.LogHelper.info({msg: "componentDidMount----------"});
         this.LogHelper.debug({msg: ""});
         this.freshAllBoard();
+        this.CallBackView.call_Dialog_Conform({
+            isOpen: true,
+            title: "本站须知",
+            ensureCallback:()=>{},
+            cancelCallback:()=>{},
+            msg: "本站开发过程中测试设备极其短缺，很可能产生客户端兼容性问题。本站原定应用场景为 PC 端浏览器，因 MD 文档阅读的部分特性，触屏设备无法生效，故推荐使用 PC 端访问本站。出于某种考虑，为移动端(竖屏)提供少许功能，进行了简单适配。若您正在使用移动端(横屏)、平板设备，极可能影响使用，请尝试更换访问本站的设备。"
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
