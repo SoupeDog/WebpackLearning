@@ -106,31 +106,28 @@ class BrowseContainer extends BaseComponent {
             rightMenu_NeedChange: false,
             WindowsScrollHelper: new WindowsScrollHelper()
         }
-        console.log("constructor----------");
-        // console.log(JSON.stringify(props));
+        this.LogHelper.info({msg: "constructor----------"});
+        this.LogHelper.debug({tag: "props", msg: props, isJson: true});
     }
 
     componentWillMount() {
-        console.log("componentWillMount----------");
+        this.LogHelper.info({msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log("componentWillReceiveProps----------");
-        // console.log("nextProps:" + JSON.stringify(nextProps));
-        // console.log("nextContext:" + JSON.stringify(nextContext));
+        this.LogHelper.info({msg: "componentWillReceiveProps----------"});
+        this.LogHelper.debug({tag: "nextProps", msg: nextProps, isJson: true});
+        this.LogHelper.debug({tag: "nextContext", msg: nextContext, isJson: true});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("shouldComponentUpdate----------");
+        this.LogHelper.info({msg: "shouldComponentUpdate----------"});
+        this.LogHelper.debug({tag: "nextProps", msg: nextProps, isJson: true});
+        this.LogHelper.debug({tag: "nextState", msg: nextState, isJson: true});
+        this.LogHelper.debug({tag: "nextContext", msg: nextContext, isJson: true});
         if (window.innerWidth < 768) {
             nextState.catalog_Hide = true;
         }
-        // console.log("nextProps:" + JSON.stringify(nextProps));
-        // console.log("nextState:" + JSON.stringify(nextState));
-        // console.log("nextContext:" + JSON.stringify(nextContext));
-        // if (this.state.article_Catalog_NeedChange == nextState.article_Catalog_NeedChange || this.state.rightMenu_NeedChange == nextState.rightMenu_NeedChange) {// 需要最小触发时间
-        //     return false;
-        // }
         return true;
     }
 
@@ -333,8 +330,8 @@ class BrowseContainer extends BaseComponent {
     }
 
     componentDidMount() {
-        console.log("componentDidMount----------");
-        console.log("");
+        this.LogHelper.info({msg: "componentDidMount----------"});
+        this.LogHelper.debug({msg: ""});
         this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
         this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
         this.state.WindowsScrollHelper.start();
@@ -343,16 +340,16 @@ class BrowseContainer extends BaseComponent {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("componentDidUpdate----------");
-        // console.log("prevProps:" + JSON.stringify(prevProps));
-        // console.log("prevState:" + JSON.stringify(prevState));
-        // console.log("snapshot:" + JSON.stringify(snapshot));
-        // this.freshArticle(!this.state.catalog_Hide);
-        console.log("");
+        this.LogHelper.info({msg: "componentDidUpdate----------"});
+        this.LogHelper.debug({tag: "prevProps", msg: prevProps, isJson: true});
+        this.LogHelper.debug({tag: "prevState", msg: prevState, isJson: true});
+        this.LogHelper.debug({tag: "snapshot", msg: snapshot, isJson: true});
+        this.LogHelper.debug({msg: ""});
     }
 
     componentWillUnmount() {
-        console.log("componentWillUnmount----------");
+        this.LogHelper.info({msg: "componentWillUnmount----------"});
+        this.LogHelper.debug({msg: ""});
     }
 
     catalogTrigger() {
