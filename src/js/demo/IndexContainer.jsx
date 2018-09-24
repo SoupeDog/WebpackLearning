@@ -22,14 +22,12 @@ const generateClassName = createGenerateClassName({productionPrefix: "HyggeWrite
 const jss = create(jssPreset());
 
 
-import Button from "@material-ui/core/es/Button/Button";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import Hidden from "@material-ui/core/es/Hidden/Hidden";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import List from "@material-ui/core/es/List/List";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import ListItemIcon from "@material-ui/core/es/ListItemIcon/ListItemIcon";
-import HomeIcon from '@material-ui/icons/Home';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import LinkIcon from '@material-ui/icons/Link';
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
@@ -51,12 +49,10 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CommentIcon from '@material-ui/icons/Comment';
 import ChatIcon from '@material-ui/icons/Chat';
 
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
-const styles = theme => ({});
 
+const styles = theme => ({});
 
 class IndexContainer extends BaseComponent {
     constructor(props) {
@@ -82,26 +78,25 @@ class IndexContainer extends BaseComponent {
             currentBoard: 0,
             currentRightMenu: 0
         }
-
-        // console.log("constructor----------");
-        // console.log(JSON.stringify(props));
+        this.LogHelper.info({msg: "constructor----------"});
+        this.LogHelper.debug({tag: "props", msg: props, isJson: true});
     }
 
     componentWillMount() {
-        console.log("componentWillMount----------");
+        this.LogHelper.info({msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log("componentWillReceiveProps----------");
-        // console.log("nextProps:" + JSON.stringify(nextProps));
-        // console.log("nextContext:" + JSON.stringify(nextContext));
+        this.LogHelper.info({msg: "componentWillReceiveProps----------"});
+        this.LogHelper.debug({tag: "nextProps", msg: nextProps, isJson: true});
+        this.LogHelper.debug({tag: "nextContext", msg: nextContext, isJson: true});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("shouldComponentUpdate----------");
-        // console.log("nextProps:" + JSON.stringify(nextProps));
-        // console.log("nextState:" + JSON.stringify(nextState));
-        // console.log("nextContext:" + JSON.stringify(nextContext));
+        this.LogHelper.info({msg: "shouldComponentUpdate----------"});
+        this.LogHelper.debug({tag: "nextProps", msg: nextProps, isJson: true});
+        this.LogHelper.debug({tag: "nextState", msg: nextState, isJson: true});
+        this.LogHelper.debug({tag: "nextContext", msg: nextContext, isJson: true});
         return true;
     }
 
@@ -528,21 +523,22 @@ class IndexContainer extends BaseComponent {
     }
 
     componentDidMount() {
-        console.log("componentDidMount----------");
-        console.log("");
+        this.LogHelper.info({msg: "componentDidMount----------"});
+        this.LogHelper.debug({msg: ""});
         this.freshAllBoard();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("componentDidUpdate----------");
-        // console.log("prevProps:" + JSON.stringify(prevProps));
-        // console.log("prevState:" + JSON.stringify(prevState));
-        // console.log("snapshot:" + JSON.stringify(snapshot));
-        console.log("");
+        this.LogHelper.info({msg: "componentDidUpdate----------"});
+        this.LogHelper.debug({tag: "prevProps", msg: prevProps, isJson: true});
+        this.LogHelper.debug({tag: "prevState", msg: prevState, isJson: true});
+        this.LogHelper.debug({tag: "snapshot", msg: snapshot, isJson: true});
+        this.LogHelper.debug({msg: ""});
     }
 
     componentWillUnmount() {
-        console.log("componentWillUnmount----------");
+        this.LogHelper.info({msg: "componentWillUnmount----------"});
+        this.LogHelper.debug({msg: ""});
     }
 }
 

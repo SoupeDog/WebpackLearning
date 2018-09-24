@@ -16,17 +16,19 @@ import EditIcon from '@material-ui/icons/Edit';
 class ArticleSummaryItem extends BaseComponent {
     constructor(props) {
         super(props)
-        console.log("constructor----------");
+        this.LogHelper.debug({msg: "constructor----------"});
     }
 
     componentWillMount() {
-        console.log("componentWillMount----------");
+        this.LogHelper.debug({msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log("componentWillReceiveProps----------");
-        console.log("nextProps:" + JSON.stringify(nextProps));
-        console.log("nextContext:" + JSON.stringify(nextContext));
+        this.LogHelper.debug({msg: "AcomponentWillReceiveProps----------"});
+        this.LogHelper.debug({msg: "AnextProps:" + nextProps});
+        this.LogHelper.debug({msg: "AnextContext:" + nextContext});
+        // this.LogHelper.debug({msg: "nextProps:" + JSON.stringify(nextProps)});
+        // this.LogHelper.debug({msg: "nextContext:" + JSON.stringify(nextContext)});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -40,8 +42,8 @@ class ArticleSummaryItem extends BaseComponent {
     render() {
         return (
             <Card style={{marginBottom: "20px"}}>
-                <CardActionArea style={{width: "100%", minHeight: "200px"}}  onClick={()=>{
-                    this.URLHelper.openNewPage({path:"http://localhost:9000/browse.html?id="+this.props.articleId});
+                <CardActionArea style={{width: "100%", minHeight: "200px"}} onClick={() => {
+                    this.URLHelper.openNewPage({path: "http://localhost:9000/browse.html?id=" + this.props.articleId});
                 }}>
                     <CardMedia
                         image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}
@@ -58,53 +60,53 @@ class ArticleSummaryItem extends BaseComponent {
                      <span id="articlePlates">
                             {this.props.boardName == null ? "未命名板块" : this.props.boardName}
                         </span>
-                    <span  className="separate" style={{marginLeft: "5px"}}>
+                    <span className="separate" style={{marginLeft: "5px"}}>
                             /
                         </span>
                     <span id="articlePlates" style={{marginLeft: "5px"}}>
                     {this.props.articleCategoryName == null ? "未命名文章类别" : this.props.articleCategoryName}
                         </span>
                     {/*<Tooltip title={"最后修改日期"}>*/}
-                            <span id="articleDate" style={{marginLeft: "20px"}}>
+                    <span id="articleDate" style={{marginLeft: "20px"}}>
                                 <AccessTimeIcon style={{
                                     fontSize: "12px",
                                     color: "#aaa",
                                     lineHeight: "40px"
                                 }}/>&nbsp;
-                                {this.TimeHelper.formatTimeStampToString({
-                                    target: this.props.lastUpdateTs,
-                                    type: "yyyy-mm-dd"
-                                })}
+                        {this.TimeHelper.formatTimeStampToString({
+                            target: this.props.lastUpdateTs,
+                            type: "yyyy-mm-dd"
+                        })}
                             </span>
                     {/*</Tooltip>*/}
                     {/*<Tooltip title={"字数统计"}>*/}
-                        <span id="articleWordCount">
+                    <span id="articleWordCount">
                             <EditIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            约&nbsp;{this.props.wordCount}&nbsp;字
+                        约&nbsp;{this.props.wordCount}&nbsp;字
                         </span>
                     {/*</Tooltip>*/}
                     {/*<Tooltip title={"浏览量"}>*/}
-                        <span id="articlePageViewsCount" style={{marginLeft: "40px"}}>
+                    <span id="articlePageViewsCount" style={{marginLeft: "40px"}}>
                             <VisibilityIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            {this.props.pageViews < 1000 ? "1k以内" : this.props.pageViews}
+                        {this.props.pageViews < 1000 ? "1k以内" : this.props.pageViews}
                         </span>
                     {/*</Tooltip>*/}
                     {/*<Tooltip title={"评论数"}>*/}
-                        <span className="articleCommentCount" style={{marginLeft: "40px"}}>
+                    <span className="articleCommentCount" style={{marginLeft: "40px"}}>
                             <CommentIcon style={{
                                 fontSize: "12px",
                                 color: "#aaa",
                                 lineHeight: "40px"
                             }}/>&nbsp;
-                            {"暂无评论"}
+                        {"暂无评论"}
                         </span>
                     {/*</Tooltip>*/}
                 </CardActions>
