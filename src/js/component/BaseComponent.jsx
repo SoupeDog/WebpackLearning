@@ -5,6 +5,7 @@ import StyleHelper from "../utils/StyleHelper.jsx";
 import PropertiesHelper from "../utils/PropertiesHelper.jsx";
 import URLHelper from "../utils/URLHelper.jsx";
 import LogHelper from "../utils/LogHelper.jsx";
+import PageJumpingOperator from "../demo/PageJumpingOperator.jsx";
 
 export default class BaseComponent extends React.Component {
     constructor(props) {
@@ -15,6 +16,7 @@ export default class BaseComponent extends React.Component {
         this.PropertiesHelper = PropertiesHelper;
         this.URLHelper = URLHelper;
         this.LogHelper = LogHelper;
+        this.PageJumpingOperator=PageJumpingOperator;
     }
 
     // 初始化子组件

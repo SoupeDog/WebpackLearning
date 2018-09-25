@@ -43,7 +43,7 @@ class ArticleSummaryItem extends BaseComponent {
         return (
             <Card style={{marginBottom: "20px"}}>
                 <CardActionArea style={{width: "100%", minHeight: "200px"}} onClick={() => {
-                    this.URLHelper.openNewPage({finalUrl: "http://localhost:9000/browse.html?id=" + this.props.articleId});
+                    this.PageJumpingOperator.openBrowse({queryString: "id=" + this.props.articleId});
                 }}>
                     <CardMedia
                         image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}
@@ -58,7 +58,7 @@ class ArticleSummaryItem extends BaseComponent {
                 </CardActionArea>
                 <CardActions>
                     <Grid id="articleInfo" item xs={12} container direction="row"
-                          justify="flex-start" alignItems="baseline" style={{lineHeight:"24px"}}>
+                          justify="flex-start" alignItems="baseline" style={{lineHeight: "24px"}}>
                         <Grid item xs={12} lg={3}>
                         <span id="articlePlates">
                             {this.props.boardName == null ? "未命名板块" : this.props.boardName}
@@ -75,7 +75,7 @@ class ArticleSummaryItem extends BaseComponent {
                               alignItems="flex-start"
                         >
                             <Tooltip title={"最后修改日期"}>
-                            <span id="articleDate" >
+                            <span id="articleDate">
                                 <AccessTimeIcon style={{
                                     fontSize: "12px",
                                     color: "#aaa",
