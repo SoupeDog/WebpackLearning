@@ -5,12 +5,12 @@ import PropertiesHelper from './PropertiesHelper.jsx';
 export default class HttpHelper {
     // 是否开启日志输出
     static isEnableLog() {
-        return true;
+        return false;
     }
 
     // url 默认前缀
     static getPrefix() {
-        return "http://localhost:8080/";
+        return "https://www.xavierwang.cn/";
     }
 
     // ajax 请求缓存是否开启标识(false:不开启)

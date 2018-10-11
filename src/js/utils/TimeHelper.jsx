@@ -23,7 +23,7 @@ export default class TimeHelper {
         if (target < 2) {
             needAddCount = size - 1;
         } else {
-            while (Math.pow(10, needAddCount + 1) * target <= compareNumber) {
+            while (Math.pow(10, needAddCount + 1) * target < compareNumber) {
                 needAddCount += 1;
             }
         }

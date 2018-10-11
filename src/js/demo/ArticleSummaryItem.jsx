@@ -70,7 +70,7 @@ class ArticleSummaryItem extends BaseComponent {
                              {this.props.articleCategoryName == null ? "未命名文章类别" : this.props.articleCategoryName}
                         </span>
                         </Grid>
-                        <Grid item xs={12} lg={9} direction="row"
+                        <Grid item xs={12} lg={9} container direction="row"
                               justify="flex-end"
                               alignItems="flex-start"
                         >

@@ -99,7 +99,7 @@ class HW_Menu extends BaseComponent {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="title" color="inherit" className={this.props.classes.text}>
-                            Bridge for You
+                            我的小宅子
                         </Typography>
                         {this.state.auth && (
                             <div>
