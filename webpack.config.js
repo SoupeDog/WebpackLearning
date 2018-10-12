@@ -93,7 +93,7 @@ module.exports = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             filename: "index.html",
-            title: "引导页",
+            title: "我的小宅子",
             favicon: "./src/img/icon.ico",
             template: "./src/html/template.html",
             chunks: ["index","commons"],

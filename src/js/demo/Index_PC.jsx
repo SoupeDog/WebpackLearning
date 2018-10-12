@@ -384,13 +384,19 @@ class Index_PC extends BaseComponent {
                     indicatorColor="primary"
                     textColor="primary"
                     fullWidth
+                    scrollable
+                    scrollButtons="auto"
                 >
                     {this.renderArticleList_TagItem(allBoardInfo)}
+                    <Tab label="N 日一句"/>
+                    <Tab label="搜索结果"/>
                 </Tabs>
                 <SwipeableViews
                     index={currentBoard}
                 >
                     {this.renderArticleList_TagContainer(allBoardInfo, allSummary)}
+                    <Typography align={"center"}><br/>暂未提供该功能</Typography>
+                    <Typography align={"center"}><br/>暂未提供该功能</Typography>
                 </SwipeableViews>
             </MuiThemeProvider>
         )
@@ -490,7 +496,10 @@ class Index_PC extends BaseComponent {
     boardTagClick(event, value) {
         this.setState({currentBoard: value});
         let queryBoardList = new Array;
-        queryBoardList.push(this.state.allBoardInfo[value]);
+        let currentAllBoardInfo = this.state.allBoardInfo[value];
+        if (currentAllBoardInfo != null && currentAllBoardInfo != "") {
+            queryBoardList.push(currentAllBoardInfo);
+        }
         if (queryBoardList.length > 0) {
             this.freshSummary({boardList: queryBoardList, headers: this.state.headers});
         }
