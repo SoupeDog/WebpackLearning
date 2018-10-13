@@ -150,9 +150,9 @@ class BrowseContainer extends BaseComponent {
                              WindowsScrollHelper={this.state.WindowsScrollHelper}
                              updateState={this.updateState.bind(this)}/>
                     <Grid id="banner" container spacing={0} justify="center">
-                        {this.renderTopImage()}
+                        {this.renderTopImage(this.state.articleObj)}
                         <Grid id="bgm_Player" item xs={12}>
-                            {this.renderBGMPlayer()}
+                            {this.renderBGMPlayer(this.state.articleObj)}
                         </Grid>
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             {this.renderArticleCatLog(this.state.catalog_Hide)}
@@ -370,7 +370,7 @@ class BrowseContainer extends BaseComponent {
                 } else {
                     _react.CallBackView.call_LightTip({isOpen: true, type: "error", msg: "未检索到文章内容，将在3秒内为您跳转回主页"});
                 }
-                document.title=response.data[0].title// 设置 html tile
+                document.title = response.data[0].title// 设置 html tile
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);
@@ -402,57 +402,43 @@ class BrowseContainer extends BaseComponent {
         }
     }
 
-    renderBGMPlayer() {
-        if (this.state.articleObj != null) {
-            let propertiesJson = this.state.articleObj.properties;
-            if (propertiesJson != null && propertiesJson.trim() != "") {
-                let properties = JSON.parse(propertiesJson);
-                if (properties.bgm != null) {
-                    return (
-                        <iframe name="wy_music"
-                                style={{
-                                    margin: 0,
-                                    border: "0",
-                                    padding: "0",
-                                    width: "100%",
-                                    height: "80px"
-                                }} src={properties.bgm}>
-                        </iframe>
-                    );
-                }
+    renderBGMPlayer(articleObj) {
+        let propertiesJson = articleObj.properties;
+        if (propertiesJson != null && propertiesJson.trim() != "") {
+            let properties = JSON.parse(propertiesJson);
+            if (properties.bgm != null) {
+                return (
+                    <iframe name="wy_music"
+                            style={{
+                                margin: 0,
+                                border: "0",
+                                padding: "0",
+                                width: "100%",
+                                height: "80px"
+                            }} src={properties.bgm}>
+                    </iframe>
+                );
             }
-        } else {
-            return null;
         }
     }
 
-    renderTopImage() {
-        if (this.state.articleObj != null) {
-            let propertiesJson = this.state.articleObj.properties;
-            if (propertiesJson != null && propertiesJson.trim() != "") {
-                let properties = JSON.parse(propertiesJson);
-                if (properties.image != null) {
-                    return (
-                        <Grid id="top_BackgroundImg"
-                              item xs={12}>
-                            <CardMedia
-                                image={properties.image}
-                                style={{height: "300px", objectFit: 'cover'}}
-                            />
-                        </Grid>
-                    );
-                }
+    renderTopImage(articleObj) {
+        let propertiesJson = articleObj.properties;
+        if (propertiesJson != null && propertiesJson.trim() != "") {
+            let properties = JSON.parse(propertiesJson);
+            if (properties.image != null) {
+                return (
+                    <Grid id="top_BackgroundImg"
+                          item xs={12}>
+                        <CardMedia
+                            image={properties.image}
+                            style={{height: "300px", objectFit: 'cover'}}
+                        />
+                    </Grid>
+                );
             }
         }
-        return (
-            <Grid id="top_BackgroundImg"
-                  item xs={12}>
-                <CardMedia
-                    image={"https://s1.ax2x.com/2018/08/26/5Dk82K.jpg"}
-                    style={{height: "300px", objectFit: 'cover'}}
-                />
-            </Grid>
-        );
+        return null;
     }
 }
 

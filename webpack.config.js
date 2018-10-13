@@ -7,7 +7,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         index: "./src/js/index.jsx",
-        browse: "./src/js/browse.jsx"
+        browse: "./src/js/browse.jsx",
+        editor: "./src/js/editor.jsx",
     },
     output: {
         publicPath: "",
@@ -109,6 +110,18 @@ module.exports = {
             favicon: "./src/img/icon.ico",
             template: "./src/html/browse.html",
             chunks: ["browse","commons"],
+            inject: "body",
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+        }),
+        new HtmlWebpackPlugin({
+            filename: "editor.html",
+            title: "编辑页",
+            favicon: "./src/img/icon.ico",
+            template: "./src/html/template.html",
+            chunks: ["editor","commons"],
             inject: "body",
             minify: {
                 removeComments: true,

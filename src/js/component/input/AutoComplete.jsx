@@ -174,6 +174,7 @@ class AutoComplete extends BaseComponent {
         let {InputProps, classes, ref, ...other} = inputProps;
         return (
             <TextField
+                variant="outlined"
                 onClick={this.isShowTrigger.bind(this)}
                 InputProps={{
                     inputRef: ref,
@@ -197,6 +198,7 @@ class AutoComplete extends BaseComponent {
                 selected={isHighlighted}
                 component="div"
                 style={{
+                    opacity:1,
                     fontWeight: isSelected ? 500 : 400,
                 }}
             >

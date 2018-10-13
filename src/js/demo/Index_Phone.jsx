@@ -36,6 +36,7 @@ import APIOperator_Board from "./APIOperator_Board.jsx";
 
 
 import HomeIcon from '@material-ui/icons/Home';
+import Badge from "@material-ui/core/es/Badge/Badge";
 
 
 const styles = theme => ({});
@@ -113,13 +114,19 @@ class Index_Phone extends BaseComponent {
                     indicatorColor="primary"
                     textColor="primary"
                     fullWidth
+                    scrollable
+                    scrollButtons="auto"
                 >
                     {this.renderArticleList_TagItem(allBoardInfo)}
+                    <Tab label="N 日一句"/>
+                    <Tab label="搜索结果"/>
                 </Tabs>
                 <SwipeableViews
                     index={currentBoard}
                 >
                     {this.renderArticleList_TagContainer(allBoardInfo, allSummary)}
+                    <Typography align={"center"}><br/>暂未提供该功能</Typography>
+                    <Typography align={"center"}><br/>暂未提供该功能</Typography>
                 </SwipeableViews>
             </MuiThemeProvider>
         )
@@ -129,7 +136,13 @@ class Index_Phone extends BaseComponent {
         return (
             allBoard.map((board, index) => {
                 return (
-                    <Tab key={index} id={board.boardId} label={board.boardName}/>
+                    <Tab label={
+                        <Badge color="secondary"
+                               badgeContent={this.state.allSummary[board.boardId] == null ? "?" : this.state.allSummary[board.boardId].totalCount}
+                               style={{paddingRight: "20px"}}>
+                            {board.boardName}
+                        </Badge>
+                    } key={index} id={board.boardId}/>
                 )
             })
         )
@@ -172,7 +185,8 @@ class Index_Phone extends BaseComponent {
                             articleCategoryName={articleSummary.articleCategoryName}
                             wordCount={articleSummary.wordCount}
                             pageViews={articleSummary.pageViews}
-                            lastUpdateTs={articleSummary.lastUpdateTs}
+                            ts={articleSummary.ts}
+                            properties={articleSummary.properties}
                         />
                     );
                 })
