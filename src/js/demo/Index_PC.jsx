@@ -52,6 +52,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 import HomeIcon from '@material-ui/icons/Home';
 import ChatIcon from '@material-ui/icons/Chat';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
+import Badge from "@material-ui/core/es/Badge/Badge";
 
 
 const styles = theme => ({});
@@ -406,7 +407,13 @@ class Index_PC extends BaseComponent {
         return (
             allBoard.map((board, index) => {
                 return (
-                    <Tab key={index} id={board.boardId} label={board.boardName}/>
+                    <Tab label={
+                        <Badge color="secondary"
+                               badgeContent={this.state.allSummary[board.boardId] == null ? "?" : this.state.allSummary[board.boardId].totalCount}
+                               style={{paddingRight: "20px"}}>
+                            {board.boardName}
+                        </Badge>
+                    } key={index} id={board.boardId}/>
                 )
             })
         )
@@ -449,7 +456,8 @@ class Index_PC extends BaseComponent {
                             articleCategoryName={articleSummary.articleCategoryName}
                             wordCount={articleSummary.wordCount}
                             pageViews={articleSummary.pageViews}
-                            lastUpdateTs={articleSummary.lastUpdateTs}
+                            ts={articleSummary.ts}
+                            properties={articleSummary.properties}
                         />
                     );
                 })

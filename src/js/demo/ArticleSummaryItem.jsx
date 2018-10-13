@@ -46,7 +46,7 @@ class ArticleSummaryItem extends BaseComponent {
                     this.PageJumpingOperator.openBrowse({queryString: "id=" + this.props.articleId});
                 }}>
                     <CardMedia
-                        image={this.props.image == null ? "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg" : this.props.image}
+                        image={this.getBGImage()}
                         title={this.props.title}
                         style={{height: "150px", objectFit: 'cover'}}
                     />
@@ -74,7 +74,7 @@ class ArticleSummaryItem extends BaseComponent {
                               justify="flex-end"
                               alignItems="flex-start"
                         >
-                            <Tooltip title={"最后修改日期"}>
+                            <Tooltip title={"创建日期"}>
                             <span id="articleDate">
                                 <AccessTimeIcon style={{
                                     fontSize: "12px",
@@ -82,7 +82,7 @@ class ArticleSummaryItem extends BaseComponent {
                                     lineHeight: "40px"
                                 }}/>&nbsp;
                                 {this.TimeHelper.formatTimeStampToString({
-                                    target: this.props.lastUpdateTs,
+                                    target: this.props.ts,
                                     type: "yyyy-mm-dd"
                                 })}
                             </span>
@@ -122,6 +122,17 @@ class ArticleSummaryItem extends BaseComponent {
                 </CardActions>
             </Card>
         );
+    }
+
+    getBGImage() {
+        let propertiesJson = this.props.properties
+        if (propertiesJson != null && propertiesJson.trim() != "") {
+            let properties = JSON.parse(propertiesJson);
+            if (properties.image != null) {
+                return properties.image;
+            }
+        }
+        return "https://s1.ax2x.com/2018/08/26/5Dk82K.jpg";
     }
 
     componentDidMount() {

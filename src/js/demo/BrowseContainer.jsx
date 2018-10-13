@@ -24,10 +24,10 @@ import Hidden from "@material-ui/core/es/Hidden/Hidden";
 import Chip from "@material-ui/core/es/Chip/Chip";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import Slide from "@material-ui/core/es/Slide/Slide";
+import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
-
 
 const styles = theme => ({
     articleHeaderRow: {
@@ -150,17 +150,9 @@ class BrowseContainer extends BaseComponent {
                              WindowsScrollHelper={this.state.WindowsScrollHelper}
                              updateState={this.updateState.bind(this)}/>
                     <Grid id="banner" container spacing={0} justify="center">
-                        <Grid id="top_BackgroundImg" item xs={12}></Grid>
+                        {this.renderTopImage()}
                         <Grid id="bgm_Player" item xs={12}>
-                            <iframe name="wy_music"
-                                    style={{
-                                        margin: 0,
-                                        border: "0",
-                                        padding: "0",
-                                        width: "100%",
-                                        height: "80px"
-                                    }} src="https://music.163.com/outchain/player?type=2&id=571541787&auto=1&height=66">
-                            </iframe>
+                            {this.renderBGMPlayer()}
                         </Grid>
                         <Grid id="article" item xs={12} container spacing={0} justify="center">
                             {this.renderArticleCatLog(this.state.catalog_Hide)}
@@ -220,7 +212,7 @@ class BrowseContainer extends BaseComponent {
                         <span id="articlePlates" style={{marginLeft: "5px"}}>
                             {articleObj.articleCategoryName}
                         </span>
-                        <Tooltip title={"最后修改日期"}>
+                        <Tooltip title={"创建日期"}>
                             <span id="articleDate" style={{marginLeft: "20px"}}>
                                 <AccessTimeIcon style={{
                                     fontSize: "12px",
@@ -228,7 +220,7 @@ class BrowseContainer extends BaseComponent {
                                     lineHeight: "40px"
                                 }}/>&nbsp;
                                 {this.TimeHelper.formatTimeStampToString({
-                                    target: articleObj.lastUpdateTs == null ? 0 : articleObj.lastUpdateTs,
+                                    target: articleObj.ts == null ? 0 : articleObj.ts,
                                     type: "yyyy-mm-dd"
                                 })}
                             </span>
@@ -378,6 +370,7 @@ class BrowseContainer extends BaseComponent {
                 } else {
                     _react.CallBackView.call_LightTip({isOpen: true, type: "error", msg: "未检索到文章内容，将在3秒内为您跳转回主页"});
                 }
+                document.title=response.data[0].title// 设置 html tile
             },
             finallyCallback: function () {
                 _react.CallBackView.call_Loading_Linear_Unknown(false);
@@ -407,6 +400,59 @@ class BrowseContainer extends BaseComponent {
                 this.setState({rightMenu_NeedChange: false});
             }
         }
+    }
+
+    renderBGMPlayer() {
+        if (this.state.articleObj != null) {
+            let propertiesJson = this.state.articleObj.properties;
+            if (propertiesJson != null && propertiesJson.trim() != "") {
+                let properties = JSON.parse(propertiesJson);
+                if (properties.bgm != null) {
+                    return (
+                        <iframe name="wy_music"
+                                style={{
+                                    margin: 0,
+                                    border: "0",
+                                    padding: "0",
+                                    width: "100%",
+                                    height: "80px"
+                                }} src={properties.bgm}>
+                        </iframe>
+                    );
+                }
+            }
+        } else {
+            return null;
+        }
+    }
+
+    renderTopImage() {
+        if (this.state.articleObj != null) {
+            let propertiesJson = this.state.articleObj.properties;
+            if (propertiesJson != null && propertiesJson.trim() != "") {
+                let properties = JSON.parse(propertiesJson);
+                if (properties.image != null) {
+                    return (
+                        <Grid id="top_BackgroundImg"
+                              item xs={12}>
+                            <CardMedia
+                                image={properties.image}
+                                style={{height: "300px", objectFit: 'cover'}}
+                            />
+                        </Grid>
+                    );
+                }
+            }
+        }
+        return (
+            <Grid id="top_BackgroundImg"
+                  item xs={12}>
+                <CardMedia
+                    image={"https://s1.ax2x.com/2018/08/26/5Dk82K.jpg"}
+                    style={{height: "300px", objectFit: 'cover'}}
+                />
+            </Grid>
+        );
     }
 }
 
