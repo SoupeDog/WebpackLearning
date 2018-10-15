@@ -49,7 +49,7 @@ class Index_Phone extends BaseComponent {
                 uId: "U00000000",
                 token: "0",
                 scope: "web",
-                secretKey: ""
+                secretKey: this.URLHelper.getQueryString("secretKey")
             },
             currentPageSize: 5,
             currentPage: 1,

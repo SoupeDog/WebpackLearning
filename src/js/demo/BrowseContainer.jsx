@@ -79,7 +79,7 @@ class BrowseContainer extends BaseComponent {
                 uId: "U00000000",
                 token: "0",
                 scope: "web",
-                secretKey: ""
+                secretKey: this.URLHelper.getQueryString("secretKey")
             },
             articleObj: {
                 // articleId: "848aa75a9baa4b019f8bf152e6b4ed17",
