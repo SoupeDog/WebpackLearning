@@ -24,6 +24,9 @@ export default class StyleHelper {
 
     static getTheme_Custom({primary, secondary}) {
         return createMuiTheme({
+            typography: {
+                useNextVariants: true,
+            },
             palette: {
                 primary: {
                     main: primary,
@@ -38,6 +41,9 @@ export default class StyleHelper {
 
 // lightTheme 指，改主题中图标配色为亮色
 const lightTheme_Blue_Pink = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
     palette: {
         primary: {
             main: '#2196f3',
@@ -49,6 +55,9 @@ const lightTheme_Blue_Pink = createMuiTheme({
 });
 
 const lightTheme_Black_Purple = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
     palette: {
         primary: {
             main: '#000',
@@ -60,6 +69,9 @@ const lightTheme_Black_Purple = createMuiTheme({
 });
 
 const lightTheme_Green_Orange = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
     palette: {
         primary: {
             main: '#388e3c',

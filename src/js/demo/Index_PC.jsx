@@ -35,7 +35,6 @@ import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import AppBar from "@material-ui/core/es/AppBar/AppBar";
 import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
-import Typography from "@material-ui/core/es/Typography/Typography";
 import Tabs from "@material-ui/core/es/Tabs/Tabs";
 import Tab from "@material-ui/core/es/Tab/Tab";
 import SwipeableViews from 'react-swipeable-views';
@@ -53,6 +52,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ChatIcon from '@material-ui/icons/Chat';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import Badge from "@material-ui/core/es/Badge/Badge";
+import Typography from "@material-ui/core/es/Typography/Typography";
 
 
 const styles = theme => ({});
@@ -136,7 +136,7 @@ class Index_PC extends BaseComponent {
                     <AppBar id="appBar" position="fixed" style={{height: "64px", width: "83.33333%", left: "8.33333%"}}>
                         <Toolbar>
                             {this.renderAPPBar_Menu(isWideMod)}
-                            <Typography variant="title" color="inherit"
+                            <Typography variant="h6" color="inherit"
                                         className={isWideMod ? "appBarTitle_Wide" : "appBarTitle"}
                                         style={{marginLeft: isWideMod ? "200px" : "26px"}}>
                                 我的小宅子
@@ -151,7 +151,7 @@ class Index_PC extends BaseComponent {
                             <IconButton color="inherit">
                                 <HomeIcon/>
                             </IconButton>
-                            <Typography variant="title" color="inherit">
+                            <Typography variant="h6" color="inherit">
                                 我的小宅子
                             </Typography>
                             {/*<Button color="secondary">登录</Button>*/}
@@ -423,7 +423,7 @@ class Index_PC extends BaseComponent {
         return (
             allBoardInfo.map((boardInfo, index) => {
                 return (
-                    <Typography key={index} component="div" style={{padding: 24}}>
+                    <Typography key={index} style={{padding: 24}}>
                         {this.renderArticleSummary(allSummary[boardInfo.boardId])}
                         {this.renderPageMenu(boardInfo)}
                     </Typography>

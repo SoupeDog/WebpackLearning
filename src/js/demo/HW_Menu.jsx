@@ -98,7 +98,7 @@ class HW_Menu extends BaseComponent {
                         }}>
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="title" color="inherit" className={this.props.classes.text}>
+                        <Typography variant="h6" color="inherit" className={this.props.classes.text}>
                             我的小宅子
                         </Typography>
                         {this.state.auth && (

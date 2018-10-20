@@ -96,7 +96,7 @@ class Index_Phone extends BaseComponent {
                     <IconButton color="inherit">
                         <HomeIcon/>
                     </IconButton>
-                    <Typography variant="title" color="inherit">
+                    <Typography variant="h6" color="inherit">
                         我的小宅子
                     </Typography>
                     {/*<Button color="secondary">登录</Button>*/}
@@ -152,7 +152,7 @@ class Index_Phone extends BaseComponent {
         return (
             allBoardInfo.map((boardInfo, index) => {
                 return (
-                    <Typography key={index} component="div" style={{padding: 24}}>
+                    <Typography key={index} style={{padding: 24}}>
                         {this.renderArticleSummary(allSummary[boardInfo.boardId])}
                         {this.renderPageMenu(boardInfo)}
                     </Typography>

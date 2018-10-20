@@ -51,7 +51,7 @@ class ArticleSummaryItem extends BaseComponent {
                         style={{height: "150px", objectFit: 'cover'}}
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="headline" component="h2">
+                        <Typography variant="h2">
                             {this.props.title == null ? "未命名标题" : this.props.title}
                         </Typography>
                     </CardContent>

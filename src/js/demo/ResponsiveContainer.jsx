@@ -61,58 +61,7 @@ class ResponsiveContainer extends BaseComponent {
     render() {
         return (
             <div>
-                <JssProvider jss={jss} generateClassName={generateClassName}>
-                    <MuiThemeProvider theme={this.state.callbackTheme}>
-                        <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
-                        <div className={this.props.classes.root}>
-                            <Grid container spacing={0}>
-                                <Grid item xs={12}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=12</Paper>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <AutoComplete componentName={"AutoComplete_1"}
-                                                  setParentNode={this.setParentNode.bind(this)} fullWidth
-                                                  error={false} label={"姓名"} isMultiple={false}
-                                                  placeholder={null}
-                                                  suggestions={["张三", "李四"]}
-                                    />
-                                    <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                        // this.AutoComplete_1.cleanVal();
-                                        alert(this.AutoComplete_1.getVal());
-                                    }}>
-                                        清除
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <AutoComplete componentName={"AutoComplete_2"}
-                                                  setParentNode={this.setParentNode.bind(this)} fullWidth
-                                                  error={false} label={"姓名"} isMultiple={true}
-                                                  placeholder={null}
-                                                  suggestions={["张三", "李四"]}
-                                    />
-                                    <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                        // this.AutoComplete_2.cleanVal();
-                                        alert(this.AutoComplete_2.getVal());
-                                    }}>
-                                        清除
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=3</Paper>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=3</Paper>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=3</Paper>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <Paper className={this.props.classes.paper} elevation={0}>xs 搞事=3</Paper>
-                                </Grid>
-                            </Grid>
-                        </div>
-                    </MuiThemeProvider>
-                </JssProvider>
+
             </div>
         );
     }
