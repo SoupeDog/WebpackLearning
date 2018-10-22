@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import LinearProgress from "@material-ui/core/es/LinearProgress/LinearProgress";
 import {withStyles} from "@material-ui/core/styles/index";
-import BaseComponent from "./BaseComponent.jsx";
 
 const styles = {
     linearProgress: {
@@ -13,11 +12,11 @@ const styles = {
     },
 };
 
+var CountArray_Loading_Linear = new Array(0);
 
-class CallBackView extends BaseComponent {
+class CallBackView extends React.Component {
     constructor(props) {
         super(props)
-        this.loading_Linear_CountArray = new Array(0);
         this.state = {
             loading_Circle_Interrupt: false,
             loading_Linear_Unknown: false,
@@ -50,15 +49,13 @@ class CallBackView extends BaseComponent {
     }
 
     call_Loading_Linear_Unknown(isOpen) {
-        let countArray = this.loading_Linear_CountArray;
+        let countArray = CountArray_Loading_Linear;
         if (isOpen) {
             countArray.push(0);
-            // console.log("add,current：" + countArray.length);
+            console.log("add,current：" + countArray.length);
         } else {
-            if (countArray.length > 0) {
-                countArray.pop();
-                // console.log("remove,current：" + countArray.length);
-            }
+            countArray.pop();
+            console.log("remove,current：" + countArray.length);
         }
         if (countArray.length > 0) {
             if (this.state.loading_Linear_Unknown == false) {

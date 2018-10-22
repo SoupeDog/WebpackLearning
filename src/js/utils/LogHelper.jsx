@@ -1,7 +1,7 @@
 export default class LogHelper {
     // 当前日志级别
     static getCurrentLogLevel() {
-        return {tag: "warn", index: 20};
+        return {tag: "warn", index: 0};
     }
 
     static getLevelIndex(levelTag) {
