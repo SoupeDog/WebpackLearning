@@ -53,7 +53,7 @@ class CallBackView extends React.Component {
     }
 
     componentWillMount() {
-        LogHelper.info({msg: "componentWillMount----------"});
+        LogHelper.info({className: "CallBackView", msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -161,14 +161,14 @@ class CallBackView extends React.Component {
         let countArray = CountArray_Loading_Linear;
         if (isOpen) {
             countArray.push(0);
-            LogHelper.debug({
+            LogHelper.info({
                 className: "CallBackView",
                 msg: "Loading_Linear add,current: " + countArray.length,
                 isJson: false
             });
         } else {
             countArray.pop();
-            LogHelper.debug({
+            LogHelper.info({
                 className: "CallBackView",
                 msg: "Loading_Linear remove,current: " + countArray.length,
                 isJson: false
