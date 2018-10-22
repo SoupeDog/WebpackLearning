@@ -4,7 +4,6 @@ import BaseComponent from "../component/BaseComponent.jsx";
 import CallBackView from "../component/CallBackView.jsx";
 import Button from "@material-ui/core/es/Button/Button";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
-import HttpHelper from "../utils/HttpHelper.jsx";
 
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
@@ -29,18 +28,17 @@ class CallbackTestContainer extends BaseComponent {
             <div>
                 <JssProvider jss={jss} generateClassName={generateClassName}>
                     <MuiThemeProvider theme={this.state.theme}>
-                        <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
-                            {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                                {/*let _react = this;*/}
-                                {/*_react.CallBackView.call_Loading_Circle_Interrupt(true);*/}
-                                {/*setTimeout(function () {*/}
-                                    {/*_react.CallBackView.call_Loading_Circle_Interrupt(false);*/}
-                                {/*}, 3000);*/}
-                            {/*}}>*/}
-                                {/*打断型加载*/}
-                            {/*</Button>*/}
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_Loading_Circle_Interrupt(true);
+                                setTimeout(function () {
+                                    _react.CallBackView.call_Loading_Circle_Interrupt(false);
+                                }, 3000);
+                            }}>
+                                打断型加载
+                            </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 let _react = this;
                                 _react.CallBackView.call_Loading_Linear_Unknown(true);
@@ -131,6 +129,7 @@ class CallbackTestContainer extends BaseComponent {
                                 {/*Bug Maker*/}
                             {/*</Button>*/}
                         </div>
+                        <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
                     </MuiThemeProvider>
                 </JssProvider>
             </div>

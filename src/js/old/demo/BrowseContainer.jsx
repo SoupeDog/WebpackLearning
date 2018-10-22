@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import {withStyles} from "@material-ui/core/styles/index";
 import HW_Menu from "./HW_Menu.jsx";
 import MarkdownHelper from "../utils/MarkdownHelper.jsx";
-import WindowsScrollHelper from "../utils/WindowsScrollHelper.jsx";
+import WindowsScrollHelper from "../utils/WindowsEventHelper.jsx;
 import APIOperator_Article from "./APIOperator_Article.jsx";
 import TOCIcon from '@material-ui/icons/toc';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -324,9 +324,9 @@ class BrowseContainer extends BaseComponent {
     componentDidMount() {
         this.LogHelper.info({msg: "componentDidMount----------"});
         this.LogHelper.debug({msg: ""});
-        this.state.WindowsScrollHelper.addCallback("修正目录图钉", this.checkCatalogPosition.bind(this));
-        this.state.WindowsScrollHelper.addCallback("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
-        this.state.WindowsScrollHelper.start();
+        this.state.WindowsScrollHelper.addCallback_Scroll("修正目录图钉", this.checkCatalogPosition.bind(this));
+        this.state.WindowsScrollHelper.addCallback_Scroll("修正右侧菜单图钉", this.checkRightMenuPosition.bind(this));
+        this.state.WindowsScrollHelper.start_OnScroll();
         this.freshArticle();
         this.freshArticleData({articleId: this.state.articleId, headers: this.state.headers});
     }

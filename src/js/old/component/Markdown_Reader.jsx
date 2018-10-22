@@ -284,7 +284,7 @@ export default class Markdown_Reader extends React.Component {
             "### 流程图 ([语法](http://adrai.github.io/flowchart.js/))\n" +
             "````markdown\n" +
             "```flow\n" +
-            "st=>start: 开始\n" +
+            "st=>start_OnScroll: 开始\n" +
             "e=>end: 结束\n" +
             "op=>operation: 操作步骤\n" +
             "cond=>condition: 是 或者 否?\n" +
@@ -491,7 +491,7 @@ export default class Markdown_Reader extends React.Component {
             "### 流程图 ([语法](http://adrai.github.io/flowchart.js/))\n" +
             "\n" +
             "```flow\n" +
-            "st=>start: 开始\n" +
+            "st=>start_OnScroll: 开始\n" +
             "e=>end: 结束\n" +
             "op=>operation: 操作步骤\n" +
             "cond=>condition: 是 或者 否?\n" +

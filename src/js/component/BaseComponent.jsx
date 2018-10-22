@@ -16,7 +16,7 @@ export default class BaseComponent extends React.Component {
         this.URLHelper = URLHelper;
         this.LogHelper = LogHelper;
 
-        this.LogHelper.info({msg: "constructor----------BaseComponent"});
+        this.LogHelper.info({className: "BaseComponent", msg: "constructor----------"});
         this.LogHelper.debug({tag: "props", msg: props, isJson: false});
     }
 

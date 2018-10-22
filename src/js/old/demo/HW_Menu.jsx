@@ -155,7 +155,7 @@ class HW_Menu extends BaseComponent {
     }
 
     componentDidMount() {
-        this.props.WindowsScrollHelper.addCallback("topBar是否隐藏", this.topBarHide.bind(this));
+        this.props.WindowsEventHelper.addCallback_Scroll("topBar是否隐藏", this.topBarHide.bind(this));
     }
 
     handleUserMenu(event) {
