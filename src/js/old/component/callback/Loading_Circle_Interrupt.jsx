@@ -16,10 +16,6 @@ class Loading_Circle_Interrupt extends BaseComponent {
         this.initCurrentWindowSize = this.initCurrentWindowSize.bind(this);
     }
 
-    componentWillMount() {
-        this.initCurrentWindowSize();
-    }
-
     render() {
         return (
             <Modal className={"loading_Circle_Interrupt"}
@@ -49,12 +45,6 @@ class Loading_Circle_Interrupt extends BaseComponent {
         });
     }
 
-    initCurrentWindowSize() {
-        this.setState({
-            currentHeight: $(window).height(),
-            currentWidth: $(window).width()
-        })
-    }
 }
 
 export default Loading_Circle_Interrupt;

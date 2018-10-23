@@ -1,3 +1,6 @@
+import LogHelper from "../utils/LogHelper.jsx";
+
+LogHelper.info({className: "PropertiesHelper", msg: "constructor----------"});
 export default class PropertiesHelper {
 
     static isStringNotNull(target) {

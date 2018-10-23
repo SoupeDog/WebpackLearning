@@ -1,14 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import LinearProgress from "@material-ui/core/es/LinearProgress/LinearProgress";
 import {withStyles} from "@material-ui/core/styles/index";
 import LogHelper from "../utils/LogHelper.jsx";
-import StyleHelper from "../utils/StyleHelper.jsx";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
-import Modal from "@material-ui/core/es/Modal/Modal";
-import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import LightTip from "./LightTip.jsx";
+import Loading_Linear_Unknown from "./Loading_Linear_Unknown.jsx";
+import Loading_Circle_Interrupt from "./Loading_Circle_Interrupt.jsx";
 
 const styles = {
     callBackView_Container: {
@@ -53,7 +50,7 @@ class CallBackView extends React.Component {
         }
         this.props.setParentNode({componentName: this.props.componentName, target: this});
         LogHelper.info({className: "CallBackView", msg: "constructor----------"});
-        LogHelper.debug({tag: "props", msg: props, isJson: false});
+        LogHelper.debug({tag: "props", msg: props, isJson: true});
         // 事件 bind
         this.close_LightTip = this.closeLightTip.bind(this);
         this.consumeLightTipMsg = this.consumeLightTipMsg.bind(this);
@@ -65,42 +62,55 @@ class CallBackView extends React.Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         LogHelper.info({className: "CallBackView", msg: "componentWillReceiveProps----------"});
-        LogHelper.debug({className: "CallBackView", tag: "nextProps", msg: nextProps, isJson: false});
-        LogHelper.debug({className: "CallBackView", tag: "nextContext", msg: nextContext, isJson: false});
+        LogHelper.debug({className: "CallBackView", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "CallBackView", tag: "nextContext", msg: nextContext, isJson: true});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         LogHelper.info({className: "CallBackView", msg: "shouldComponentUpdate----------"});
-        LogHelper.debug({className: "CallBackView", tag: "nextProps", msg: nextProps, isJson: false});
-        LogHelper.debug({className: "CallBackView", tag: "nextState", msg: nextState, isJson: false});
-        LogHelper.debug({className: "CallBackView", tag: "nextContext", msg: nextContext, isJson: false});
-        return true;
+        LogHelper.debug({className: "CallBackView", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "CallBackView", tag: "nextState", msg: nextState, isJson: true});
+        LogHelper.debug({className: "CallBackView", tag: "nextContext", msg: nextContext, isJson: true});
+        if (this.state.currentHeight == nextState.currentHeight &&
+            this.state.currentWidth == nextState.currentWidth &&
+            this.state.loading_Circle_Interrupt == nextState.loading_Circle_Interrupt &&
+            this.state.loading_Linear_Unknown == nextState.loading_Linear_Unknown &&
+            this.state.lightTip_Visible == nextState.lightTip_Visible) {
+            return false
+        } else {
+            return true;
+        }
     }
 
     render() {
         return (
             <div id="CallbackHelper" className={this.props.classes.callBackView_Container}>
-                {this.state.loading_Linear_Unknown ?
-                    <LinearProgress className={this.props.classes.linearProgress} color="secondary"/> : null}
+                <Loading_Linear_Unknown isShow={this.state.loading_Linear_Unknown}/>
+                <Loading_Circle_Interrupt
+                    isShow={this.state.loading_Circle_Interrupt}
+                    currentHeight={this.state.currentHeight}
+                    currentWidth={this.state.currentWidth}
+                    halfProgressCircleDiameter={this.state.halfProgressCircleDiameter}
+                />
 
-                {this.state.loading_Circle_Interrupt ?
-                    <Modal className={"loading_Circle_Interrupt"}
-                           open={true}
-                           disableEnforceFocus={true}
-                    >
-                        <CircularProgress
-                            size={(this.state.halfProgressCircleDiameter)}
-                            style={{
-                                outline: "none",
-                                margin: StyleHelper.createMargin({
-                                    fatherWidth: this.state.currentWidth,
-                                    fatherHeight: this.state.currentHeight,
-                                    sonWidth: this.state.halfProgressCircleDiameter,
-                                    sonHeight: this.state.halfProgressCircleDiameter
-                                })
-                            }}
-                        />
-                    </Modal> : null}
+                {/*{this.state.loading_Circle_Interrupt ?*/}
+                    {/*<Modal className={"loading_Circle_Interrupt"}*/}
+                           {/*open={true}*/}
+                           {/*disableEnforceFocus={true}*/}
+                    {/*>*/}
+                        {/*<CircularProgress*/}
+                            {/*size={(this.state.halfProgressCircleDiameter)}*/}
+                            {/*style={{*/}
+                                {/*outline: "none",*/}
+                                {/*margin: StyleHelper.createMargin({*/}
+                                    {/*fatherWidth: this.state.currentWidth,*/}
+                                    {/*fatherHeight: this.state.currentHeight,*/}
+                                    {/*sonWidth: this.state.halfProgressCircleDiameter,*/}
+                                    {/*sonHeight: this.state.halfProgressCircleDiameter*/}
+                                {/*})*/}
+                            {/*}}*/}
+                        {/*/>*/}
+                    {/*</Modal> : null}*/}
 
                 <Snackbar
                     key={this.state.lightTipKey}
@@ -135,9 +145,9 @@ class CallBackView extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         LogHelper.info({className: "CallBackView", msg: "componentDidUpdate----------"});
-        LogHelper.debug({className: "CallBackView", tag: "prevProps", msg: prevProps, isJson: false});
-        LogHelper.debug({className: "CallBackView", tag: "prevState", msg: prevState, isJson: false});
-        LogHelper.debug({className: "CallBackView", tag: "snapshot", msg: snapshot, isJson: false});
+        LogHelper.debug({className: "CallBackView", tag: "prevProps", msg: prevProps, isJson: true});
+        LogHelper.debug({className: "CallBackView", tag: "prevState", msg: prevState, isJson: true});
+        LogHelper.debug({className: "CallBackView", tag: "snapshot", msg: snapshot, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
@@ -161,14 +171,14 @@ class CallBackView extends React.Component {
             LogHelper.info({
                 className: "CallBackView",
                 msg: "Loading_Circle add,current: " + countArray.length,
-                isJson: false
+                isJson: true
             });
         } else {
             countArray.pop();
             LogHelper.info({
                 className: "CallBackView",
                 msg: "Loading_Circle remove,current: " + countArray.length,
-                isJson: false
+                isJson: true
             });
         }
         if (countArray.length > 0) {
@@ -189,14 +199,14 @@ class CallBackView extends React.Component {
             LogHelper.info({
                 className: "CallBackView",
                 msg: "Loading_Linear add,current: " + countArray.length,
-                isJson: false
+                isJson: true
             });
         } else {
             countArray.pop();
             LogHelper.info({
                 className: "CallBackView",
                 msg: "Loading_Linear remove,current: " + countArray.length,
-                isJson: false
+                isJson: true
             });
         }
         if (countArray.length > 0) {
@@ -249,6 +259,7 @@ class CallBackView extends React.Component {
             this.consumeLightTipMsg();
         }
     }
+
     consumeLightTipMsg() {
         if (LightTip_Queue.length > 0) {
             let config = LightTip_Queue.shift();
@@ -257,11 +268,11 @@ class CallBackView extends React.Component {
         }
     }
 
-    closeLightTip(event,reason){
+    closeLightTip(event, reason) {
         if (reason === 'clickaway') {
             return;
         }
-        this.setState({ lightTip_Visible: false });
+        this.setState({lightTip_Visible: false});
     }
 
 }

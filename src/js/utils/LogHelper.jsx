@@ -1,5 +1,5 @@
 var CurrentLogLevel = {tag: "warn", index: 5};    // 当前日志级别
-
+console.log("[LogHelper] "+"constructor----------");
 export default class LogHelper {
 
     static getCurrentLogLevel() {
