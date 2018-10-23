@@ -18,7 +18,7 @@ class CallbackTestContainer extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            theme: this.StyleHelper.getLightTheme_Blue_Pink(),
+            theme: this.StyleHelper.getLightTheme_Black_Purple(),
             CallBackView: null
         }
     }

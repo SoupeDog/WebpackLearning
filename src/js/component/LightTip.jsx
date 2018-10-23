@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import SnackbarContent from "@material-ui/core/es/SnackbarContent/SnackbarContent";
-import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import classNames from 'classnames';
-import {withStyles} from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
-import WarningIcon from '@material-ui/icons/Warning';
 import CloseIcon from '@material-ui/icons/Close';
-
 import green from '@material-ui/core/colors/green';
 import amber from '@material-ui/core/colors/amber';
-
+import IconButton from '@material-ui/core/IconButton';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import WarningIcon from '@material-ui/icons/Warning';
+import { withStyles } from '@material-ui/core/styles';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -55,11 +52,6 @@ class LightTip extends React.Component {
         super(props)
         this.state = {}
         this.MIcon = variantIcon[props.variant];
-        // alert("constructor");
-    }
-
-    componentWillMount() {
-        // alert("componentWillMount");
     }
 
     render() {
@@ -87,17 +79,6 @@ class LightTip extends React.Component {
             />
         );
     }
-
-    componentDidMount() {
-        // alert("componentDidMount");
-    }
 }
 
 export default withStyles(styles)(LightTip);
-
-LightTip.propTypes = {
-    className: PropTypes.string,
-    message: PropTypes.string,
-    onClose: PropTypes.func,
-    variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
-};
