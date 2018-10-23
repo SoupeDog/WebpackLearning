@@ -6,6 +6,7 @@ import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import LightTip from "./LightTip.jsx";
 import Loading_Linear_Unknown from "./Loading_Linear_Unknown.jsx";
 import Loading_Circle_Interrupt from "./Loading_Circle_Interrupt.jsx";
+import Dialog_Conform from "./Dialog_Conform.jsx";
 
 const styles = {
     callBackView_Container: {
@@ -13,12 +14,6 @@ const styles = {
         height: "0px",
         position: "fixed",
         top: "0px"
-    },
-    linearProgress: {
-        flexGrow: 10,
-        width: "100%",
-        position: "absolute",
-        zIndex: 10000
     }
 };
 
@@ -54,6 +49,7 @@ class CallBackView extends React.Component {
         // 事件 bind
         this.close_LightTip = this.closeLightTip.bind(this);
         this.consumeLightTipMsg = this.consumeLightTipMsg.bind(this);
+        this.call_Dialog_Conform = this.call_Dialog_Conform.bind(this);
     }
 
     componentWillMount() {
@@ -75,7 +71,8 @@ class CallBackView extends React.Component {
             this.state.currentWidth == nextState.currentWidth &&
             this.state.loading_Circle_Interrupt == nextState.loading_Circle_Interrupt &&
             this.state.loading_Linear_Unknown == nextState.loading_Linear_Unknown &&
-            this.state.lightTip_Visible == nextState.lightTip_Visible) {
+            this.state.lightTip_Visible == nextState.lightTip_Visible &&
+            this.state.dialog_Conform == nextState.dialog_Conform) {
             return false
         } else {
             return true;
@@ -92,26 +89,6 @@ class CallBackView extends React.Component {
                     currentWidth={this.state.currentWidth}
                     halfProgressCircleDiameter={this.state.halfProgressCircleDiameter}
                 />
-
-                {/*{this.state.loading_Circle_Interrupt ?*/}
-                    {/*<Modal className={"loading_Circle_Interrupt"}*/}
-                           {/*open={true}*/}
-                           {/*disableEnforceFocus={true}*/}
-                    {/*>*/}
-                        {/*<CircularProgress*/}
-                            {/*size={(this.state.halfProgressCircleDiameter)}*/}
-                            {/*style={{*/}
-                                {/*outline: "none",*/}
-                                {/*margin: StyleHelper.createMargin({*/}
-                                    {/*fatherWidth: this.state.currentWidth,*/}
-                                    {/*fatherHeight: this.state.currentHeight,*/}
-                                    {/*sonWidth: this.state.halfProgressCircleDiameter,*/}
-                                    {/*sonHeight: this.state.halfProgressCircleDiameter*/}
-                                {/*})*/}
-                            {/*}}*/}
-                        {/*/>*/}
-                    {/*</Modal> : null}*/}
-
                 <Snackbar
                     key={this.state.lightTipKey}
                     anchorOrigin={{
@@ -129,6 +106,17 @@ class CallBackView extends React.Component {
                         message={this.state.lightTip_Msg}
                     />
                 </Snackbar>
+                {this.state.dialog_Conform ?
+                    <Dialog_Conform
+                        call_Dialog_Conform={this.call_Dialog_Conform}
+                        needRender={this.state.dialog_Conform}
+                        transition={this.state.dialog_Transition}
+                        title={this.state.dialog_Title}
+                        msg={this.state.dialog_Msg}
+                        ensure={this.state.dialog_Ensure == null ? null : this.state.dialog_Ensure.bind(this)}
+                        cancel={this.state.dialog_Cancel == null ? null : this.state.dialog_Cancel.bind(this)}/>
+                    : null}
+
             </div>
         );
     }
@@ -221,14 +209,25 @@ class CallBackView extends React.Component {
     }
 
     call_Dialog_Conform({isOpen, transition, title, msg, ensureCallback, cancelCallback}) {
-        this.setState({
-            dialog_Conform: isOpen,
-            dialog_Transition: transition == null ? "fade" : transition,
-            dialog_Title: title,
-            dialog_Msg: msg,
-            dialog_Ensure: ensureCallback,
-            dialog_Cancel: cancelCallback
-        });
+        if (isOpen) {
+            this.setState({
+                dialog_Conform: true,
+                dialog_Transition: transition == null ? "fade" : transition,
+                dialog_Title: title,
+                dialog_Msg: msg,
+                dialog_Ensure: ensureCallback,
+                dialog_Cancel: cancelCallback
+            });
+        } else {
+            this.setState({
+                dialog_Conform: false,
+                dialog_Transition: transition == null ? "fade" : transition,
+                dialog_Title: null,
+                dialog_Msg: null,
+                dialog_Ensure: null,
+                dialog_Cancel: null
+            });
+        }
     }
 
     call_LightTip({isOpen, type, msg, vertical, horizontal}) {

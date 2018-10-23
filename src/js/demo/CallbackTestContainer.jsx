@@ -124,10 +124,31 @@ class CallbackTestContainer extends BaseComponent {
                                     title: "注意",
                                     msg: "这个是一个不可逆操作，请重新确认是否执行。",
                                     ensureCallback: () => {
-                                        alert("确认")
+                                        alert("确认");
+                                        _react.CallBackView.call_Dialog_Conform({isOpen:false});// 删除组件
                                     },
                                     cancelCallback: () => {
                                         alert("取消")
+                                        _react.CallBackView.call_Dialog_Conform({isOpen:false});// 删除组件
+                                    }
+                                });
+                            }}>
+                                确认弹窗
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_Dialog_Conform({
+                                    isOpen: true,
+                                    transaction: "zoom",
+                                    title: "注意2",
+                                    msg: "这个是一个不可逆操作，请重新确认是否执行。2",
+                                    ensureCallback: () => {
+                                        alert("确认2");
+                                        _react.CallBackView.call_Dialog_Conform({isOpen:false});// 删除组件
+                                    },
+                                    cancelCallback: () => {
+                                        alert("取消2")
+                                        _react.CallBackView.call_Dialog_Conform({isOpen:false});// 删除组件
                                     }
                                 });
                             }}>

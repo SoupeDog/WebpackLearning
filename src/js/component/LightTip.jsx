@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import {withStyles} from '@material-ui/core/styles';
+import LogHelper from "../utils/LogHelper.jsx";
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -50,6 +51,30 @@ class LightTip extends React.Component {
     constructor(props) {
         super(props)
         this.MIcon = variantIcon[props.variant];
+        LogHelper.info({className: "LightTip", msg: "constructor----------"});
+    }
+
+    componentWillMount() {
+        LogHelper.info({className: "LightTip", msg: "componentWillMount----------"});
+    }
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        LogHelper.info({className: "LightTip", msg: "componentWillReceiveProps----------"});
+        LogHelper.debug({className: "LightTip", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "LightTip", tag: "nextContext", msg: nextContext, isJson: true});
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        LogHelper.info({className: "LightTip", msg: "shouldComponentUpdate----------"});
+        LogHelper.debug({className: "LightTip", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "LightTip", tag: "nextState", msg: nextState, isJson: true});
+        LogHelper.debug({className: "LightTip", tag: "nextContext", msg: nextContext, isJson: true});
+        if (this.props.variant == nextProps.variant &&
+            this.props.message == nextProps.message) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
@@ -76,6 +101,22 @@ class LightTip extends React.Component {
                 ]}
             />
         );
+    }
+
+    componentDidMount() {
+        LogHelper.info({className: "LightTip", msg: "componentDidMount----------"});
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        LogHelper.info({className: "LightTip", msg: "componentDidUpdate----------"});
+        LogHelper.debug({className: "LightTip", tag: "prevProps", msg: prevProps, isJson: true});
+        LogHelper.debug({className: "LightTip", tag: "prevState", msg: prevState, isJson: true});
+        LogHelper.debug({className: "LightTip", tag: "snapshot", msg: snapshot, isJson: true});
+        LogHelper.debug({msg: ""});
+    }
+
+    componentWillUnmount() {
+        LogHelper.info({className: "LightTip", msg: "componentWillUnmount----------"});
     }
 }
 
