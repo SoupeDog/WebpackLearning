@@ -27,6 +27,7 @@ const styles = {
 
 const CountArray_Loading_Circle = new Array(0);
 const CountArray_Loading_Linear = new Array(0);
+const LightTip_Queue = new Array(0);
 
 class CallBackView extends React.Component {
     constructor(props) {
@@ -43,6 +44,7 @@ class CallBackView extends React.Component {
             dialog_Msg: "内容",
             dialog_Ensure: null,
             dialog_Cancel: null,
+            lightTipKey: 0,
             lightTip_Vertical: "top",
             lightTip_Horizontal: "center",
             lightTip_Visible: false,
@@ -53,9 +55,8 @@ class CallBackView extends React.Component {
         LogHelper.info({className: "CallBackView", msg: "constructor----------"});
         LogHelper.debug({tag: "props", msg: props, isJson: false});
         // 事件 bind
-        this.close_LightTip = this.call_LightTip.bind(this, {
-            isOpen: false
-        });
+        this.close_LightTip = this.closeLightTip.bind(this);
+        this.consumeLightTipMsg = this.consumeLightTipMsg.bind(this);
     }
 
     componentWillMount() {
@@ -102,12 +103,14 @@ class CallBackView extends React.Component {
                     </Modal> : null}
 
                 <Snackbar
+                    key={this.state.lightTipKey}
                     anchorOrigin={{
                         vertical: this.state.lightTip_Vertical,
                         horizontal: this.state.lightTip_Horizontal,
                     }}
                     open={this.state.lightTip_Visible}
                     autoHideDuration={3000}
+                    onExited={this.consumeLightTipMsg}
                     onClose={this.close_LightTip}
                 >
                     <LightTip
@@ -234,8 +237,33 @@ class CallBackView extends React.Component {
         if (horizontal != null) {
             config.lightTip_Horizontal = horizontal;
         }
-        this.setState(config);
+        config.lightTipKey = new Date().getTime();
+        this.addLightTipToQueue(config);
     }
+
+    addLightTipToQueue(settingsJsonObj) {
+        LightTip_Queue.push(settingsJsonObj);
+        if (this.state.lightTip_Visible) {
+            this.setState({lightTip_Visible: false});
+        } else {
+            this.consumeLightTipMsg();
+        }
+    }
+    consumeLightTipMsg() {
+        if (LightTip_Queue.length > 0) {
+            let config = LightTip_Queue.shift();
+            config.lightTip_Visible = true;
+            this.setState(config);
+        }
+    }
+
+    closeLightTip(event,reason){
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({ lightTip_Visible: false });
+    }
+
 }
 
 export default withStyles(styles)(CallBackView);

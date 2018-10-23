@@ -9,7 +9,7 @@ import amber from '@material-ui/core/colors/amber';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 
 const variantIcon = {
     success: CheckCircleIcon,
@@ -49,7 +49,6 @@ class LightTip extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {}
         this.MIcon = variantIcon[props.variant];
     }
 
