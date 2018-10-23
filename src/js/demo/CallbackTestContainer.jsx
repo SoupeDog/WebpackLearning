@@ -8,14 +8,17 @@ import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
+import LightTip from "../component/LightTip.jsx";
+
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
+
 class CallbackTestContainer extends BaseComponent {
 
     constructor(props) {
         super(props)
         this.state = {
-            theme: this.StyleHelper.getLightTheme_Black_Purple(),
+            theme: this.StyleHelper.getLightTheme_Blue_Pink(),
             CallBackView: null
         }
     }
@@ -54,79 +57,79 @@ class CallbackTestContainer extends BaseComponent {
                             }}>
                                 非打断型加载-
                             </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_LightTip({
+                                    isOpen: true,
+                                    type: "success",
+                                    msg: "这是一条成功提示",
+                                    vertical: "bottom",
+                                    horizontal: "center"
+                                });
+                            }}>
+                                成功提示
+                            </Button>
+                            <Button variant="contained" color="primary" justify="center" onClick={() => {
+                                let _react = this;
+                                _react.CallBackView.call_LightTip({
+                                    isOpen: true,
+                                    type: "warning",
+                                    msg: "这是一条警告提示",
+                                    vertical: "top",
+                                    horizontal: "center"
+                                });
+                            }}>
+                                警告提示
+                            </Button>
                             {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                                {/*let _react = this;*/}
-                                {/*_react.CallBackView.call_LightTip({*/}
-                                    {/*isOpen: true,*/}
-                                    {/*type: "success",*/}
-                                    {/*msg: "这是一条成功提示",*/}
-                                    {/*vertical:"bottom",*/}
-                                    {/*horizontal:"center"*/}
-                                {/*});*/}
+                            {/*let _react = this;*/}
+                            {/*_react.CallBackView.call_LightTip({*/}
+                            {/*isOpen: true,*/}
+                            {/*type: "error",*/}
+                            {/*msg: "这是一条错误提示",*/}
+                            {/*vertical:"top",*/}
+                            {/*horizontal:"left"*/}
+                            {/*});*/}
                             {/*}}>*/}
-                                {/*成功提示*/}
+                            {/*错误提示*/}
                             {/*</Button>*/}
                             {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                                {/*let _react = this;*/}
-                                {/*_react.CallBackView.call_LightTip({*/}
-                                    {/*isOpen: true,*/}
-                                    {/*type: "warning",*/}
-                                    {/*msg: "这是一条警告提示",*/}
-                                    {/*vertical:"top",*/}
-                                    {/*horizontal:"center"*/}
-                                {/*});*/}
+                            {/*let _react = this;*/}
+                            {/*_react.CallBackView.call_Dialog_Conform({*/}
+                            {/*isOpen: true,*/}
+                            {/*transaction: "zoom",*/}
+                            {/*title: "注意",*/}
+                            {/*msg: "这个是一个不可逆操作，请重新确认是否执行。",*/}
+                            {/*ensureCallback: () => {*/}
+                            {/*alert("确认")*/}
+                            {/*},*/}
+                            {/*cancelCallback: () => {*/}
+                            {/*alert("取消")*/}
+                            {/*}*/}
+                            {/*});*/}
                             {/*}}>*/}
-                                {/*警告提示*/}
+                            {/*确认弹窗*/}
                             {/*</Button>*/}
                             {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                                {/*let _react = this;*/}
-                                {/*_react.CallBackView.call_LightTip({*/}
-                                    {/*isOpen: true,*/}
-                                    {/*type: "error",*/}
-                                    {/*msg: "这是一条错误提示",*/}
-                                    {/*vertical:"top",*/}
-                                    {/*horizontal:"left"*/}
-                                {/*});*/}
+                            {/*let _react = this;*/}
+                            {/*_react.CallBackView.call_Dialog_Conform({*/}
+                            {/*isOpen: true,*/}
+                            {/*transaction: "zoom",*/}
+                            {/*title: "注意",*/}
+                            {/*msg: "这个是一个不可逆操作，请重新确认是否执行。",*/}
+                            {/*ensureCallback: () => {*/}
+                            {/*alert("确认")*/}
+                            {/*_react.CallBackView.call_Loading_Circle_Interrupt({isOpen: true});*/}
+                            {/*window.setTimeout(()=>{*/}
+                            {/*_react.CallBackView.call_Loading_Circle_Interrupt({isOpen: false});*/}
+                            {/*},3000);*/}
+                            {/*},*/}
+                            {/*cancelCallback: () => {*/}
+                            {/*alert("取消")*/}
+                            {/*}*/}
+                            {/*});*/}
                             {/*}}>*/}
-                                {/*错误提示*/}
-                            {/*</Button>*/}
-                            {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                                {/*let _react = this;*/}
-                                {/*_react.CallBackView.call_Dialog_Conform({*/}
-                                    {/*isOpen: true,*/}
-                                    {/*transaction: "zoom",*/}
-                                    {/*title: "注意",*/}
-                                    {/*msg: "这个是一个不可逆操作，请重新确认是否执行。",*/}
-                                    {/*ensureCallback: () => {*/}
-                                        {/*alert("确认")*/}
-                                    {/*},*/}
-                                    {/*cancelCallback: () => {*/}
-                                        {/*alert("取消")*/}
-                                    {/*}*/}
-                                {/*});*/}
-                            {/*}}>*/}
-                                {/*确认弹窗*/}
-                            {/*</Button>*/}
-                            {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                                {/*let _react = this;*/}
-                                {/*_react.CallBackView.call_Dialog_Conform({*/}
-                                    {/*isOpen: true,*/}
-                                    {/*transaction: "zoom",*/}
-                                    {/*title: "注意",*/}
-                                    {/*msg: "这个是一个不可逆操作，请重新确认是否执行。",*/}
-                                    {/*ensureCallback: () => {*/}
-                                        {/*alert("确认")*/}
-                                        {/*_react.CallBackView.call_Loading_Circle_Interrupt({isOpen: true});*/}
-                                        {/*window.setTimeout(()=>{*/}
-                                            {/*_react.CallBackView.call_Loading_Circle_Interrupt({isOpen: false});*/}
-                                        {/*},3000);*/}
-                                    {/*},*/}
-                                    {/*cancelCallback: () => {*/}
-                                        {/*alert("取消")*/}
-                                    {/*}*/}
-                                {/*});*/}
-                            {/*}}>*/}
-                                {/*Bug Maker*/}
+                            {/*Bug Maker*/}
                             {/*</Button>*/}
                         </div>
                         <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>

@@ -7,6 +7,8 @@ import StyleHelper from "../utils/StyleHelper.jsx";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
 import Modal from "@material-ui/core/es/Modal/Modal";
 import CircularProgress from "@material-ui/core/es/CircularProgress/CircularProgress";
+import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
+import LightTip from "./LightTip.jsx";
 
 const styles = {
     callBackView_Container: {
@@ -20,7 +22,7 @@ const styles = {
         width: "100%",
         position: "absolute",
         zIndex: 10000
-    },
+    }
 };
 
 const CountArray_Loading_Circle = new Array(0);
@@ -50,6 +52,10 @@ class CallBackView extends React.Component {
         this.props.setParentNode({componentName: this.props.componentName, target: this});
         LogHelper.info({className: "CallBackView", msg: "constructor----------"});
         LogHelper.debug({tag: "props", msg: props, isJson: false});
+        // 事件 bind
+        this.close_LightTip = this.call_LightTip.bind(this, {
+            isOpen: false
+        });
     }
 
     componentWillMount() {
@@ -94,6 +100,22 @@ class CallBackView extends React.Component {
                             }}
                         />
                     </Modal> : null}
+
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: this.state.lightTip_Vertical,
+                        horizontal: this.state.lightTip_Horizontal,
+                    }}
+                    open={this.state.lightTip_Visible}
+                    autoHideDuration={3000}
+                    onClose={this.close_LightTip}
+                >
+                    <LightTip
+                        onClose={this.close_LightTip}
+                        variant={this.state.lightTip_Variant}
+                        message={this.state.lightTip_Msg}
+                    />
+                </Snackbar>
             </div>
         );
     }
@@ -198,10 +220,14 @@ class CallBackView extends React.Component {
 
     call_LightTip({isOpen, type, msg, vertical, horizontal}) {
         let config = {
-            lightTip_Visible: isOpen,
-            lightTip_Variant: type,
-            lightTip_Msg: msg
+            lightTip_Visible: isOpen
         };
+        if (type != null) {
+            config.lightTip_Variant = type;
+        }
+        if (msg != null) {
+            config.lightTip_Msg = msg;
+        }
         if (vertical != null) {
             config.lightTip_Vertical = vertical;
         }
