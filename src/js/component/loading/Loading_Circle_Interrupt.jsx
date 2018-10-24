@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from '@material-ui/core/Modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import LogHelper from "../utils/LogHelper.jsx";
-import StyleHelper from "../utils/StyleHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
+import StyleHelper from "../../utils/StyleHelper.jsx";
 
 class Loading_Circle_Interrupt extends React.Component {
 

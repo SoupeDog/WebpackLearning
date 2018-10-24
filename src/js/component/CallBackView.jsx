@@ -3,10 +3,10 @@ import {withStyles} from "@material-ui/core/styles/index";
 import LogHelper from "../utils/LogHelper.jsx";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
-import LightTip from "./LightTip.jsx";
-import Loading_Linear_Unknown from "./Loading_Linear_Unknown.jsx";
-import Loading_Circle_Interrupt from "./Loading_Circle_Interrupt.jsx";
-import Dialog_Conform from "./Dialog_Conform.jsx";
+import LightTip from "./alert/LightTip.jsx";
+import Loading_Linear_Unknown from "./loading/Loading_Linear_Unknown.jsx";
+import Loading_Circle_Interrupt from "./loading/Loading_Circle_Interrupt.jsx";
+import Dialog_Conform from "./dialog/Dialog_Conform.jsx";
 
 const styles = {
     callBackView_Container: {

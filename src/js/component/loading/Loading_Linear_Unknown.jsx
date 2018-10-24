@@ -1,7 +1,7 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import LogHelper from "../utils/LogHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
 
 const styles = {
     root: {

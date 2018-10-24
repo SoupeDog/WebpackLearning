@@ -5,8 +5,8 @@ import DialogContent from "@material-ui/core/es/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/es/DialogActions/DialogActions";
 import Button from "@material-ui/core/es/Button/Button";
-import LogHelper from "../utils/LogHelper.jsx";
-import StyleHelper from "../utils/StyleHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
+import StyleHelper from "../../utils/StyleHelper.jsx";
 
 class Dialog_Conform extends React.Component {
 
