@@ -5,6 +5,7 @@ import CallBackView from "../component/CallBackView.jsx";
 import Button from "@material-ui/core/es/Button/Button";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import StyleHelper from "../utils/StyleHelper.jsx";
+import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
@@ -21,7 +22,6 @@ class CallbackTestContainer extends BaseComponent {
         super(props)
         this.state = {
             theme: StyleHelper.getLightTheme_Black_Purple(),
-            CallBackView: null
         }
     }
 
@@ -36,39 +36,42 @@ class CallbackTestContainer extends BaseComponent {
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_Loading_Circle_Interrupt(true);
+                                CallBackViewHelper.call_Loading_Circle_Interrupt(true);
                                 setTimeout(function () {
-                                    _react.CallBackView.call_Loading_Circle_Interrupt(false);
+                                    CallBackViewHelper.call_Loading_Circle_Interrupt(false);
                                 }, 3000);
+
+                                // let _react = this;
+                                // CallBackViewHelper.call_Loading_Circle_Interrupt(true);
+                                // setTimeout(function () {
+                                //     CallBackViewHelper.call_Loading_Circle_Interrupt(false);
+                                // }, 3000);
                             }}>
                                 打断型加载
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_Loading_Linear_Unknown(true);
+                                CallBackViewHelper.call_Loading_Linear_Unknown(true);
                             }}>
                                 非打断型加载+
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_Loading_Linear_Unknown(false);
+                                CallBackViewHelper.call_Loading_Linear_Unknown(false);
                             }}>
                                 非打断型加载-
                             </Button>
                         </div>
                         {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
                         {/*let _react = this;*/}
-                        {/*_react.CallBackView.call_Dialog_Conform({*/}
+                        {/*CallBackViewHelper.call_Dialog_Conform({*/}
                         {/*isOpen: true,*/}
                         {/*transaction: "zoom",*/}
                         {/*title: "注意",*/}
                         {/*msg: "这个是一个不可逆操作，请重新确认是否执行。",*/}
                         {/*ensureCallback: () => {*/}
                         {/*alert("确认")*/}
-                        {/*_react.CallBackView.call_Loading_Circle_Interrupt({isOpen: true});*/}
+                        {/*CallBackViewHelper.call_Loading_Circle_Interrupt({isOpen: true});*/}
                         {/*window.setTimeout(()=>{*/}
-                        {/*_react.CallBackView.call_Loading_Circle_Interrupt({isOpen: false});*/}
+                        {/*CallBackViewHelper.call_Loading_Circle_Interrupt({isOpen: false});*/}
                         {/*},3000);*/}
                         {/*},*/}
                         {/*cancelCallback: () => {*/}
@@ -83,8 +86,7 @@ class CallbackTestContainer extends BaseComponent {
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_LightTip({
+                                CallBackViewHelper.call_LightTip({
                                     isOpen: true,
                                     type: "success",
                                     msg: "这是一条成功提示",
@@ -95,8 +97,7 @@ class CallbackTestContainer extends BaseComponent {
                                 成功提示
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_LightTip({
+                                CallBackViewHelper.call_LightTip({
                                     isOpen: true,
                                     type: "warning",
                                     msg: "这是一条警告提示",
@@ -107,8 +108,7 @@ class CallbackTestContainer extends BaseComponent {
                                 警告提示
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_LightTip({
+                                CallBackViewHelper.call_LightTip({
                                     isOpen: true,
                                     type: "error",
                                     msg: "这是一条错误提示",
@@ -119,8 +119,7 @@ class CallbackTestContainer extends BaseComponent {
                                 错误提示
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_Dialog_Conform({
+                                CallBackViewHelper.call_Dialog_Conform({
                                     isOpen: true,
                                     scroll: "body",
                                     transition: "slide",
@@ -128,19 +127,18 @@ class CallbackTestContainer extends BaseComponent {
                                     msg: "这个是一个不可逆操作，请重新确认是否执行。",
                                     ensureCallback: () => {
                                         alert("确认");
-                                        _react.CallBackView.call_Dialog_Conform({isOpen: false});// 删除组件
+                                        CallBackViewHelper.call_Dialog_Conform({isOpen: false});// 删除组件
                                     },
                                     cancelCallback: () => {
                                         alert("取消")
-                                        _react.CallBackView.call_Dialog_Conform({isOpen: false});// 删除组件
+                                        CallBackViewHelper.call_Dialog_Conform({isOpen: false});// 删除组件
                                     }
                                 });
                             }}>
                                 确认弹窗
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
-                                let _react = this;
-                                _react.CallBackView.call_Dialog_Conform({
+                                CallBackViewHelper.call_Dialog_Conform({
                                     isOpen: true,
                                     scroll: "body",
                                     transition: "slide",
@@ -148,11 +146,11 @@ class CallbackTestContainer extends BaseComponent {
                                     msg: "这个是一个不可逆操作，请重新确认是否执行。2",
                                     ensureCallback: () => {
                                         alert("确认2");
-                                        _react.CallBackView.call_Dialog_Conform({isOpen: false});// 删除组件
+                                        CallBackViewHelper.call_Dialog_Conform({isOpen: false});// 删除组件
                                     },
                                     cancelCallback: () => {
                                         alert("取消2")
-                                        _react.CallBackView.call_Dialog_Conform({isOpen: false});// 删除组件
+                                        CallBackViewHelper.call_Dialog_Conform({isOpen: false});// 删除组件
                                     }
                                 });
                             }}>

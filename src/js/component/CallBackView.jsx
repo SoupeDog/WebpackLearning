@@ -2,6 +2,7 @@ import React from 'react';
 import {withStyles} from "@material-ui/core/styles/index";
 import LogHelper from "../utils/LogHelper.jsx";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
+import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
 import LightTip from "./alert/LightTip.jsx";
 import Loading_Linear_Unknown from "./loading/Loading_Linear_Unknown.jsx";
@@ -43,7 +44,7 @@ class CallBackView extends React.Component {
             lightTip_Msg: "这是一条成功信息！",
             lightTip_Variant: "success"
         }
-        this.props.setParentNode({componentName: this.props.componentName, target: this});
+        CallBackViewHelper.setCallBackView(this);
         LogHelper.info({className: "CallBackView", msg: "constructor----------"});
         LogHelper.debug({tag: "props", msg: props, isJson: true});
         // 事件 bind
@@ -275,7 +276,6 @@ class CallBackView extends React.Component {
         }
         this.setState({lightTip_Visible: false});
     }
-
 }
 
 export default withStyles(styles)(CallBackView);

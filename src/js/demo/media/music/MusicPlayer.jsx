@@ -5,7 +5,6 @@ class MusicPlayer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
         LogHelper.info({className: "MusicPlayer", msg: "constructor----------"});
     }
 
@@ -26,13 +25,29 @@ class MusicPlayer extends React.Component {
         LogHelper.debug({className: "MusicPlayer", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "MusicPlayer", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        if (this.props.type == nextProps.type &&
+            this.props.src == nextProps.src) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
-        return (
-            null
-        );
+        switch (this.props.type) {
+            default:
+                return (
+                    <iframe className="wangYi_CloudMusic"
+                            style={{
+                                margin: 0,
+                                border: "0",
+                                padding: "0",
+                                width: "100%",
+                                height: "80px"
+                            }} src={this.props.src}>
+                    </iframe>
+                );
+        }
     }
 
     componentDidMount() {
