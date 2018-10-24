@@ -129,7 +129,6 @@ class CallBackView extends React.Component {
             delta: 150,
             callbackFunction: this.initCircleSize.bind(this)
         });
-        WindowsEventHelper.start_OnResize();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

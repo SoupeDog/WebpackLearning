@@ -9,6 +9,8 @@ import StyleHelper from "../utils/StyleHelper.jsx";
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
+import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
+import LogHelper from "../utils/LogHelper.jsx";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -163,6 +165,19 @@ class CallbackTestContainer extends BaseComponent {
             </div>
         );
     }
+
+    componentDidMount() {
+        LogHelper.info({className: "CallBackView", msg: "componentDidMount----------"});
+        WindowsEventHelper.addCallback_Resize({
+            name: "父类监听Resize",
+            delta: 150,
+            callbackFunction: function () {
+                console.log("CallBackView Resize");
+            }
+        });
+        WindowsEventHelper.start_OnResize();
+    }
+
 }
 
 export default CallbackTestContainer;

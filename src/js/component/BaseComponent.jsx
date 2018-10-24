@@ -4,6 +4,7 @@ import LogHelper from "../utils/LogHelper.jsx";
 export default class BaseComponent extends React.Component {
     constructor(props) {
         super(props);
+        document.getElementById('root').innerHTML="";// 清理初始页面
         LogHelper.info({className: "BaseComponent", msg: "constructor----------"});
         LogHelper.debug({tag: "props", msg: props, isJson: false});
     }
