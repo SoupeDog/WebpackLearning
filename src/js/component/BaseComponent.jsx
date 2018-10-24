@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import LogHelper from "../utils/LogHelper.jsx";
 
 export default class BaseComponent extends React.Component {

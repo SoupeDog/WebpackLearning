@@ -8,7 +8,6 @@ const styles = {
         flexGrow: 10,
         width: "100%",
         position: "absolute",
-        zIndex: 10000
     },
 };
 

@@ -14,7 +14,8 @@ const styles = {
         width: "100%",
         height: "0px",
         position: "fixed",
-        top: "0px"
+        top: "0px",
+        zIndex:10000
     }
 };
 
@@ -32,7 +33,7 @@ class CallBackView extends React.Component {
             loading_Circle_Interrupt: false,
             loading_Linear_Unknown: false,
             dialog_Conform: false,
-            dialog_Transition: "fade",
+            dialog_Transition: "slide",
             dialog_Title: "提示",
             dialog_Msg: "内容",
             dialog_Ensure: null,
@@ -214,7 +215,7 @@ class CallBackView extends React.Component {
             this.setState({
                 scroll: scroll,
                 dialog_Conform: true,
-                dialog_Transition: transition == null ? "fade" : transition,
+                dialog_Transition: transition == null ? "slide" : transition,
                 dialog_Title: title,
                 dialog_Msg: msg,
                 dialog_Ensure: ensureCallback,
@@ -224,7 +225,7 @@ class CallBackView extends React.Component {
             this.setState({
                 dialog_Conform: false,
                 scroll: null,
-                dialog_Transition: transition == null ? "fade" : transition,
+                dialog_Transition: transition == null ? "slide" : transition,
                 dialog_Title: null,
                 dialog_Msg: null,
                 dialog_Ensure: null,

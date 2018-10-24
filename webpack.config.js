@@ -96,7 +96,7 @@ module.exports = {
             filename: "index.html",
             title: "我的小宅子",
             favicon: "./src/img/icon.ico",
-            template: "./src/html/template.html",
+            template: "./src/html/browse.html",
             chunks: ["index","commons"],
             inject: "body",
             minify: {

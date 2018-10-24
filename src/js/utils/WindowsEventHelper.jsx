@@ -12,6 +12,7 @@ export default class WindowsEventHelper {
         if (Scroll_FunctionMap.has(name) || FunctionLimiter_Time.has(name)) {
             throw new Error("Duplicate callback key : " + name);
         }
+        Scroll_FunctionMap.set(name,callbackFunction);
         if (delta != null) {
             FunctionLimiter_Time.set(name, delta);
         }
@@ -39,7 +40,7 @@ export default class WindowsEventHelper {
 
     static start_OnScroll() {
         window.onscroll = () => {
-            LogHelper.info({className: "WindowsEventHelper", msg: "OnScroll----------"});
+            LogHelper.info({className: "WindowsEventHelper", msg: "OnScroll----------"+Scroll_FunctionMap.size});
             let currentScrollY = window.scrollY;
             for (let [name, callbackFunction] of Scroll_FunctionMap) {
                 if (typeof callbackFunction == "function") {
