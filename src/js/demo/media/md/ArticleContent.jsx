@@ -27,7 +27,7 @@ class ArticleContent extends React.Component {
         LogHelper.debug({className: "ArticleContent", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "ArticleContent", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        if (this.props.article != null || this.props.article.lastUpdateTs == nextProps.lastUpdateTs) {
+        if (this.props.article == null || this.props.article.lastUpdateTs == nextProps.lastUpdateTs) {
             return false;
         } else {
             return true;

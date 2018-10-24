@@ -10,12 +10,15 @@ import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
 import StyleHelper from "../utils/StyleHelper.jsx";
 import LogHelper from "../utils/LogHelper.jsx";
+import URLHelper from "../utils/URLHelper.jsx";
 import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import CallBackView from "../component/CallBackView.jsx";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import MusicPlayer from "./media/music/MusicPlayer.jsx";
 import ArticleReader from "./media/md/ArticleReader.jsx";
+import APIOperator_Article from "./api/APIOperator_Article.jsx";
+import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -25,6 +28,13 @@ class BrowseContainer extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
+            articleId: URLHelper.getQueryString("id"),
+            headers: {
+                uId: "U00000000",
+                token: "0",
+                scope: "web",
+                secretKey: URLHelper.getQueryString("secretKey")
+            },
             articleObj: {
                 articleId: "848aa75a9baa4b019f8bf152e6b4ed17",
                 boardName: "技术",
@@ -824,7 +834,7 @@ class BrowseContainer extends BaseComponent {
                 pageViews: 0,
                 legal_Flag: true,
                 properties: {
-                    bgm: "https://music.163.com/outchain/player?type=2&id=34014166&auto=1&height=66",
+                    // bgm: "https://music.163.com/outchain/player?type=2&id=34014166&auto=1&height=66",
                     image: "https://s1.ax2x.com/2018/10/24/5XWUJa.jpg"
                     // image: "https://s1.ax2x.com/2018/10/13/5TywRO.jpg"
                 },
@@ -891,6 +901,7 @@ class BrowseContainer extends BaseComponent {
     componentDidMount() {
         WindowsEventHelper.start_OnResize();
         WindowsEventHelper.start_OnScroll();
+        this.freshArticleData({articleId: this.state.articleId, headers: this.state.headers});
         LogHelper.info({className: "BrowseContainer", msg: "componentDidMount----------"});
     }
 
@@ -904,6 +915,41 @@ class BrowseContainer extends BaseComponent {
 
     componentWillUnmount() {
         LogHelper.info({className: "BrowseContainer", msg: "componentWillUnmount----------"});
+    }
+
+    freshArticleData({articleId, headers}) {
+        let _react = this;
+        APIOperator_Article.getArticleInfo({
+            headers: headers,
+            articleId: articleId,
+            requestBefore: function () {
+                CallBackViewHelper.call_Loading_Linear_Unknown(true);
+            },
+            successCallback: function (response) {
+                if (response.data.length > 0) {// 确保已查询到结果
+                    document.title = response.data[0].title// 设置 html tile
+                    let articleTemp = response.data[0];
+                    let currentArticle = articleTemp;
+                    if (articleTemp.properties == null) {
+                        currentArticle.properties = {};
+                    } else {
+                        currentArticle.properties = JSON.parse(articleTemp.properties);
+                    }
+                    _react.setState({articleObj: currentArticle});
+                    // window.setTimeout(function () {// 确保 articleObj 被更新再刷新 MD 显示内容
+                    //     _react.s();
+                    // }, 500);
+                } else {
+                    CallBackViewHelper.call_LightTip({isOpen: true, type: "error", msg: "未检索到文章内容，将在3秒内为您跳转回主页"});
+                }
+            },
+            errorCallback: function (response) {
+                CallBackViewHelper.call_LightTip({isOpen: true, type: "error", msg: "发生了某种错误："+JSON.stringify(response)});
+            },
+            finallyCallback: function () {
+                CallBackViewHelper.call_Loading_Linear_Unknown(false);
+            }
+        });
     }
 }
 
