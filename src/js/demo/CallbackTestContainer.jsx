@@ -120,6 +120,7 @@ class CallbackTestContainer extends BaseComponent {
                                 let _react = this;
                                 _react.CallBackView.call_Dialog_Conform({
                                     isOpen: true,
+                                    scroll:"body",
                                     transaction: "zoom",
                                     title: "注意",
                                     msg: "这个是一个不可逆操作，请重新确认是否执行。",
@@ -139,6 +140,7 @@ class CallbackTestContainer extends BaseComponent {
                                 let _react = this;
                                 _react.CallBackView.call_Dialog_Conform({
                                     isOpen: true,
+                                    scroll:"body",
                                     transaction: "zoom",
                                     title: "注意2",
                                     msg: "这个是一个不可逆操作，请重新确认是否执行。2",

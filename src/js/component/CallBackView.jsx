@@ -108,6 +108,7 @@ class CallBackView extends React.Component {
                 </Snackbar>
                 {this.state.dialog_Conform ?
                     <Dialog_Conform
+                        scroll={this.state.scroll}
                         call_Dialog_Conform={this.call_Dialog_Conform}
                         needRender={this.state.dialog_Conform}
                         transition={this.state.dialog_Transition}
@@ -208,9 +209,10 @@ class CallBackView extends React.Component {
         }
     }
 
-    call_Dialog_Conform({isOpen, transition, title, msg, ensureCallback, cancelCallback}) {
+    call_Dialog_Conform({isOpen, scroll, transition, title, msg, ensureCallback, cancelCallback}) {
         if (isOpen) {
             this.setState({
+                scroll: scroll,
                 dialog_Conform: true,
                 dialog_Transition: transition == null ? "fade" : transition,
                 dialog_Title: title,
@@ -221,6 +223,7 @@ class CallBackView extends React.Component {
         } else {
             this.setState({
                 dialog_Conform: false,
+                scroll: null,
                 dialog_Transition: transition == null ? "fade" : transition,
                 dialog_Title: null,
                 dialog_Msg: null,

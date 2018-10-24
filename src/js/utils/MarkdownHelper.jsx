@@ -1,5 +1,7 @@
 import PropertiesHelper from "./PropertiesHelper.jsx"
+import LogHelper from "../utils/LogHelper.jsx";
 
+LogHelper.info({className: "PropertiesHelper", msg: "constructor----------"});
 export default class MarkdownHelper {
 
     static formatToHtml({containerId, content, catalogId, useCatalog, useEmoji, useFlowChart, useSequenceDiagram, useTex}) {
