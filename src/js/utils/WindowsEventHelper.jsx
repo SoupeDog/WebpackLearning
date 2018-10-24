@@ -10,7 +10,8 @@ export default class WindowsEventHelper {
 
     static addCallback_Scroll({name, callbackFunction, delta}) {
         if (Scroll_FunctionMap.has(name) || FunctionLimiter_Time.has(name)) {
-            throw new Error("Duplicate callback key : " + name);
+            // throw new Error("Duplicate callback key : " + name);
+            LogHelper.warn({className:"WindowsEventHelper",msg:"AddCallback_Scroll duplicate callback key : " + name});
         }
         Scroll_FunctionMap.set(name,callbackFunction);
         if (delta != null) {
@@ -25,7 +26,8 @@ export default class WindowsEventHelper {
 
     static addCallback_Resize({name, callbackFunction, delta}) {
         if (Scroll_FunctionMap.has(name) || FunctionLimiter_Time.has(name)) {
-            throw new Error("Duplicate callback key : " + name);
+            // throw new Error("Duplicate callback key : " + name);
+            LogHelper.warn({className:"WindowsEventHelper",msg:"AddCallback_Resize duplicate callback key : " + name});
         }
         Resize_FunctionMap.set(name, callbackFunction);
         if (delta != null) {
@@ -59,7 +61,7 @@ export default class WindowsEventHelper {
 
     static start_OnResize() {
         window.onresize = () => {
-            LogHelper.info({className: "WindowsEventHelper", msg: "OnResize----------"});
+            LogHelper.info({className: "WindowsEventHelper", msg: "OnResize----------"+Resize_FunctionMap.size});
             let currentHight = window.innerHeight;
             let currentWidth = window.innerWidth;
             for (let [name, callbackFunction] of Resize_FunctionMap) {

@@ -8,7 +8,7 @@ class ArticleCatlog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            needFixed: true
+            needFixed: window.scrollY > 330
         };
         LogHelper.info({className: "ArticleCatlog", msg: "constructor----------"});
     }
@@ -30,7 +30,12 @@ class ArticleCatlog extends React.Component {
         LogHelper.debug({className: "ArticleCatlog", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "ArticleCatlog", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        if (this.props.article.lastUpdateTs == nextProps.article.lastUpdateTs &&
+            this.state.needFixed == nextState.needFixed) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
@@ -50,7 +55,7 @@ class ArticleCatlog extends React.Component {
     componentDidMount() {
         let _react = this;
         WindowsEventHelper.addCallback_Scroll({
-            name: "日志目录固定检查", delta: 150, callbackFunction: function ({currentScrollY}) {
+            name: "日志目录固定检查", delta: 50, callbackFunction: function ({currentScrollY}) {
                 if (currentScrollY > 330) {
                     _react.setState({needFixed: true});
                 } else {

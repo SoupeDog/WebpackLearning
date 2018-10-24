@@ -14,7 +14,6 @@ import InputBase from "@material-ui/core/InputBase/InputBase";
 import {withStyles} from "@material-ui/core/styles/index";
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import LeftDrawerMenu from "./LeftDrawerMenu.jsx";
-import Grid from "@material-ui/core/es/Grid/Grid";
 
 
 const styles = theme => ({
@@ -72,6 +71,8 @@ const styles = theme => ({
             width: 120,
             '&:focus': {
                 width: 200,
+                borderRadius: theme.shape.borderRadius,
+                backgroundColor: fade(theme.palette.common.black, 0.25),
             },
         },
     },
@@ -110,7 +111,12 @@ class Menu_Top_PC extends React.Component {
         LogHelper.debug({className: "Menu_Top_PC", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "Menu_Top_PC", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        if (this.state.menu_Top_BackgroundTransparent == nextState.menu_Top_BackgroundTransparent &&
+            this.state.swipeableDrawerIsOpen == nextState.swipeableDrawerIsOpen) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
@@ -119,7 +125,9 @@ class Menu_Top_PC extends React.Component {
                 <LeftDrawerMenu swipeableDrawerIsOpen={this.state.swipeableDrawerIsOpen}
                                 openSwipeableDrawer={this.openSwipeableDrawer}
                                 closeSwipeableDrawer={this.closeSwipeableDrawer}/>
-                <AppBar position="fixed">
+                <AppBar position="fixed"
+                        elevation={this.state.menu_Top_BackgroundTransparent ? 0 : 1}
+                        className={classNames({"backgroundTransparent": this.state.menu_Top_BackgroundTransparent})}>
                     <Toolbar>
                         <IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Open drawer"
                                     onClick={this.openSwipeableDrawer}>
@@ -148,6 +156,16 @@ class Menu_Top_PC extends React.Component {
     }
 
     componentDidMount() {
+        let _react = this;
+        WindowsEventHelper.addCallback_Scroll({
+            name: "APPBar 透明判定", delta: 50, callbackFunction: function ({currentScrollY}) {
+                if (currentScrollY > 270) {
+                    _react.setState({menu_Top_BackgroundTransparent: false});
+                } else {
+                    _react.setState({menu_Top_BackgroundTransparent: true});
+                }
+            }
+        });
         LogHelper.info({className: "Menu_Top_PC", msg: "componentDidMount----------"});
     }
 

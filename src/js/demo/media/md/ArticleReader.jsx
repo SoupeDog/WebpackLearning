@@ -4,6 +4,8 @@ import Grid from "@material-ui/core/es/Grid/Grid";
 import ArticleTitle from "./ArticleTitle.jsx";
 import ArticleContent from "./ArticleContent.jsx";
 import ArticleCatlog from "./ArticleCatlog.jsx";
+import ArticleMenu from "./ArticleMenu.jsx";
+import Hidden from "@material-ui/core/es/Hidden/Hidden";
 
 class ArticleReader extends React.Component {
 
@@ -12,6 +14,7 @@ class ArticleReader extends React.Component {
         this.state = {
             catalogIsOpen: false
         };
+        this.catalogTrigger = this.catalogTrigger.bind(this);
         LogHelper.info({className: "ArticleReader", msg: "constructor----------"});
     }
 
@@ -49,7 +52,12 @@ class ArticleReader extends React.Component {
                             <ArticleTitle article={this.props.article} key={"ArticleTitle"}/>
                             <ArticleContent article={this.props.article} key={"ArticleContent"}/>
                         </Grid>
-                        <Grid item xs={1}></Grid>
+                        <Grid item xs={1}>
+                            <Hidden only={["xs", "sm"]}>
+                                <ArticleMenu catalogTrigger={this.catalogTrigger} catalogIsOpen={this.state.catalogIsOpen}
+                                             key={"ArticleMenu"}/>
+                            </Hidden>
+                        </Grid>
                     </Grid>
                 </Grid>
             );
@@ -61,14 +69,19 @@ class ArticleReader extends React.Component {
                         <ArticleTitle article={this.props.article} key={"ArticleTitle"}/>
                         <ArticleContent article={this.props.article} key={"ArticleContent"}/>
                     </Grid>
-                    <Grid item xs={1}></Grid>
+                    <Grid item xs={1}>
+                        <Hidden only={["xs", "sm"]}>
+                            <ArticleMenu catalogTrigger={this.catalogTrigger} catalogIsOpen={this.state.catalogIsOpen}
+                                         key={"ArticleMenu"}/>
+                        </Hidden>
+                    </Grid>
                 </Grid>
             );
         }
     }
 
     componentDidMount() {
-        let _react=this;
+        let _react = this;
         LogHelper.info({className: "ArticleReader", msg: "componentDidMount----------"});
         // window.setTimeout(function () {
         //     _react.setState({catalogIsOpen:true});
@@ -88,6 +101,10 @@ class ArticleReader extends React.Component {
 
     componentWillUnmount() {
         LogHelper.info({className: "ArticleReader", msg: "componentWillUnmount----------"});
+    }
+
+    catalogTrigger() {
+        this.setState({catalogIsOpen: !this.state.catalogIsOpen});
     }
 }
 

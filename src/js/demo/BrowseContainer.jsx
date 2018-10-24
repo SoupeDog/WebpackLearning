@@ -825,7 +825,7 @@ class BrowseContainer extends BaseComponent {
                 legal_Flag: true,
                 properties: {
                     bgm: "https://music.163.com/outchain/player?type=2&id=34014166&auto=1&height=66",
-                    image: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540384654948&di=1eba639599a807937010c4988c99f6ec&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fb64543a98226cffc4b262b91b3014a90f603ea81.jpg"
+                    image: "https://s1.ax2x.com/2018/10/24/5XWUJa.jpg"
                     // image: "https://s1.ax2x.com/2018/10/13/5TywRO.jpg"
                 },
                 lastUpdateTs: 1536494132974,
@@ -864,7 +864,7 @@ class BrowseContainer extends BaseComponent {
             <JssProvider jss={jss} generateClassName={generateClassName}>
                 <MuiThemeProvider theme={StyleHelper.getLightTheme_Black_Purple()}>
                     <Menu_Top_PC/>
-                    <Grid container spacing={0} justify="center" style={{marginTop: "64px"}}>
+                    <Grid container spacing={0} justify="center">
                         <Grid id="banner" item xs={12}>
                             {this.state.articleObj.properties.image != null ?
                                 <CardMedia
@@ -889,6 +889,7 @@ class BrowseContainer extends BaseComponent {
     }
 
     componentDidMount() {
+        WindowsEventHelper.start_OnResize();
         WindowsEventHelper.start_OnScroll();
         LogHelper.info({className: "BrowseContainer", msg: "componentDidMount----------"});
     }
