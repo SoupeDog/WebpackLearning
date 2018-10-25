@@ -78,7 +78,7 @@ const styles = theme => ({
     },
 });
 
-class Menu_Top_PC extends React.Component {
+class Menu_Top_Browse extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -87,7 +87,7 @@ class Menu_Top_PC extends React.Component {
         };
         this.openSwipeableDrawer = this.toggleDrawer.bind(this, true);
         this.closeSwipeableDrawer = this.toggleDrawer.bind(this, false);
-        LogHelper.info({className: "Menu_Top_PC", msg: "constructor----------"});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "constructor----------"});
     }
 
     toggleDrawer(isOpen) {
@@ -95,21 +95,21 @@ class Menu_Top_PC extends React.Component {
     }
 
     componentWillMount() {
-        LogHelper.info({className: "Menu_Top_PC", msg: "componentWillMount----------"});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        LogHelper.info({className: "Menu_Top_PC", msg: "componentWillReceiveProps----------"});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "nextContext", msg: nextContext, isJson: true});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "componentWillReceiveProps----------"});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        LogHelper.info({className: "Menu_Top_PC", msg: "shouldComponentUpdate----------"});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "nextState", msg: nextState, isJson: true});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "nextContext", msg: nextContext, isJson: true});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "shouldComponentUpdate----------"});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "nextState", msg: nextState, isJson: true});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
         if (this.state.menu_Top_BackgroundTransparent == nextState.menu_Top_BackgroundTransparent &&
             this.state.swipeableDrawerIsOpen == nextState.swipeableDrawerIsOpen) {
@@ -168,20 +168,20 @@ class Menu_Top_PC extends React.Component {
                 }
             });
         }
-        LogHelper.info({className: "Menu_Top_PC", msg: "componentDidMount----------"});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "componentDidMount----------"});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        LogHelper.info({className: "Menu_Top_PC", msg: "componentDidUpdate----------"});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "prevProps", msg: prevProps, isJson: true});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "prevState", msg: prevState, isJson: true});
-        LogHelper.debug({className: "Menu_Top_PC", tag: "snapshot", msg: snapshot, isJson: true});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "componentDidUpdate----------"});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "prevProps", msg: prevProps, isJson: true});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "prevState", msg: prevState, isJson: true});
+        LogHelper.debug({className: "Menu_Top_Browse", tag: "snapshot", msg: snapshot, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
     componentWillUnmount() {
-        LogHelper.info({className: "Menu_Top_PC", msg: "componentWillUnmount----------"});
+        LogHelper.info({className: "Menu_Top_Browse", msg: "componentWillUnmount----------"});
     }
 }
 
-export default withStyles(styles)(Menu_Top_PC);
+export default withStyles(styles)(Menu_Top_Browse);
