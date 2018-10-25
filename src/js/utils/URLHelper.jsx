@@ -22,7 +22,11 @@ export default class URLHelper {
         }
     }
 
-    static openNewPage({finalUrl}) {
-        window.open(finalUrl);
+    static openNewPage({finalUrl, inNewTab}) {
+        if (inNewTab == null || inNewTab == false) {
+            window.location.href = finalUrl;
+        } else {
+            window.open(finalUrl);
+        }
     }
 }

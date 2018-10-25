@@ -11,6 +11,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import LinkIcon from '@material-ui/icons/Link';
 import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
+import PageJumpingOperator from "../api/PageJumpingOperator.jsx";
 
 class LeftDrawerMenu extends React.Component {
 
@@ -39,6 +40,9 @@ class LeftDrawerMenu extends React.Component {
                     CallBackViewHelper.call_Dialog_Conform({isOpen: false});
                 }
             });
+        }.bind(this);
+        this.goToHomePage=function(){
+            PageJumpingOperator.goToHomePage();
         }.bind(this);
         LogHelper.info({className: "LeftDrawerMenu", msg: "constructor----------"});
     }
@@ -81,9 +85,9 @@ class LeftDrawerMenu extends React.Component {
                                 <ListItemIcon>
                                     <HomeIcon/>
                                 </ListItemIcon>
-                                <ListItemText primary="主页" onClick={() => {
-                                    this.PageJumpingOperator.goToHomePage();
-                                }}/>
+                                <ListItemText primary="主页" onClick={
+                                    this.goToHomePage
+                                }/>
                             </ListItem>
                             <Divider/>
                             <ListItem button onClick={this.friendsLinksButtonClick}>

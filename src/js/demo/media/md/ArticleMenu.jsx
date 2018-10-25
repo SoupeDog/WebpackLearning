@@ -15,7 +15,7 @@ class ArticleMenu extends React.Component {
             needFixed: window.scrollY > 370
         };
         this.scrollToTop = function () {
-            window.scrollTo(0, 330);
+            window.scrollTo(0, 0);
         }.bind(this);
         LogHelper.info({className: "ArticleMenu", msg: "constructor----------"});
     }

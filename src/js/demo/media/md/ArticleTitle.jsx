@@ -18,7 +18,7 @@ const styles = theme => ({
         float: "left"
     },
     articleTitle: {
-        fontSize: "60px",
+        fontSize: "52px",
         fontWeight: 800,
         color: "#000",
         lineHeight: "100px"

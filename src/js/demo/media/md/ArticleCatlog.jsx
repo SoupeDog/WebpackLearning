@@ -31,7 +31,8 @@ class ArticleCatlog extends React.Component {
         LogHelper.debug({className: "ArticleCatlog", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
         if (this.props.article.lastUpdateTs == nextProps.article.lastUpdateTs &&
-            this.state.needFixed == nextState.needFixed) {
+            this.state.needFixed == nextState.needFixed &&
+            this.props.catalogIsOpen == nextProps.catalogIsOpen) {
             return false;
         } else {
             return true;
@@ -40,7 +41,7 @@ class ArticleCatlog extends React.Component {
 
     render() {
         return (
-            <Slide direction="right" in={true} mountOnEnter>
+            <Slide direction="right" in={this.props.catalogIsOpen} mountOnEnter>
                 <div id="article_Catalog" className="hyggeWriter_Markdown_Catalog" style={{
                     width: this.state.needFixed ? "16.66666%" : "100%",
                     position: this.state.needFixed ? "fixed" : "static",

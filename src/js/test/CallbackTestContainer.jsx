@@ -166,13 +166,6 @@ class CallbackTestContainer extends BaseComponent {
 
     componentDidMount() {
         LogHelper.info({className: "CallBackView", msg: "componentDidMount----------"});
-        WindowsEventHelper.addCallback_Resize({
-            name: "父类监听Resize",
-            delta: 150,
-            callbackFunction: function () {
-                console.log("CallBackView Resize");
-            }
-        });
         WindowsEventHelper.start_OnResize();
     }
 

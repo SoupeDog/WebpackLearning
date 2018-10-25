@@ -127,7 +127,7 @@ class Menu_Top_PC extends React.Component {
                                 closeSwipeableDrawer={this.closeSwipeableDrawer}/>
                 <AppBar position="fixed"
                         elevation={this.state.menu_Top_BackgroundTransparent ? 0 : 1}
-                        className={classNames({"backgroundTransparent": this.state.menu_Top_BackgroundTransparent})}>
+                        className={classNames({"backgroundTransparent": this.props.autoTransparent && this.state.menu_Top_BackgroundTransparent})}>
                     <Toolbar>
                         <IconButton className={this.props.classes.menuButton} color="inherit" aria-label="Open drawer"
                                     onClick={this.openSwipeableDrawer}>
@@ -156,16 +156,18 @@ class Menu_Top_PC extends React.Component {
     }
 
     componentDidMount() {
-        let _react = this;
-        WindowsEventHelper.addCallback_Scroll({
-            name: "APPBar 透明判定", delta: 50, callbackFunction: function ({currentScrollY}) {
-                if (currentScrollY > 270) {
-                    _react.setState({menu_Top_BackgroundTransparent: false});
-                } else {
-                    _react.setState({menu_Top_BackgroundTransparent: true});
+        if(this.props.autoTransparent){
+            let _react = this;
+            WindowsEventHelper.addCallback_Scroll({
+                name: "APPBar 透明判定", delta: 50, callbackFunction: function ({currentScrollY}) {
+                    if (currentScrollY > 270) {
+                        _react.setState({menu_Top_BackgroundTransparent: false});
+                    } else {
+                        _react.setState({menu_Top_BackgroundTransparent: true});
+                    }
                 }
-            }
-        });
+            });
+        }
         LogHelper.info({className: "Menu_Top_PC", msg: "componentDidMount----------"});
     }
 

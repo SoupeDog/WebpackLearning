@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BaseComponent from "../BaseComponent.jsx";
 import Loading_Circle_Interrupt from "./Loading_Circle_Interrupt.jsx";
-import Snackbar from "@material-ui/core/es/Snackbar/Snackbar";
+import Snackbar from "@material-ui/core/Snackbar/Snackbar";
 import LightTip from "./LightTip.jsx";
 import Loading_Linear_Unknown from "./Loading_Linear_Unknown.jsx";
 import Dialog_Conform from "./Dialog_Conform.jsx";

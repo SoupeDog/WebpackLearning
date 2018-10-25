@@ -7,7 +7,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         index: "./src/js/index.jsx",
-        // browse: "./src/js/browse.jsx",
+        browse: "./src/js/browse.jsx",
         // editor: "./src/js/editor.jsx",
     },
     output: {
@@ -19,7 +19,8 @@ module.exports = {
         contentBase: Path.join(__dirname, "./dist"),
         open: true,
         compress: true,
-        port: 9000
+        port: 9000,
+        host:"192.168.12.70"
     },
     module: {
         rules: [
@@ -96,7 +97,7 @@ module.exports = {
             filename: "index.html",
             title: "我的小宅子",
             favicon: "./src/img/icon.ico",
-            template: "./src/html/browse.html",
+            template: "./src/html/template.html",
             chunks: ["index","commons"],
             inject: "body",
             minify: {
@@ -104,18 +105,18 @@ module.exports = {
                 collapseWhitespace: true
             }
         }),
-        // new HtmlWebpackPlugin({
-        //     filename: "browse.html",
-        //     title: "浏览页",
-        //     favicon: "./src/img/icon.ico",
-        //     template: "./src/html/browse.html",
-        //     chunks: ["browse","commons"],
-        //     inject: "body",
-        //     minify: {
-        //         removeComments: true,
-        //         collapseWhitespace: true
-        //     }
-        // }),
+        new HtmlWebpackPlugin({
+            filename: "browse.html",
+            title: "浏览页",
+            favicon: "./src/img/icon.ico",
+            template: "./src/html/browse.html",
+            chunks: ["browse","commons"],
+            inject: "body",
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+        }),
         // new HtmlWebpackPlugin({
         //     filename: "editor.html",
         //     title: "编辑页",

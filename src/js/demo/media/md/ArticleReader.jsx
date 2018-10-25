@@ -35,7 +35,12 @@ class ArticleReader extends React.Component {
         LogHelper.debug({className: "ArticleReader", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "ArticleReader", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        if (this.state.catalogIsOpen == nextState.catalogIsOpen &&
+            this.props.article.lastUpdateTs == nextProps.article.lastUpdateTs) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
@@ -54,7 +59,8 @@ class ArticleReader extends React.Component {
                         </Grid>
                         <Grid item xs={1}>
                             <Hidden only={["xs", "sm"]}>
-                                <ArticleMenu catalogTrigger={this.catalogTrigger} catalogIsOpen={this.state.catalogIsOpen}
+                                <ArticleMenu catalogTrigger={this.catalogTrigger}
+                                             catalogIsOpen={this.state.catalogIsOpen}
                                              key={"ArticleMenu"}/>
                             </Hidden>
                         </Grid>
