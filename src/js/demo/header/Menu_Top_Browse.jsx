@@ -75,7 +75,7 @@ const styles = theme => ({
                 backgroundColor: fade(theme.palette.common.black, 0.25),
             },
         },
-    },
+    }
 });
 
 class Menu_Top_Browse extends React.Component {
