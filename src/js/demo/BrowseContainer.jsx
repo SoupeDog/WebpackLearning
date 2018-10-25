@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import BaseComponent from "../component/BaseComponent.jsx";
-import Menu_Top_Browse from "./header/Menu_Top_Browse.jsx";
+import Menu_Top_Browse from "./menu/Menu_Top_Browse.jsx";
 
 
 import JssProvider from "react-jss/lib/JssProvider";
