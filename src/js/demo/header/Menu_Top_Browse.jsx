@@ -13,7 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from "@material-ui/core/InputBase/InputBase";
 import {withStyles} from "@material-ui/core/styles/index";
 import {fade} from '@material-ui/core/styles/colorManipulator';
-import LeftDrawerMenu from "./LeftDrawerMenu.jsx";
+import LeftDrawerMenu_Browse from "./LeftDrawerMenu_Browse.jsx";
 
 
 const styles = theme => ({
@@ -122,9 +122,9 @@ class Menu_Top_Browse extends React.Component {
     render() {
         return (
             <div>
-                <LeftDrawerMenu swipeableDrawerIsOpen={this.state.swipeableDrawerIsOpen}
-                                openSwipeableDrawer={this.openSwipeableDrawer}
-                                closeSwipeableDrawer={this.closeSwipeableDrawer}/>
+                <LeftDrawerMenu_Browse swipeableDrawerIsOpen={this.state.swipeableDrawerIsOpen}
+                                       openSwipeableDrawer={this.openSwipeableDrawer}
+                                       closeSwipeableDrawer={this.closeSwipeableDrawer}/>
                 <AppBar position="fixed"
                         elevation={this.state.menu_Top_BackgroundTransparent ? 0 : 1}
                         className={classNames({"backgroundTransparent": this.props.autoTransparent && this.state.menu_Top_BackgroundTransparent})}>

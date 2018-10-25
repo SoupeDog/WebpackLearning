@@ -13,7 +13,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
 import PageJumpingOperator from "../api/PageJumpingOperator.jsx";
 
-class LeftDrawerMenu extends React.Component {
+class LeftDrawerMenu_Browse extends React.Component {
 
     constructor(props) {
         super(props);
@@ -44,25 +44,25 @@ class LeftDrawerMenu extends React.Component {
         this.goToHomePage=function(){
             PageJumpingOperator.goToHomePage();
         }.bind(this);
-        LogHelper.info({className: "LeftDrawerMenu", msg: "constructor----------"});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "constructor----------"});
     }
 
     componentWillMount() {
-        LogHelper.info({className: "LeftDrawerMenu", msg: "componentWillMount----------"});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        LogHelper.info({className: "LeftDrawerMenu", msg: "componentWillReceiveProps----------"});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "nextContext", msg: nextContext, isJson: true});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "componentWillReceiveProps----------"});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        LogHelper.info({className: "LeftDrawerMenu", msg: "shouldComponentUpdate----------"});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "nextState", msg: nextState, isJson: true});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "nextContext", msg: nextContext, isJson: true});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "shouldComponentUpdate----------"});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "nextState", msg: nextState, isJson: true});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
         if (this.props.swipeableDrawerIsOpen == nextProps.swipeableDrawerIsOpen) {
             return false;
@@ -111,20 +111,20 @@ class LeftDrawerMenu extends React.Component {
     }
 
     componentDidMount() {
-        LogHelper.info({className: "LeftDrawerMenu", msg: "componentDidMount----------"});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "componentDidMount----------"});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        LogHelper.info({className: "LeftDrawerMenu", msg: "componentDidUpdate----------"});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "prevProps", msg: prevProps, isJson: true});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "prevState", msg: prevState, isJson: true});
-        LogHelper.debug({className: "LeftDrawerMenu", tag: "snapshot", msg: snapshot, isJson: true});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "componentDidUpdate----------"});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "prevProps", msg: prevProps, isJson: true});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "prevState", msg: prevState, isJson: true});
+        LogHelper.debug({className: "LeftDrawerMenu_Browse", tag: "snapshot", msg: snapshot, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
     componentWillUnmount() {
-        LogHelper.info({className: "LeftDrawerMenu", msg: "componentWillUnmount----------"});
+        LogHelper.info({className: "LeftDrawerMenu_Browse", msg: "componentWillUnmount----------"});
     }
 }
 
-export default LeftDrawerMenu;
+export default LeftDrawerMenu_Browse;

@@ -59,7 +59,11 @@ class Menu_Top_Index extends React.Component {
         LogHelper.debug({className: "Menu_Top_Index", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "Menu_Top_Index", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        if (this.props.open == nextProps.open) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     render() {
