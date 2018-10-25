@@ -12,14 +12,15 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Typography from "@material-ui/core/es/Typography/Typography";
 
 import {withStyles} from "@material-ui/core/styles/index";
-import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 import CallBackView from "../component/CallBackView.jsx";
 import Menu_Top_Index from "./header/Menu_Top_Index.jsx";
 import LeftDrawerMenu_Index from "./header/LeftDrawerMenu_Index.jsx";
+import Grid from "@material-ui/core/es/Grid/Grid";
+import ArticleSummaryList from "./article/ArticleSummaryList.jsx";
 
 const styles = theme => ({
     root: {
-        display: 'flex',
+        display: 'flex'
     },
     toolbar: {
         display: 'flex',
@@ -30,7 +31,7 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing.unit * 3,
+        width:"0px"  // 因为 flexGrow 实际宽度会变成0px+ 父容器剩余部分
     },
 });
 
@@ -41,7 +42,11 @@ class IndexContainer extends React.Component {
         super(props);
         this.state = {
             open: false,
+            focusedTabIndex: 0
         };
+        this.handleFocusedTabIndexChange = function (event, nextIndex) {
+            this.setState({focusedTabIndex: nextIndex});
+        }.bind(this);
         this.handleDrawerOpen = function () {
             this.setState({open: true});
         }.bind(this);
@@ -78,8 +83,20 @@ class IndexContainer extends React.Component {
                     <div className={this.props.classes.root}>
                         <Menu_Top_Index open={this.state.open} handleDrawerOpen={this.handleDrawerOpen}/>
                         <LeftDrawerMenu_Index open={this.state.open} handleDrawerClose={this.handleDrawerClose}/>
-                        <main className={this.props.classes.content}>
+                        <div className={this.props.classes.content}>
                             <div className={this.props.classes.toolbar}/>
+                            <ArticleSummaryList focusedTabIndex={this.state.focusedTabIndex}
+                                                handleFocusedTabIndexChange={this.handleFocusedTabIndexChange}/>
+
+                            <Grid
+                                container
+                                direction="row"
+                                justify="center"
+                                alignItems="center"
+                            >
+
+                            </Grid>
+
                             <Typography paragraph>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
@@ -104,7 +121,7 @@ class IndexContainer extends React.Component {
                                 viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
                                 ultrices sagittis orci a.
                             </Typography>
-                        </main>
+                        </div>
                     </div>
                     <CallBackView/>
                 </MuiThemeProvider>
