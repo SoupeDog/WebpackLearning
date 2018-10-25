@@ -28,10 +28,7 @@ const styles = theme => ({
         marginRight: 20,
     },
     title: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-            display: 'block',
-        },
+        display: 'block',
     },
     search: {
         position: 'relative',
@@ -40,12 +37,8 @@ const styles = theme => ({
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing.unit,
-            width: 'auto',
-        },
+        marginLeft: theme.spacing.unit,
+        width: 'auto'
     },
     searchIcon: {
         width: theme.spacing.unit * 9,
@@ -66,15 +59,12 @@ const styles = theme => ({
         paddingBottom: theme.spacing.unit,
         paddingLeft: theme.spacing.unit * 10,
         transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: 120,
-            '&:focus': {
-                width: 200,
-                borderRadius: theme.shape.borderRadius,
-                backgroundColor: fade(theme.palette.common.black, 0.25),
-            },
-        },
+        width: 120,
+        '&:focus': {
+            width: 200,
+            borderRadius: theme.shape.borderRadius,
+            backgroundColor: fade(theme.palette.common.black, 0.25)
+        }
     }
 });
 
@@ -156,7 +146,7 @@ class Menu_Top_Browse extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.autoTransparent){
+        if (this.props.autoTransparent) {
             let _react = this;
             WindowsEventHelper.addCallback_Scroll({
                 name: "APPBar 透明判定", delta: 50, callbackFunction: function ({currentScrollY}) {

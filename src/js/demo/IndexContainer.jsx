@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from "classnames";
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
@@ -17,6 +18,8 @@ import Menu_Top_Index from "./menu/Menu_Top_Index.jsx";
 import LeftDrawerMenu_Index from "./menu/LeftDrawerMenu_Index.jsx";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import ArticleSummaryList from "./article/ArticleSummaryList.jsx";
+import RightMenu_Index from "./menu/RightMenu_Index.jsx";
+import Hidden from "@material-ui/core/es/Hidden/Hidden";
 
 const styles = theme => ({
     root: {
@@ -31,8 +34,11 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
-        width:"0px"  // 因为 flexGrow 实际宽度会变成0px+ 父容器剩余部分
+        width: "0px"  // 因为 flexGrow 实际宽度会变成0px+ 父容器剩余部分
     },
+    main_Container: {
+        display: 'flex',
+    }
 });
 
 
@@ -85,21 +91,33 @@ class IndexContainer extends React.Component {
                         <LeftDrawerMenu_Index open={this.state.open} handleDrawerClose={this.handleDrawerClose}/>
                         <div className={this.props.classes.content}>
                             <div className={this.props.classes.toolbar}/>
-                            <div>
-                                <ArticleSummaryList focusedTabIndex={this.state.focusedTabIndex}
-                                                    handleFocusedTabIndexChange={this.handleFocusedTabIndexChange}/>
-
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center"
-                                >
-
-                                </Grid>
-                            </div>
-                            <div>
-
+                            {/*margin-top 用*/}
+                            <div className={this.props.classes.main_Container}>
+                                <MuiThemeProvider theme={StyleHelper.getLightTheme_Blue_Pink()}>
+                                    <div className="floatLeft" style={{flexGrow: 1, width: "0px"}}>
+                                        <ArticleSummaryList boardInfoList={[
+                                            {
+                                                boardId: "0ef526a3140a46cb94d458f7d506cfe3",
+                                                uId: "U00000001",
+                                                boardName: "技术",
+                                                lastUpdateTs: 1537782719374,
+                                                ts: 1537782719374
+                                            },
+                                            {
+                                                boardId: "744ed9f224d74827a12db8ec97b6975b",
+                                                uId: "U00000001",
+                                                boardName: "随笔",
+                                                lastUpdateTs: 1537782729174,
+                                                ts: 1537782729174
+                                            }
+                                        ]}
+                                                            focusedTabIndex={this.state.focusedTabIndex}
+                                                            handleFocusedTabIndexChange={this.handleFocusedTabIndexChange}/>
+                                    </div>
+                                    <div style={{width: "240px"}}>
+                                        <RightMenu_Index/>
+                                    </div>
+                                </MuiThemeProvider>
                             </div>
                         </div>
                     </div>

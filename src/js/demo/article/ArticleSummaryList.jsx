@@ -5,6 +5,7 @@ import Tabs from "@material-ui/core/es/Tabs/Tabs";
 import Tab from "@material-ui/core/es/Tab/Tab";
 import SwipeableViews from 'react-swipeable-views';
 import Typography from "@material-ui/core/es/Typography/Typography";
+import Badge from "@material-ui/core/es/Badge/Badge";
 
 class ArticleSummaryList extends React.Component {
 
@@ -38,45 +39,50 @@ class ArticleSummaryList extends React.Component {
     }
 
     render() {
-        return (
-            <div style={{width:"100%",}}>
-                <Tabs
-                    value={this.props.focusedTabIndex}
-                    onChange={this.props.handleFocusedTabIndexChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    fullWidth
-                    scrollable
-                    scrollButtons="auto"
-                >
-                    <Tab label="N 日一句1"/>
-                    <Tab label="搜索结果2"/>
-                    <Tab label="N 日一句3"/>
-                    <Tab label="搜索结果4"/>
-                    <Tab label="N 日一句5"/>
-                    <Tab label="搜索结果6"/>
-                    <Tab label="N 日一句7"/>
-                    <Tab label="搜索结果8"/>
-                    <Tab label="N 日一句9"/>
-                    <Tab label="搜索结果10"/>
-                </Tabs>
-                <SwipeableViews
-                    index={this.props.focusedTabIndex}
-                    onChangeIndex={this.swipeableViewsChangeIndex}
-                >
-                    <Typography align={"center"}><br/>暂未提供该功能 N 日一句1</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 搜索结果2</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 N 日一句3</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 搜索结果4</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 N 日一句5</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 搜索结果6</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 N 日一句7</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 搜索结果8</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 N 日一句9</Typography>
-                    <Typography align={"center"}><br/>暂未提供该功能 搜索结果10</Typography>
-                </SwipeableViews>
-            </div>
-        );
+        if (this.props.boardInfoList != null) {
+            return (
+                <div style={{width: "100%", height: "600px"}}>
+                    <div style={{margin: "0px 16px"}}>
+                        <Tabs
+                            value={this.props.focusedTabIndex}
+                            onChange={this.props.handleFocusedTabIndexChange}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            fullWidth
+                            scrollable
+                            scrollButtons="auto"
+                        >
+                            {
+                                this.props.boardInfoList.map((board, index) => {
+                                    return (
+                                        <Tab label={
+                                            <Badge color="secondary"
+                                                   badgeContent={null == null ? "?" : this.state.allSummary[board.boardId].totalCount}
+                                                   style={{paddingRight: "20px"}}>
+                                                {board.boardName}
+                                            </Badge>
+                                        } key={board.boardId} id={board.boardId} style={{minWidth:"120px"}}/>
+                                    )
+                                })
+                            }
+                            <Tab label="N 日一句" style={{minWidth:"120px"}}/>
+                            <Tab label="搜索结果" style={{minWidth:"120px"}}/>
+                        </Tabs>
+                        <SwipeableViews
+                            index={this.props.focusedTabIndex}
+                            onChangeIndex={this.swipeableViewsChangeIndex}
+                        >
+                            <Typography align={"center"}><br/>技术</Typography>
+                            <Typography align={"center"}><br/>随笔</Typography>
+                            <Typography align={"center"}><br/>暂未提供该功能 N 日一句</Typography>
+                            <Typography align={"center"}><br/>暂未提供该功能 搜索结果</Typography>
+                        </SwipeableViews>
+                    </div>
+                </div>
+            );
+        } else {
+            return (null);
+        }
     }
 
     componentDidMount() {
