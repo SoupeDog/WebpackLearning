@@ -47,7 +47,11 @@ class RightMenu_Index extends React.Component {
         LogHelper.debug({className: "RightMenu_Index", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "RightMenu_Index", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        if (this.state.currentRightMenu == nextState.currentRightMenu) {
+            return false
+        } else {
+            return true;
+        }
     }
 
     render() {
