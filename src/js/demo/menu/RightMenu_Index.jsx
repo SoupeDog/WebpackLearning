@@ -12,6 +12,7 @@ import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import ListItemIcon from "@material-ui/core/es/ListItemIcon/ListItemIcon";
 import Avatar from "@material-ui/core/es/Avatar/Avatar";
 import StyleHelper from "../../utils/StyleHelper.jsx";
+import Divider from "@material-ui/core/es/Divider/Divider";
 
 class RightMenu_Index extends React.Component {
 
@@ -97,12 +98,13 @@ class RightMenu_Index extends React.Component {
                         {
                             this.state.hotArticle.map((hotArticleItem, index) => {
                                 return (
-                                    <ListItem key={index} button>
-                                        <div className="hotItem">
-                                            <div className="hotTitle clearBoth">
-                                                {hotArticleItem.title}
-                                            </div>
-                                            <div className="hotMoreInfo clearBoth">
+                                    <div key={index}>
+                                        <ListItem  button>
+                                            <div className="hotItem">
+                                                <div className="hotTitle clearBoth">
+                                                    {hotArticleItem.title}
+                                                </div>
+                                                <div className="hotMoreInfo clearBoth">
                                             <span id="articlePageViewsCount">
                                                 <VisibilityIcon style={{
                                                     fontSize: "12px",
@@ -111,17 +113,21 @@ class RightMenu_Index extends React.Component {
                                                 }}/>&nbsp;
                                                 {hotArticleItem.pageViews < 1000 ? "1k以内" : hotArticleItem.pageViews}
                                             </span>
-                                                <span className="articleCommentCount" style={{marginLeft: "20px"}}>
+                                                    <span className="articleCommentCount" style={{marginLeft: "20px"}}>
                                         <CommentIcon style={{
                                             fontSize: "12px",
                                             color: "#aaa",
                                             lineHeight: "40px"
                                         }}/>&nbsp;
-                                                    {"暂无评论"}
+                                                        {"暂无评论"}
                                               </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </ListItem>
+                                        </ListItem>
+                                        <Divider/>
+                                    </div>
+
+
                                 )
                             })
                         }
@@ -148,6 +154,7 @@ class RightMenu_Index extends React.Component {
                                 </div>
                             </div>
                         </ListItem>
+                        <Divider/>
                         <ListItem button>
                             <ListItemIcon>
                                 <Avatar src="https://s1.ax2x.com/2018/10/25/5XGD36.png"/>
@@ -166,6 +173,7 @@ class RightMenu_Index extends React.Component {
                                 </div>
                             </div>
                         </ListItem>
+                        <Divider/>
                     </List>
                 );
         }

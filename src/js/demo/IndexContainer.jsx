@@ -10,20 +10,18 @@ const jss = create(jssPreset());
 import LogHelper from "../utils/LogHelper.jsx";
 import StyleHelper from "../utils/StyleHelper.jsx";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import Typography from "@material-ui/core/es/Typography/Typography";
 
 import {withStyles} from "@material-ui/core/styles/index";
 import CallBackView from "../component/CallBackView.jsx";
 import Menu_Top_Index from "./menu/Menu_Top_Index.jsx";
 import LeftDrawerMenu_Index from "./menu/LeftDrawerMenu_Index.jsx";
-import Grid from "@material-ui/core/es/Grid/Grid";
-import ArticleSummaryList from "./article/ArticleSummaryList.jsx";
-import RightMenu_Index from "./menu/RightMenu_Index.jsx";
-import Hidden from "@material-ui/core/es/Hidden/Hidden";
+import IndexMain from "./IndexMain.jsx";
+
 
 const styles = theme => ({
     root: {
-        display: 'flex'
+        display: 'flex',
+        minWidth:"1050px"
     },
     toolbar: {
         display: 'flex',
@@ -47,17 +45,13 @@ class IndexContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
-            focusedTabIndex: 0
+            leftDrawerOpen: false
         };
-        this.handleFocusedTabIndexChange = function (event, nextIndex) {
-            this.setState({focusedTabIndex: nextIndex});
-        }.bind(this);
         this.handleDrawerOpen = function () {
-            this.setState({open: true});
+            this.setState({leftDrawerOpen: true});
         }.bind(this);
         this.handleDrawerClose = function () {
-            this.setState({open: false});
+            this.setState({leftDrawerOpen: false});
         }.bind(this);
         LogHelper.info({className: "indexContainer", msg: "constructor----------"});
     }
@@ -87,39 +81,9 @@ class IndexContainer extends React.Component {
             <JssProvider jss={jss} generateClassName={generateClassName}>
                 <MuiThemeProvider theme={StyleHelper.getLightTheme_Black_Purple()}>
                     <div className={this.props.classes.root}>
-                        <Menu_Top_Index open={this.state.open} handleDrawerOpen={this.handleDrawerOpen}/>
-                        <LeftDrawerMenu_Index open={this.state.open} handleDrawerClose={this.handleDrawerClose}/>
-                        <div className={this.props.classes.content}>
-                            <div className={this.props.classes.toolbar}/>
-                            {/*margin-top 用*/}
-                            <div className={this.props.classes.main_Container}>
-                                <MuiThemeProvider theme={StyleHelper.getLightTheme_Blue_Pink()}>
-                                    <div className="floatLeft" style={{flexGrow: 1, width: "0px"}}>
-                                        <ArticleSummaryList boardInfoList={[
-                                            {
-                                                boardId: "0ef526a3140a46cb94d458f7d506cfe3",
-                                                uId: "U00000001",
-                                                boardName: "技术",
-                                                lastUpdateTs: 1537782719374,
-                                                ts: 1537782719374
-                                            },
-                                            {
-                                                boardId: "744ed9f224d74827a12db8ec97b6975b",
-                                                uId: "U00000001",
-                                                boardName: "随笔",
-                                                lastUpdateTs: 1537782729174,
-                                                ts: 1537782729174
-                                            }
-                                        ]}
-                                                            focusedTabIndex={this.state.focusedTabIndex}
-                                                            handleFocusedTabIndexChange={this.handleFocusedTabIndexChange}/>
-                                    </div>
-                                    <div style={{width: "240px"}}>
-                                        <RightMenu_Index/>
-                                    </div>
-                                </MuiThemeProvider>
-                            </div>
-                        </div>
+                        <Menu_Top_Index open={this.state.leftDrawerOpen} handleDrawerOpen={this.handleDrawerOpen}/>
+                        <LeftDrawerMenu_Index open={this.state.leftDrawerOpen} handleDrawerClose={this.handleDrawerClose}/>
+                        <IndexMain open={this.state.leftDrawerOpen}/>
                     </div>
                     <CallBackView/>
                 </MuiThemeProvider>

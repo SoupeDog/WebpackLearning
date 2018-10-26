@@ -1,11 +1,10 @@
 import React from 'react';
 import LogHelper from "../../utils/LogHelper.jsx";
-import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
 import Tabs from "@material-ui/core/es/Tabs/Tabs";
 import Tab from "@material-ui/core/es/Tab/Tab";
-import SwipeableViews from 'react-swipeable-views';
-import Typography from "@material-ui/core/es/Typography/Typography";
 import Badge from "@material-ui/core/es/Badge/Badge";
+import SwipeableViews from "react-swipeable-views";
+import Typography from "@material-ui/core/es/Typography/Typography";
 import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
 
 
@@ -59,41 +58,41 @@ const response = {
     ts: 1540535452948
 };
 const response2 = {
-        type: 1,
-        code: 200,
-        msg: null,
-        data: {
-            resultSet: [
-                {
-                    articleId: "7fe06d5bdeb745aea7a5bce52167dbdf",
-                    boardName: "随笔",
-                    title: "为什么你应该（从现在开始就）写博客",
-                    articleCategoryId: "7f050c9085ca4dae93d0830c3860c723",
-                    articleCategoryName: "假装在思考",
-                    uId: "U00000001",
-                    statementId: "",
-                    summary: "防止非技术板块空着的无事水",
-                    content: null,
-                    wordCount: 2777,
-                    articleRetainType: "DEFAULT",
-                    articlePath: null,
-                    pageViews: 362,
-                    properties: "{\"bgm\":\"https://music.163.com/outchain/player?type=2&id=34014166&auto=1&height=66\",\"image\":\"https://s1.ax2x.com/2018/10/24/5XWUJa.jpg\"}",
-                    legal_Flag: true,
-                    lastUpdateTs: 1540486095998,
-                    ts: 1538739132896
-                }
-            ],
-            "totalCount": 1
-        },
-        "ts": 1540535300756
-    };
+    type: 1,
+    code: 200,
+    msg: null,
+    data: {
+        resultSet: [
+            {
+                articleId: "7fe06d5bdeb745aea7a5bce52167dbdf",
+                boardName: "随笔",
+                title: "为什么你应该（从现在开始就）写博客",
+                articleCategoryId: "7f050c9085ca4dae93d0830c3860c723",
+                articleCategoryName: "假装在思考",
+                uId: "U00000001",
+                statementId: "",
+                summary: "防止非技术板块空着的无事水",
+                content: null,
+                wordCount: 2777,
+                articleRetainType: "DEFAULT",
+                articlePath: null,
+                pageViews: 362,
+                properties: "{\"bgm\":\"https://music.163.com/outchain/player?type=2&id=34014166&auto=1&height=66\",\"image\":\"https://s1.ax2x.com/2018/10/24/5XWUJa.jpg\"}",
+                legal_Flag: true,
+                lastUpdateTs: 1540486095998,
+                ts: 1538739132896
+            }
+        ],
+        "totalCount": 1
+    },
+    "ts": 1540535300756
+};
 
 const map = new Map();
 map.set("0ef526a3140a46cb94d458f7d506cfe3", response);
 map.set("744ed9f224d74827a12db8ec97b6975b", response2);
 
-class ArticleSummaryList extends React.Component {
+class BoardView extends React.Component {
 
     constructor(props) {
         super(props);
@@ -107,25 +106,25 @@ class ArticleSummaryList extends React.Component {
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
             this.handleFocusedTabIndexChange(event, nextIndex);
         }.bind(this);
-        LogHelper.info({className: "ArticleSummaryList", msg: "constructor----------"});
+        LogHelper.info({className: "BoardView", msg: "constructor----------"});
     }
 
     componentWillMount() {
-        LogHelper.info({className: "ArticleSummaryList", msg: "componentWillMount----------"});
+        LogHelper.info({className: "BoardView", msg: "componentWillMount----------"});
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        LogHelper.info({className: "ArticleSummaryList", msg: "componentWillReceiveProps----------"});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "nextContext", msg: nextContext, isJson: true});
+        LogHelper.info({className: "BoardView", msg: "componentWillReceiveProps----------"});
+        LogHelper.debug({className: "BoardView", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "BoardView", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        LogHelper.info({className: "ArticleSummaryList", msg: "shouldComponentUpdate----------"});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "nextState", msg: nextState, isJson: true});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "nextContext", msg: nextContext, isJson: true});
+        LogHelper.info({className: "BoardView", msg: "shouldComponentUpdate----------"});
+        LogHelper.debug({className: "BoardView", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.debug({className: "BoardView", tag: "nextState", msg: nextState, isJson: true});
+        LogHelper.debug({className: "BoardView", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
         return true;
     }
@@ -178,7 +177,7 @@ class ArticleSummaryList extends React.Component {
                                             <div style={{width: "100%", minHeight: "40px"}}>
                                                 <div id={"pageMenu_" + boardItem.boardId} className="pageControl"></div>
                                             </div>
-                                            </Typography>
+                                        </Typography>
                                     );
                                 })
                             }
@@ -194,37 +193,20 @@ class ArticleSummaryList extends React.Component {
     }
 
     componentDidMount() {
-        LogHelper.info({className: "ArticleSummaryList", msg: "componentDidMount----------"});
-        this.props.boardInfoList.map((boardItem) => {
-            alert($("#pageMenu_" + boardItem.boardId))
-            $("#pageMenu_" + boardItem.boardId).pagination({
-                coping: false,
-                jump: false,
-                prevContent: '上一页',
-                nextContent: '下一页',
-                current: 1,
-                count: 1,
-                pageCount: Math.ceil(this.state.allArticleSummary.get(boardItem.boardId).data.totalCount/1),
-                activeCls: 'active',
-                callback: function (api) {
-//
-                }
-            });
-        });
-
+        LogHelper.info({className: "BoardView", msg: "componentDidMount----------"});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        LogHelper.info({className: "ArticleSummaryList", msg: "componentDidUpdate----------"});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "prevProps", msg: prevProps, isJson: true});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "prevState", msg: prevState, isJson: true});
-        LogHelper.debug({className: "ArticleSummaryList", tag: "snapshot", msg: snapshot, isJson: true});
+        LogHelper.info({className: "BoardView", msg: "componentDidUpdate----------"});
+        LogHelper.debug({className: "BoardView", tag: "prevProps", msg: prevProps, isJson: true});
+        LogHelper.debug({className: "BoardView", tag: "prevState", msg: prevState, isJson: true});
+        LogHelper.debug({className: "BoardView", tag: "snapshot", msg: snapshot, isJson: true});
         LogHelper.debug({msg: ""});
     }
 
     componentWillUnmount() {
-        LogHelper.info({className: "ArticleSummaryList", msg: "componentWillUnmount----------"});
+        LogHelper.info({className: "BoardView", msg: "componentWillUnmount----------"});
     }
 }
 
-export default ArticleSummaryList;
+export default BoardView;
