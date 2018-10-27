@@ -10,7 +10,7 @@ class SingleBoardView extends React.Component {
         super(props);
         this.state = {
             currentPage: 1,
-            defaultPageSize: 1
+            defaultPageSize: 5
         };
         LogHelper.info({className: "SingleBoardView", msg: "constructor----------"});
     }

@@ -27,7 +27,7 @@ class BoardView extends React.Component {
             let currentAllArticleSummary = this.state.allArticleSummary;
             APIOperator_Board.getSummaryOfBoard({
                 boardId: boardId,
-                pageSize: 1,
+                pageSize: 5,
                 currentPage: 1,
                 successCallback: function (response) {
                     currentAllArticleSummary.set(boardId, response);
