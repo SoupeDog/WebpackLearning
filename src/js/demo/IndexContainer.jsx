@@ -16,12 +16,13 @@ import CallBackView from "../component/CallBackView.jsx";
 import Menu_Top_Index from "./menu/Menu_Top_Index.jsx";
 import LeftDrawerMenu_Index from "./menu/LeftDrawerMenu_Index.jsx";
 import IndexMain from "./IndexMain.jsx";
+import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 
 
 const styles = theme => ({
     root: {
         display: 'flex',
-        minWidth:"1050px"
+        minWidth: "1050px"
     },
     toolbar: {
         display: 'flex',
@@ -82,7 +83,8 @@ class IndexContainer extends React.Component {
                 <MuiThemeProvider theme={StyleHelper.getLightTheme_Black_Purple()}>
                     <div className={this.props.classes.root}>
                         <Menu_Top_Index open={this.state.leftDrawerOpen} handleDrawerOpen={this.handleDrawerOpen}/>
-                        <LeftDrawerMenu_Index open={this.state.leftDrawerOpen} handleDrawerClose={this.handleDrawerClose}/>
+                        <LeftDrawerMenu_Index open={this.state.leftDrawerOpen}
+                                              handleDrawerClose={this.handleDrawerClose}/>
                         <IndexMain open={this.state.leftDrawerOpen}/>
                     </div>
                     <CallBackView/>
@@ -92,6 +94,24 @@ class IndexContainer extends React.Component {
     }
 
     componentDidMount() {
+        if (localStorage.getItem("isPC") == null && !this.props.isPC) {
+            CallBackViewHelper.call_Dialog_Conform({
+                isOpen: true,
+                title: "提示",
+                scroll: "body",
+                msg: "检测到您可能使用了移动端设备访问，因本站暂未针对移动端开发独立 UI ,为获得最佳体验，建议您切换为 PC 访问。若执意使用移动端访问，禁用放大，横屏为佳。",
+                dialog_Ensure_Text: "不再提示",
+                cancelCallback: function () {
+                    CallBackViewHelper.call_Dialog_Conform({isOpen: false});
+                    localStorage.setItem("isPC", true);
+                },
+                dialog_Cancel_Text: "了解",
+                ensureCallback: function () {
+                    CallBackViewHelper.call_Dialog_Conform({isOpen: false});
+                    localStorage.setItem("isPC", null);
+                }
+            });
+        }
         LogHelper.info({className: "indexContainer", msg: "componentDidMount----------"});
     }
 

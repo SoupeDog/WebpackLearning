@@ -28,9 +28,9 @@ export default class CallBackViewHelper {
         }
     }
 
-    static call_Dialog_Conform({isOpen, scroll, transition, title, msg, ensureCallback, cancelCallback}) {
+    static call_Dialog_Conform({isOpen, scroll, transition, title, msg, dialog_Ensure_Text, ensureCallback, dialog_Cancel_Text, cancelCallback}) {
         if (CallBackView != null) {
-            CallBackView.call_Dialog_Conform({isOpen, scroll, transition, title, msg, ensureCallback, cancelCallback});
+            CallBackView.call_Dialog_Conform({isOpen, scroll, transition, title, msg, dialog_Ensure_Text, ensureCallback, dialog_Cancel_Text, cancelCallback});
         } else {
             LogHelper.warn({className: "CallBackViewHelper", msg: "target was null----------"});
         }

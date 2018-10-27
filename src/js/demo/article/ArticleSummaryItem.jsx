@@ -53,7 +53,6 @@ class ArticleSummaryItem extends React.Component {
         if (this.props.articleSummary == null || (this.props.articleSummary != null && this.props.articleSummary.lastUpdateTs == nextProps.articleSummary.lastUpdateTs)) {
             return false;
         } else {
-            alert(this.props.articleSummary.lastUpdateTs+"------"+nextProps.lastUpdateTs)
             return true;
         }
     }

@@ -196,7 +196,6 @@ class ArticleSummaryList extends React.Component {
     componentDidMount() {
         LogHelper.info({className: "ArticleSummaryList", msg: "componentDidMount----------"});
         this.props.boardInfoList.map((boardItem) => {
-            alert($("#pageMenu_" + boardItem.boardId))
             $("#pageMenu_" + boardItem.boardId).pagination({
                 coping: false,
                 jump: false,

@@ -5,92 +5,9 @@ import Tab from "@material-ui/core/es/Tab/Tab";
 import Badge from "@material-ui/core/es/Badge/Badge";
 import SwipeableViews from "react-swipeable-views";
 import Typography from "@material-ui/core/es/Typography/Typography";
-import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
-
-
-const response = {
-    type: 1,
-    code: 200,
-    msg: null,
-    data: {
-        resultSet: [
-            {
-                articleId: "39d0f40cfdea4770a34679aa4a7c4e8b",
-                boardName: "技术",
-                title: "初始化一台云服务器",
-                articleCategoryId: "f53577ef61d64e73a4d7e5389476b89f",
-                articleCategoryName: "运维",
-                uId: "U00000001",
-                statementId: "",
-                summary: "简单记录我初次搭建云服务器的过程",
-                content: null,
-                wordCount: 3860,
-                articleRetainType: "DEFAULT",
-                articlePath: null,
-                pageViews: 126,
-                properties: "{\"image\":\"https://s1.ax2x.com/2018/10/24/5XWiJq.jpg\"}",
-                legal_Flag: true,
-                lastUpdateTs: 1540535284791,
-                ts: 1537787367460
-            },
-            {
-                articleId: "501a892e80604e75ac8b0ab4e10f1806",
-                boardName: "技术",
-                title: "携程 Apollo 配置中心快速入门及搭建",
-                articleCategoryId: "f53577ef61d64e73a4d7e5389476b89f",
-                articleCategoryName: "运维",
-                uId: "U00000001",
-                statementId: "",
-                summary: "携程 Apollo 配置中心快速入门及搭建",
-                content: null,
-                wordCount: 4933,
-                articleRetainType: "DEFAULT",
-                articlePath: null,
-                pageViews: 242,
-                properties: "{\"image\":\"https://s1.ax2x.com/2018/10/24/5XWiJq.jpg\"}",
-                legal_Flag: true,
-                lastUpdateTs: 1540484793772,
-                ts: 1539448805119
-            }
-        ],
-        totalCount: 2
-    },
-    ts: 1540535452948
-};
-const response2 = {
-    type: 1,
-    code: 200,
-    msg: null,
-    data: {
-        resultSet: [
-            {
-                articleId: "7fe06d5bdeb745aea7a5bce52167dbdf",
-                boardName: "随笔",
-                title: "为什么你应该（从现在开始就）写博客",
-                articleCategoryId: "7f050c9085ca4dae93d0830c3860c723",
-                articleCategoryName: "假装在思考",
-                uId: "U00000001",
-                statementId: "",
-                summary: "防止非技术板块空着的无事水",
-                content: null,
-                wordCount: 2777,
-                articleRetainType: "DEFAULT",
-                articlePath: null,
-                pageViews: 362,
-                properties: "{\"bgm\":\"https://music.163.com/outchain/player?type=2&id=34014166&auto=1&height=66\",\"image\":\"https://s1.ax2x.com/2018/10/24/5XWUJa.jpg\"}",
-                legal_Flag: true,
-                lastUpdateTs: 1540486095998,
-                ts: 1538739132896
-            }
-        ],
-        "totalCount": 1
-    },
-    "ts": 1540535300756
-};
-
-const map = new Map();
-map.set("0ef526a3140a46cb94d458f7d506cfe3", response);
-map.set("744ed9f224d74827a12db8ec97b6975b", response2);
+import SingleBoardView from "./SingleBoardView.jsx";
+import APIOperator_Board from "../api/APIOperator_Board.jsx";
+import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
 
 class BoardView extends React.Component {
 
@@ -98,9 +15,39 @@ class BoardView extends React.Component {
         super(props);
         this.state = {
             focusedTabIndex: 0,
-            allArticleSummary: map
+            allArticleSummary: new Map()
+        };
+        this.updateState = function (data) {
+            this.setState(data);
         };
         this.handleFocusedTabIndexChange = function (event, nextIndex) {
+            let _react = this;
+            let boardId = this.props.boardInfoList[nextIndex].boardId;
+            // 重复代码：1
+            let currentAllArticleSummary = this.state.allArticleSummary;
+            APIOperator_Board.getSummaryOfBoard({
+                boardId: boardId,
+                pageSize: 1,
+                currentPage: 1,
+                successCallback: function (response) {
+                    currentAllArticleSummary.set(boardId, response);
+                    _react.setState({currentAllArticleSummary: currentAllArticleSummary});
+                },
+                requestBefore: function () {
+                    CallBackViewHelper.call_Loading_Linear_Unknown(true);
+                },
+                finallyCallback: function () {
+                    CallBackViewHelper.call_Loading_Linear_Unknown(false);
+                },
+                errorCallback: function (response) {
+                    CallBackViewHelper.call_LightTip({
+                        isOpen: true,
+                        type: "error",
+                        msg: "发生了某种错误：" + JSON.stringify(response)
+                    });
+                }
+            });
+
             this.setState({focusedTabIndex: nextIndex});
         }.bind(this);
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
@@ -148,7 +95,7 @@ class BoardView extends React.Component {
                                     return (
                                         <Tab label={
                                             <Badge color="secondary"
-                                                   badgeContent={this.state.allArticleSummary.get(boardItem.boardId) == null ? "?" : this.state.allArticleSummary.get(boardItem.boardId).data.totalCount}
+                                                   badgeContent={this.state.allArticleSummary.get(boardItem.boardId) == null ? "?" : this.state.allArticleSummary.get(boardItem.boardId).data.totalCount == null ? "?" : this.state.allArticleSummary.get(boardItem.boardId).data.totalCount}
                                                    style={{paddingRight: "20px"}}>
                                                 {boardItem.boardName}
                                             </Badge>
@@ -168,15 +115,10 @@ class BoardView extends React.Component {
                                     return (
                                         <Typography align={"center"} component={"div"}
                                                     key={boardItem.boardId}>
-                                            {this.state.allArticleSummary.get(boardItem.boardId).data.resultSet.map((articleSummary) => {
-                                                return (
-                                                    <ArticleSummaryItem articleSummary={articleSummary}
-                                                                        key={articleSummary.articleId}/>
-                                                )
-                                            })}
-                                            <div style={{width: "100%", minHeight: "40px"}}>
-                                                <div id={"pageMenu_" + boardItem.boardId} className="pageControl"></div>
-                                            </div>
+                                            <SingleBoardView currentAllArticleSummary={this.state.allArticleSummary}
+                                                             updateState={this.updateState.bind(this)}
+                                                             boardItem={boardItem}
+                                                             singleBoardInfo={this.state.allArticleSummary.has(boardItem.boardId) ? this.state.allArticleSummary.get(boardItem.boardId) : null}/>
                                         </Typography>
                                     );
                                 })
@@ -194,11 +136,13 @@ class BoardView extends React.Component {
 
     componentDidMount() {
         LogHelper.info({className: "BoardView", msg: "componentDidMount----------"});
+        this.handleFocusedTabIndexChange(null, 0);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         LogHelper.info({className: "BoardView", msg: "componentDidUpdate----------"});
         LogHelper.debug({className: "BoardView", tag: "prevProps", msg: prevProps, isJson: true});
+        LogHelper.debug({className: "BoardView", tag: "State", msg: this.state, isJson: true});
         LogHelper.debug({className: "BoardView", tag: "prevState", msg: prevState, isJson: true});
         LogHelper.debug({className: "BoardView", tag: "snapshot", msg: snapshot, isJson: true});
         LogHelper.debug({msg: ""});

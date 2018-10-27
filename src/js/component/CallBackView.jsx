@@ -15,7 +15,7 @@ const styles = {
         height: "0px",
         position: "fixed",
         top: "0px",
-        zIndex:10000
+        zIndex: 10000
     }
 };
 
@@ -116,7 +116,9 @@ class CallBackView extends React.Component {
                         transition={this.state.dialog_Transition}
                         title={this.state.dialog_Title}
                         msg={this.state.dialog_Msg}
+                        dialog_Ensure_Text={this.state.dialog_Ensure_Text}
                         ensure={this.state.dialog_Ensure == null ? null : this.state.dialog_Ensure.bind(this)}
+                        dialog_Cancel_Text={this.state.dialog_Cancel_Text}
                         cancel={this.state.dialog_Cancel == null ? null : this.state.dialog_Cancel.bind(this)}/>
                     : null}
 
@@ -210,7 +212,7 @@ class CallBackView extends React.Component {
         }
     }
 
-    call_Dialog_Conform({isOpen, scroll, transition, title, msg, ensureCallback, cancelCallback}) {
+    call_Dialog_Conform({isOpen, scroll, transition, title, msg, dialog_Ensure_Text, ensureCallback, dialog_Cancel_Text, cancelCallback}) {
         if (isOpen) {
             this.setState({
                 scroll: scroll,
@@ -219,7 +221,9 @@ class CallBackView extends React.Component {
                 dialog_Title: title,
                 dialog_Msg: msg,
                 dialog_Ensure: ensureCallback,
-                dialog_Cancel: cancelCallback
+                dialog_Ensure_Text: dialog_Ensure_Text == null ? "确认" : dialog_Ensure_Text,
+                dialog_Cancel: cancelCallback,
+                dialog_Cancel_Text: dialog_Cancel_Text == null ? "取消" : dialog_Cancel_Text
             });
         } else {
             this.setState({

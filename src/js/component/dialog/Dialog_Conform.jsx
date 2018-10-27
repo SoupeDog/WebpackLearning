@@ -66,10 +66,10 @@ class Dialog_Conform extends React.Component {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.handelEnsure} color="primary">
-                        确定
+                        {this.props.dialog_Ensure_Text}
                     </Button>
                     <Button onClick={this.handleClose.bind(this)} color="secondary">
-                        取消
+                        {this.props.dialog_Cancel_Text}
                     </Button>
                 </DialogActions>
             </Dialog>
