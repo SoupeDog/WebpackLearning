@@ -101,14 +101,14 @@ class IndexContainer extends React.Component {
                 scroll: "body",
                 msg: "检测到您可能使用了移动端设备访问，因本站暂未针对移动端开发独立 UI ,为获得最佳体验，建议您切换为 PC 访问。若执意使用移动端访问，禁用放大，横屏为佳。",
                 dialog_Ensure_Text: "不再提示",
-                cancelCallback: function () {
+                ensureCallback: function () {
                     CallBackViewHelper.call_Dialog_Conform({isOpen: false});
                     localStorage.setItem("isPC", true);
                 },
                 dialog_Cancel_Text: "了解",
-                ensureCallback: function () {
+                cancelCallback: function () {
                     CallBackViewHelper.call_Dialog_Conform({isOpen: false});
-                    localStorage.setItem("isPC", null);
+                    localStorage.removeItem("isPC");
                 }
             });
         }

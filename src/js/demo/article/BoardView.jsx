@@ -22,32 +22,33 @@ class BoardView extends React.Component {
         };
         this.handleFocusedTabIndexChange = function (event, nextIndex) {
             let _react = this;
-            let boardId = this.props.boardInfoList[nextIndex].boardId;
-            // 重复代码：1
-            let currentAllArticleSummary = this.state.allArticleSummary;
-            APIOperator_Board.getSummaryOfBoard({
-                boardId: boardId,
-                pageSize: 5,
-                currentPage: 1,
-                successCallback: function (response) {
-                    currentAllArticleSummary.set(boardId, response);
-                    _react.setState({currentAllArticleSummary: currentAllArticleSummary});
-                },
-                requestBefore: function () {
-                    CallBackViewHelper.call_Loading_Linear_Unknown(true);
-                },
-                finallyCallback: function () {
-                    CallBackViewHelper.call_Loading_Linear_Unknown(false);
-                },
-                errorCallback: function (response) {
-                    CallBackViewHelper.call_LightTip({
-                        isOpen: true,
-                        type: "error",
-                        msg: "发生了某种错误：" + JSON.stringify(response)
-                    });
-                }
-            });
-
+            if (this.props.boardInfoList[nextIndex] != null) {
+                let boardId = this.props.boardInfoList[nextIndex].boardId;
+                // 重复代码：1
+                let currentAllArticleSummary = this.state.allArticleSummary;
+                APIOperator_Board.getSummaryOfBoard({
+                    boardId: boardId,
+                    pageSize: 5,
+                    currentPage: 1,
+                    successCallback: function (response) {
+                        currentAllArticleSummary.set(boardId, response);
+                        _react.setState({currentAllArticleSummary: currentAllArticleSummary});
+                    },
+                    requestBefore: function () {
+                        CallBackViewHelper.call_Loading_Linear_Unknown(true);
+                    },
+                    finallyCallback: function () {
+                        CallBackViewHelper.call_Loading_Linear_Unknown(false);
+                    },
+                    errorCallback: function (response) {
+                        CallBackViewHelper.call_LightTip({
+                            isOpen: true,
+                            type: "error",
+                            msg: "发生了某种错误：" + JSON.stringify(response)
+                        });
+                    }
+                });
+            }
             this.setState({focusedTabIndex: nextIndex});
         }.bind(this);
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
