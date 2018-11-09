@@ -8,7 +8,7 @@ module.exports = {
     entry: {
         index: "./src/js/index.jsx",
         browse: "./src/js/browse.jsx",
-        // editor: "./src/js/editor.jsx",
+        editor: "./src/js/editor.jsx",
     },
     output: {
         publicPath: "",
@@ -118,18 +118,18 @@ module.exports = {
                 collapseWhitespace: true
             }
         }),
-        // new HtmlWebpackPlugin({
-        //     filename: "editor.html",
-        //     title: "编辑页",
-        //     favicon: "./src/img/icon.ico",
-        //     template: "./src/html/template.html",
-        //     chunks: ["editor","commons"],
-        //     inject: "body",
-        //     minify: {
-        //         removeComments: true,
-        //         collapseWhitespace: true
-        //     }
-        // })
+        new HtmlWebpackPlugin({
+            filename: "editor.html",
+            title: "编辑页",
+            favicon: "./src/img/icon.ico",
+            template: "./src/html/template.html",
+            chunks: ["editor","commons"],
+            inject: "body",
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true
+            }
+        })
     ],
     optimization: {
         splitChunks: {
