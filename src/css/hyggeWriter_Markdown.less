@@ -1,6 +1,11 @@
 .hyggeWriter_Markdown_Reader {
   overflow: hidden;// 流程图可能会宽度溢出
   padding-top: 20px;
+
+  blockquote{
+    font-style: normal;
+  }
+
   a.reference-link {
     position: relative;
     top: -60px;
@@ -38,9 +43,11 @@
   }
 
   a {
+    word-wrap:break-word;
     color: #CC6633;
   }
   a:hover {
+    word-wrap:break-word;
     color: #66CCFF;
   }
 }
