@@ -70,7 +70,7 @@ class LeftDrawerMenu_Index extends React.Component {
                 isOpen: true,
                 title: "一个兴趣使然的博客站",
                 scroll: "body",
-                msg: "本站前端基于 React 、Material-UI、Editor.md 开发，后端基于 Spring boot 全家桶开发，已在我的 github 个人仓库开源。目标使用场景为 PC ，对手机端提供少数功能，平板将被视为手机端。本站全部素材图片来源于网络，若侵犯了您的权益，请联系 xavierpe@qq.com 以便及时删除侵权图片。",
+                msg: "本站前端基于 React 、Material-UI、Editor.md 开发，后端基于 Spring boot 全家桶开发，已在我的 github 个人仓库开源。目标使用场景为 PC ，对手机端提供少数功能，平板将被视为手机端。本站全部音频、图片素材来源于网络，若侵犯了您的权益，请联系 xavierpe@qq.com 以便及时删除侵权素材。",
                 cancelCallback: function () {
                     CallBackViewHelper.call_Dialog_Conform({isOpen: false});
                 },
