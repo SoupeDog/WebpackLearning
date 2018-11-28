@@ -61,7 +61,12 @@ class SingleBoardView extends React.Component {
         );
     }
 
+    getCurrentPage() {
+        return this.state.currentPage;
+    }
+
     componentDidMount() {
+        this.props.bindSingleBoardView(this.props.boardItem.boardId, this);
         LogHelper.info({className: "SingleBoardView", msg: "componentDidMount----------"});
     }
 

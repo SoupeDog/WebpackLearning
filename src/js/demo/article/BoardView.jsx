@@ -29,7 +29,7 @@ class BoardView extends React.Component {
                 APIOperator_Board.getSummaryOfBoard({
                     boardId: boardId,
                     pageSize: 5,
-                    currentPage: 1,
+                    currentPage: _react["BoardView_" + boardId].getCurrentPage(),
                     successCallback: function (response) {
                         currentAllArticleSummary.set(boardId, response);
                         _react.setState({currentAllArticleSummary: currentAllArticleSummary});
@@ -53,6 +53,9 @@ class BoardView extends React.Component {
         }.bind(this);
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
             this.handleFocusedTabIndexChange(event, nextIndex);
+        }.bind(this);
+        this.bindSingleBoardView = function (key, singleBoardView) {
+            this["BoardView_" + key] = singleBoardView;
         }.bind(this);
         LogHelper.info({className: "BoardView", msg: "constructor----------"});
     }
@@ -117,6 +120,7 @@ class BoardView extends React.Component {
                                         <Typography align={"center"} component={"div"}
                                                     key={boardItem.boardId}>
                                             <SingleBoardView currentAllArticleSummary={this.state.allArticleSummary}
+                                                             bindSingleBoardView={this.bindSingleBoardView}
                                                              updateState={this.updateState.bind(this)}
                                                              boardItem={boardItem}
                                                              singleBoardInfo={this.state.allArticleSummary.has(boardItem.boardId) ? this.state.allArticleSummary.get(boardItem.boardId) : null}/>
