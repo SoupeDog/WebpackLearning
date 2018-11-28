@@ -1,14 +1,13 @@
 import React from 'react';
 import LogHelper from "../../utils/LogHelper.jsx";
 import PropertiesHelper from "../../utils/PropertiesHelper.jsx";
-import TimeHelper from "../../utils/TimeHelper.jsx";
 import URLHelper from "../../utils/URLHelper.jsx";
+import TimeHelper from "../../utils/TimeHelper.jsx";
 import PageJumpingOperator from "../../demo/api/PageJumpingOperator.jsx";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import Card from "@material-ui/core/es/Card/Card";
 import CardActionArea from "@material-ui/core/es/CardActionArea/CardActionArea";
 import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
-import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -22,7 +21,11 @@ class ArticleSummaryItem extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            jumpingQueryString: URLHelper.getQueryString("secretKey") == null ?
+                "id=" + this.props.articleSummary.articleId :
+                "id=" + this.props.articleSummary.articleId + "&secretKey=" + URLHelper.getQueryString("secretKey")
+        };
         this.getImage = function (properties) {
             if (PropertiesHelper.isStringNotNull(properties)) {
                 return JSON.parse(properties).image;
@@ -66,7 +69,7 @@ class ArticleSummaryItem extends React.Component {
                         <Typography variant="h4" align={"left"} component={"div"} gutterBottom>
                             <div className="autoWrap autoOmit" style={{margin: "20px"}}>
                                 <a className={"b_r"}
-                                   href={PageJumpingOperator.getOpenBrowseURL({queryString: "id=" + this.props.articleSummary.articleId})}>{this.props.articleSummary.title}</a>
+                                   href={PageJumpingOperator.getOpenBrowseURL({queryString: this.state.jumpingQueryString})}>{this.props.articleSummary.title}</a>
                             </div>
                         </Typography>
                         <Typography align={"left"} component={"div"}>
@@ -143,7 +146,7 @@ class ArticleSummaryItem extends React.Component {
                     </div>
                     <div style={{width: "200px", minWidth: "200px", margin: "25px 10px 25px 0px", height: "100px"}}>
                         <a className={"b_r"}
-                           href={PageJumpingOperator.getOpenBrowseURL({queryString: "id=" + this.props.articleSummary.articleId})}><Card>
+                           href={PageJumpingOperator.getOpenBrowseURL({queryString: this.state.jumpingQueryString})}><Card>
                             <CardActionArea>
                                 <CardMedia
                                     image={this.getImage(this.props.articleSummary.properties)}
