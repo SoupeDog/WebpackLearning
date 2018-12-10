@@ -101,8 +101,10 @@ class Dialog_Conform extends React.Component {
         if (this.props.ensure != null) {
             this.hideDialog();
             this.props.ensure();
+            this.props.call_Dialog_Conform({isOpen: false});
         } else {
             this.hideDialog();
+            this.props.call_Dialog_Conform({isOpen: false});
         }
     }
 
@@ -110,8 +112,10 @@ class Dialog_Conform extends React.Component {
         if (this.props.cancel != null) {
             this.hideDialog();
             this.props.cancel();
+            this.props.call_Dialog_Conform({isOpen: false});
         } else {
             this.hideDialog();
+            this.props.call_Dialog_Conform({isOpen: false});
         }
     }
 }
