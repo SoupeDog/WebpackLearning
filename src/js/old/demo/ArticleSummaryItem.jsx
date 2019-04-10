@@ -107,16 +107,16 @@ class ArticleSummaryItem extends BaseComponent {
                             {this.props.pageViews < 1000 ? "1k以内" : this.props.pageViews}
                         </span>
                             </Tooltip>
-                            <Tooltip title={"评论数"}>
-                        <span id="articleCommentCount" style={{marginLeft: "40px"}}>
-                            <CommentIcon style={{
-                                fontSize: "12px",
-                                color: "#aaa",
-                                lineHeight: "40px"
-                            }}/>&nbsp;
-                            {"暂无评论"}
-                        </span>
-                            </Tooltip>
+                            {/*<Tooltip title={"评论数"}>*/}
+                        {/*<span id="articleCommentCount" style={{marginLeft: "40px"}}>*/}
+                            {/*<CommentIcon style={{*/}
+                                {/*fontSize: "12px",*/}
+                                {/*color: "#aaa",*/}
+                                {/*lineHeight: "40px"*/}
+                            {/*}}/>&nbsp;*/}
+                            {/*{"暂无评论"}*/}
+                        {/*</span>*/}
+                            {/*</Tooltip>*/}
                         </Grid>
                     </Grid>
                 </CardActions>

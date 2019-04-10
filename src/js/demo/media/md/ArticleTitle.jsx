@@ -138,16 +138,16 @@ class ArticleTitle extends React.Component {
                             {this.props.article.pageViews < 1000 ? "1k以内" : this.props.article.pageViews}
                         </span>
                         </Tooltip>
-                        <Tooltip title={"评论数"}>
-                        <span id="articleCommentCount" style={{marginLeft: "40px"}}>
-                            <CommentIcon style={{
-                                fontSize: "12px",
-                                color: "#aaa",
-                                lineHeight: "40px"
-                            }}/>&nbsp;
-                            {0}
-                        </span>
-                        </Tooltip>
+                        {/*<Tooltip title={"评论数"}>*/}
+                        {/*<span id="articleCommentCount" style={{marginLeft: "40px"}}>*/}
+                            {/*<CommentIcon style={{*/}
+                                {/*fontSize: "12px",*/}
+                                {/*color: "#aaa",*/}
+                                {/*lineHeight: "40px"*/}
+                            {/*}}/>&nbsp;*/}
+                            {/*{0}*/}
+                        {/*</span>*/}
+                        {/*</Tooltip>*/}
                     </Grid>
                     {/*<Grid item xs={12} className={"autoWrap"} style={{lineHeight: "20px"}}>*/}
                         {/*请尊重笔者的劳动成果，如需转载，请先联系我，并声明文章来源---*/}

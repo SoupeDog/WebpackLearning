@@ -247,16 +247,16 @@ class BrowseContainer extends BaseComponent {
                             {articleObj.pageViews < 1000 ? "1k以内" : articleObj.pageViews}
                         </span>
                         </Tooltip>
-                        <Tooltip title={"评论数"}>
-                        <span id="articleCommentCount" style={{marginLeft: "40px"}}>
-                            <CommentIcon style={{
-                                fontSize: "12px",
-                                color: "#aaa",
-                                lineHeight: "40px"
-                            }}/>&nbsp;
-                            {0}
-                        </span>
-                        </Tooltip>
+                        {/*<Tooltip title={"评论数"}>*/}
+                        {/*<span id="articleCommentCount" style={{marginLeft: "40px"}}>*/}
+                            {/*<CommentIcon style={{*/}
+                                {/*fontSize: "12px",*/}
+                                {/*color: "#aaa",*/}
+                                {/*lineHeight: "40px"*/}
+                            {/*}}/>&nbsp;*/}
+                            {/*{0}*/}
+                        {/*</span>*/}
+                        {/*</Tooltip>*/}
                     </Grid>
                     {/*<Tooltip title={"毕竟口头说不许转载也没多大约束力，上版权印之类的也很麻烦 (〜￣△￣)〜"}>*/}
                     {/*<Grid item xs={12} className={"autoWrap"} style={{lineHeight: "20px"}}>*/}

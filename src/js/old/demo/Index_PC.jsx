@@ -316,14 +316,14 @@ class Index_PC extends BaseComponent {
                                                 }}/>&nbsp;
                                                 {hotArticleItem.pageViews < 1000 ? "1k以内" : hotArticleItem.pageViews}
                                             </span>
-                                                <span className="articleCommentCount" style={{marginLeft: "20px"}}>
-                                        <CommentIcon style={{
-                                            fontSize: "12px",
-                                            color: "#aaa",
-                                            lineHeight: "40px"
-                                        }}/>&nbsp;
-                                                    {"暂无评论"}
-                                              </span>
+                                                {/*<span className="articleCommentCount" style={{marginLeft: "20px"}}>*/}
+                                        {/*<CommentIcon style={{*/}
+                                            {/*fontSize: "12px",*/}
+                                            {/*color: "#aaa",*/}
+                                            {/*lineHeight: "40px"*/}
+                                        {/*}}/>&nbsp;*/}
+                                                    {/*{"暂无评论"}*/}
+                                              {/*</span>*/}
                                             </div>
                                         </div>
                                     </ListItem>
