@@ -17,6 +17,7 @@ import Menu_Top_Index from "./menu/Menu_Top_Index.jsx";
 import LeftDrawerMenu_Index from "./menu/LeftDrawerMenu_Index.jsx";
 import IndexMain from "./IndexMain.jsx";
 import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
+import Grid from "@material-ui/core/es/Grid/Grid";
 
 
 const styles = theme => ({
@@ -81,11 +82,23 @@ class IndexContainer extends React.Component {
         return (
             <JssProvider jss={jss} generateClassName={generateClassName}>
                 <MuiThemeProvider theme={StyleHelper.getLightTheme_Black_Purple()}>
-                    <div className={this.props.classes.root}>
+                    <div style={{clear:"both",float:"left",width:"100%"}} className={this.props.classes.root}>
                         <Menu_Top_Index open={this.state.leftDrawerOpen} handleDrawerOpen={this.handleDrawerOpen}/>
                         <LeftDrawerMenu_Index open={this.state.leftDrawerOpen}
                                               handleDrawerClose={this.handleDrawerClose}/>
                         <IndexMain open={this.state.leftDrawerOpen}/>
+                    </div>
+                    <div style={{clear:"both",float:"left",width:"100%"}}>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Grid item xs={8} lg={6}>
+                                <a style={{display:"block",textAlign:"center"}} href={"http://www.beian.miit.gov.cn"}>津ICP备18004196号-1</a>
+                            </Grid>
+                        </Grid>
                     </div>
                     <CallBackView/>
                 </MuiThemeProvider>

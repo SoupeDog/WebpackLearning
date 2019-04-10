@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 import SingleBoardView from "./SingleBoardView.jsx";
 import APIOperator_Board from "../api/APIOperator_Board.jsx";
 import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
+import Grid from "@material-ui/core/es/Grid/Grid";
 
 class BoardView extends React.Component {
 
@@ -132,6 +133,16 @@ class BoardView extends React.Component {
                             <Typography align={"center"}><br/>暂未提供该功能 搜索结果</Typography>
                         </SwipeableViews>
                     </div>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={8} lg={6}>
+                            <a style={{display:"block",textAlign:"center"}} href={"http://www.beian.miit.gov.cn"}>津ICP备18004196号-1</a>
+                        </Grid>
+                    </Grid>
                 </div>
             );
         } else {
