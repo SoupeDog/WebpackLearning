@@ -170,7 +170,7 @@ class Index_PC extends BaseComponent {
                     <Tooltip title="Xavier" placement="right">
                         <Avatar
                             className={"pointer " + (this.state.leftMenu_WideMode ? "xavierHeadIcon_Wide" : "xavierHeadIcon")}
-                            src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
+                            src="https://www.xavierwang.cn/images/47454e58e7f249c3968524d25a6c9c7a_M.png"/>
                     </Tooltip>
                     <div>
                         <div style={{
@@ -244,7 +244,7 @@ class Index_PC extends BaseComponent {
                     <Tooltip title="Xavier" placement="right">
                         <Avatar
                             className={"pointer " + (this.state.leftMenu_WideMode ? "xavierHeadIcon_Wide" : "xavierHeadIcon")}
-                            src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
+                            src="https://www.xavierwang.cn/images/47454e58e7f249c3968524d25a6c9c7a_M.png"/>
                     </Tooltip>
                     <Tooltip title="友链" placement="right">
                         <IconButton color="inherit" onClick={() => {
@@ -337,7 +337,7 @@ class Index_PC extends BaseComponent {
                     <List>
                         <ListItem button>
                             <ListItemIcon>
-                                <Avatar src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
+                                <Avatar src="https://www.xavierwang.cn/images/47454e58e7f249c3968524d25a6c9c7a_M.png"/>
                             </ListItemIcon>
                             <div className="commentBox">
                                 <div className="commentArticleTitle autoOmit">
@@ -355,7 +355,7 @@ class Index_PC extends BaseComponent {
                         </ListItem>
                         <ListItem button>
                             <ListItemIcon>
-                                <Avatar src="https://s1.ax2x.com/2018/09/01/5Benei.png"/>
+                                <Avatar src="https://www.xavierwang.cn/images/47454e58e7f249c3968524d25a6c9c7a_M.png"/>
                             </ListItemIcon>
                             <div className="commentBox">
                                 <div className="commentArticleTitle autoOmit">

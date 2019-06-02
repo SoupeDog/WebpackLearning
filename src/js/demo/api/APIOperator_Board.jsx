@@ -6,8 +6,6 @@ export default class APIOperator_Board {
 
     static getHeaders() {
         return {
-            uId: "U00000000",
-            token: "0",
             scope: "web",
             secretKey: URLHelper.getQueryString("secretKey")
         };

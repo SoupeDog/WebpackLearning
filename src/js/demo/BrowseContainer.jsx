@@ -145,7 +145,6 @@ class BrowseContainer extends BaseComponent {
                 CallBackViewHelper.call_Loading_Linear_Unknown(true);
             },
             successCallback: function (response) {
-                alert(JSON.stringify(response));
                 document.title = response.data.title// 设置 html tile
                 let articleTemp = response.data;
                 let currentArticle = articleTemp;
