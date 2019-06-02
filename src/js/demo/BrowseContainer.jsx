@@ -30,8 +30,6 @@ class BrowseContainer extends BaseComponent {
         this.state = {
             articleId: URLHelper.getQueryString("id"),
             headers: {
-                uId: "U00000000",
-                token: "0",
                 scope: "web",
                 secretKey: URLHelper.getQueryString("secretKey")
             },
@@ -147,22 +145,19 @@ class BrowseContainer extends BaseComponent {
                 CallBackViewHelper.call_Loading_Linear_Unknown(true);
             },
             successCallback: function (response) {
-                if (response.data.length > 0) {// 确保已查询到结果
-                    document.title = response.data[0].title// 设置 html tile
-                    let articleTemp = response.data[0];
-                    let currentArticle = articleTemp;
-                    if (articleTemp.properties == null) {
-                        currentArticle.properties = {};
-                    } else {
-                        currentArticle.properties = JSON.parse(articleTemp.properties);
-                    }
-                    _react.setState({articleObj: currentArticle});
-                    // window.setTimeout(function () {// 确保 articleObj 被更新再刷新 MD 显示内容
-                    //     _react.s();
-                    // }, 500);
+                alert(JSON.stringify(response));
+                document.title = response.data.title// 设置 html tile
+                let articleTemp = response.data;
+                let currentArticle = articleTemp;
+                if (articleTemp.properties == null) {
+                    currentArticle.properties = {};
                 } else {
-                    CallBackViewHelper.call_LightTip({isOpen: true, type: "error", msg: "未检索到文章内容，请查证博文编号是否存在"});
+                    currentArticle.properties = JSON.parse(articleTemp.properties);
                 }
+                _react.setState({articleObj: currentArticle});
+                // window.setTimeout(function () {// 确保 articleObj 被更新再刷新 MD 显示内容
+                //     _react.s();
+                // }, 500);
             },
             errorCallback: function (response) {
                 CallBackViewHelper.call_LightTip({

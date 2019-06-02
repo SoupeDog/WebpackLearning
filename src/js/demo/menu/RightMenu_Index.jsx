@@ -58,7 +58,7 @@ class RightMenu_Index extends React.Component {
     render() {
         return (
             <div id="main_Right" className="floatRight"
-                 style={{width: "100%", height: "600px"}}>
+                 style={{width: "100%", minHeight: "600px"}}>
                 <BottomNavigation
                     value={this.state.currentRightMenu}
                     onChange={(event, value) => {

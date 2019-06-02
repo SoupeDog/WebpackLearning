@@ -12,6 +12,7 @@ import {create} from "jss";
 import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
 import LogHelper from "../utils/LogHelper.jsx";
+import HttpHelper from "../utils/HttpHelper.jsx";
 
 const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
 const jss = create(jssPreset());
@@ -51,6 +52,20 @@ class CallbackTestContainer extends BaseComponent {
                             </Button>
                             <Button variant="contained" color="primary" justify="center" onClick={() => {
                                 CallBackViewHelper.call_Loading_Linear_Unknown(true);
+                                HttpHelper.httpGet({
+                                    finalUrl: "https://www.xavierwang.cn/article-service/main/article/f8ef5e3e31ad4a97a8f9e7d55d37bb8c",
+                                    headers: {
+                                        uId: "U00000003",
+                                        token: "8926c177ac7248668350f20661d547f0",
+                                        scope: "web"
+                                    },
+                                    successCallback: function (response) {
+                                        alert(JSON.stringify(response));
+                                    },
+                                    errorCallback: function (response) {
+                                        alert("失败: " + JSON.stringify(response));
+                                    }
+                                });
                             }}>
                                 非打断型加载+
                             </Button>

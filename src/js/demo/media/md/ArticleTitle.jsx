@@ -11,6 +11,7 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import EditIcon from '@material-ui/icons/Edit';
 import {withStyles} from "@material-ui/core/styles/index";
 import Hidden from "@material-ui/core/es/Hidden/Hidden";
+import PropertiesHelper from "../../../utils/PropertiesHelper.jsx";
 
 const styles = theme => ({
     articleHeaderRow: {
@@ -86,11 +87,11 @@ class ArticleTitle extends React.Component {
                 <Hidden lgUp>
                     <div id="title" className={this.props.classes.articleTitle_Phone}>{this.props.article.title}</div>
                 </Hidden>
-                <Grid id="articleTags" className={this.props.classes.tag_Box} item xs={12} container>
-                    <Chip className={this.props.classes.tag} clickable label="Tag 功能待上线" color="secondary"
-                          avatar={<Avatar className={this.props.classes.tag_Avatar}
-                                          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>
-                </Grid>
+                {/*<Grid id="articleTags" className={this.props.classes.tag_Box} item xs={12} container>*/}
+                    {/*<Chip className={this.props.classes.tag} clickable label="Tag 功能待上线" color="secondary"*/}
+                          {/*avatar={<Avatar className={this.props.classes.tag_Avatar}*/}
+                                          {/*src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1535520657529&di=78d823beb3585733d9d56375fb5d7975&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F01%2F54%2F42%2F83574716ee2ac08.jpg"/>}/>*/}
+                {/*</Grid>*/}
                 <Grid id="articleInfo" item xs={12} className={this.props.classes.articleInfo} container direction="row"
                       justify="flex-start" alignItems="baseline">
                     <Grid item xs={12} lg={4}>
@@ -101,7 +102,11 @@ class ArticleTitle extends React.Component {
                             /
                         </span>
                         <span id="articlePlates" style={{marginLeft: "5px"}}>
-                            {this.props.article.articleCategoryName}
+                            {PropertiesHelper.arrayToString({
+                                isStandard: false,
+                                array: this.props.article.articleCategoryPath,
+                                targetVal:"articleCategoryName"
+                            }).replace(/,/g,"-")}
                         </span>
                         <Tooltip title={"创建日期"}>
                             <span id="articleDate" style={{marginLeft: "20px"}}>

@@ -76,7 +76,7 @@ class IndexMain extends React.Component {
                                 {
                                     boardId: "744ed9f224d74827a12db8ec97b6975b",
                                     uId: "U00000001",
-                                    boardName: "随笔",
+                                    boardName: "其他",
                                     lastUpdateTs: 1537782729174,
                                     ts: 1537782729174
                                 }

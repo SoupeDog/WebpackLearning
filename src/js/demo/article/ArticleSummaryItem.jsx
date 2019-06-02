@@ -89,7 +89,11 @@ class ArticleSummaryItem extends React.Component {
                             /
                         </span>
                                         <span id="articlePlates" style={{marginLeft: "5px"}}>
-                             {this.props.articleSummary.articleCategoryName == null ? "未命名文章类别" : this.props.articleSummary.articleCategoryName}
+                             {this.props.articleSummary.articleCategoryPath == null ? "未命名文章类别" : PropertiesHelper.arrayToString({
+                                 isStandard: false,
+                                 array: this.props.articleSummary.articleCategoryPath,
+                                 targetVal:"articleCategoryName"
+                             }).replace(/,/g,"-")}
                         </span>
                                     </Grid>
                                     <Grid item xs={12} lg={9} container direction="row"
@@ -130,14 +134,14 @@ class ArticleSummaryItem extends React.Component {
                         </span>
                                         </Tooltip>
                                         {/*<Tooltip title={"评论数"}>*/}
-                        {/*<span id="articleCommentCount" style={{marginLeft: "40px"}}>*/}
-                            {/*<CommentIcon style={{*/}
-                                {/*fontSize: "12px",*/}
-                                {/*color: "#aaa",*/}
-                                {/*lineHeight: "40px"*/}
-                            {/*}}/>&nbsp;*/}
-                            {/*{"暂无评论"}*/}
-                        {/*</span>*/}
+                                        {/*<span id="articleCommentCount" style={{marginLeft: "40px"}}>*/}
+                                        {/*<CommentIcon style={{*/}
+                                        {/*fontSize: "12px",*/}
+                                        {/*color: "#aaa",*/}
+                                        {/*lineHeight: "40px"*/}
+                                        {/*}}/>&nbsp;*/}
+                                        {/*{"暂无评论"}*/}
+                                        {/*</span>*/}
                                         {/*</Tooltip>*/}
                                     </Grid>
                                 </Grid>

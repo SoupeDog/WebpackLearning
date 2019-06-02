@@ -28,7 +28,7 @@ export default class APIOperator_Board {
 
     static getSummaryOfBoard({boardId, pageSize, currentPage, headers, timeout, requestBefore, successCallback, errorCallback, timeOutCallback, finallyCallback}) {
         HttpHelper.httpGet({
-            path: "main/board/summary/" + boardId + "?pageSize=" + pageSize + "&&currentPage=" + currentPage + "&&isDESC=true",
+            path: "article-service/main/article/summary/" + boardId + "?pageSize=" + pageSize + "&&currentPage=" + currentPage + "&&isDESC=true",
             headers: headers == null ? this.getHeaders() : headers,
             timeout,
             requestBefore,
@@ -38,5 +38,4 @@ export default class APIOperator_Board {
             finallyCallback
         });
     }
-
 }
