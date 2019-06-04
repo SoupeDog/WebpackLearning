@@ -1,6 +1,6 @@
 import LogHelper from "./LogHelper.jsx";
 
-var CallBackView = null;
+let CallBackView = null;
 LogHelper.info({className: "CallBackViewHelper", msg: "constructor----------"});
 export default class CallBackViewHelper {
     static setCallBackView(tartget) {

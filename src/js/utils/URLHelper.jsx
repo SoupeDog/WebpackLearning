@@ -4,7 +4,6 @@ export default class URLHelper {
         return "http://localhost:9000/";
     }
 
-
     static getQueryString(key) {
         let fullURL = window.location.href;
         let start = fullURL.indexOf('?');

@@ -1,8 +1,6 @@
 import React from 'react';
 import LogHelper from "../utils/LogHelper.jsx";
 
-var currentUser;
-
 class IndexContainer extends React.Component {
 
     constructor(props) {

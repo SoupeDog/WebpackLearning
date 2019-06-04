@@ -53,12 +53,12 @@ export default class TimeHelper {
             throw new Error("TimeHelper:[target] of formatTimeStampToString(target, type) should be number.");
         }
         let currentDate = new Date(target);
-        var year = currentDate.getFullYear();
-        var month = currentDate.getMonth() + 1;
-        var day = currentDate.getDate();
-        var hour = currentDate.getHours();
-        var minute = currentDate.getMinutes();
-        var second = currentDate.getSeconds();
+        let year = currentDate.getFullYear();
+        let month = currentDate.getMonth() + 1;
+        let day = currentDate.getDate();
+        let hour = currentDate.getHours();
+        let minute = currentDate.getMinutes();
+        let second = currentDate.getSeconds();
         switch (type) {
             case "yyyy-mm-dd":
                 return year + "-" + this.formatNumber({target: month, size: 2}) + "-" + this.formatNumber({
@@ -87,9 +87,9 @@ export default class TimeHelper {
     // 获取目标时间戳 ± x 个自然天的 00:00:00 时刻时间戳
     static getNaturalDayTimeStamp({target, x}) {
         let currentDate = new Date(target);
-        var year = currentDate.getFullYear();
-        var month = currentDate.getMonth();
-        var day = currentDate.getDate();
+        let year = currentDate.getFullYear();
+        let month = currentDate.getMonth();
+        let day = currentDate.getDate();
         if (typeof target != "number") {
             throw new Error("TimeHelper:[target] of getNaturalDayTimeStamp(target, x) should be number.");
         }
