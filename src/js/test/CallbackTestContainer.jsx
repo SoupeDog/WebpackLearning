@@ -9,13 +9,13 @@ import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 
 import JssProvider from "react-jss/lib/JssProvider";
 import {create} from "jss";
-import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
+// import {createGenerateClassName, jssPreset} from "@material-ui/core/styles";
 import WindowsEventHelper from "../utils/WindowsEventHelper.jsx";
 import LogHelper from "../utils/LogHelper.jsx";
 import HttpHelper from "../utils/HttpHelper.jsx";
 
-const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
-const jss = create(jssPreset());
+// const generateClassName = createGenerateClassName({productionPrefix: "HyggeWriterComponent"});
+// const jss = create(jssPreset());
 
 class CallbackTestContainer extends BaseComponent {
 
@@ -32,7 +32,7 @@ class CallbackTestContainer extends BaseComponent {
     render() {
         return (
             <div>
-                <JssProvider jss={jss} generateClassName={generateClassName}>
+                {/*<JssProvider jss={jss} generateClassName={generateClassName}>*/}
                     <MuiThemeProvider theme={this.state.theme}>
                         <div id="button_Group"
                              style={{width: "100%", display: "flex", justifyContent: "space-between"}}>
@@ -174,7 +174,7 @@ class CallbackTestContainer extends BaseComponent {
                         </div>
                         <CallBackView componentName={"CallBackView"} setParentNode={this.setParentNode.bind(this)}/>
                     </MuiThemeProvider>
-                </JssProvider>
+                {/*</JssProvider>*/}
             </div>
         );
     }
