@@ -99,7 +99,7 @@ module.exports = {
             title: "我的小宅子",
             favicon: "./src/img/icon.ico",
             template: "./src/html/template.html",
-            chunks: ["index","commons"],
+            chunks: ["index", "commons"],
             inject: "body",
             minify: {
                 removeComments: true,
@@ -111,7 +111,7 @@ module.exports = {
             title: "浏览页",
             favicon: "./src/img/icon.ico",
             template: "./src/html/browse.html",
-            chunks: ["browse","commons"],
+            chunks: ["browse", "commons"],
             inject: "body",
             minify: {
                 removeComments: true,
@@ -123,7 +123,7 @@ module.exports = {
             title: "编辑页",
             favicon: "./src/img/icon.ico",
             template: "./src/html/template.html",
-            chunks: ["editor","commons"],
+            chunks: ["editor", "commons"],
             inject: "body",
             minify: {
                 removeComments: true,
@@ -133,7 +133,7 @@ module.exports = {
     ],
     optimization: {
         splitChunks: {
-           // 打包公共依赖
+            // 打包公共依赖
             chunks: 'all',
             name: "commons"
         }
