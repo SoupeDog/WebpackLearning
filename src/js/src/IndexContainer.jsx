@@ -32,7 +32,8 @@ class IndexContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            leftMenuIsOpen: false
+            leftMenuIsOpen: false,
+            currentUser: null
         };
 
         this.handleDrawerOpen = function () {
@@ -41,6 +42,9 @@ class IndexContainer extends React.Component {
 
         this.handleDrawerClose = function () {
             this.setState({leftMenuIsOpen: false});
+        }.bind(this);
+        this.setStateToRoot = function (properties) {
+            this.setState(properties);
         }.bind(this);
         LogHelper.info({className: "IndexContainer", msg: "constructor----------"});
     }
@@ -70,8 +74,12 @@ class IndexContainer extends React.Component {
             <MuiThemeProvider theme={StyleHelper.getLightTheme_Black_Purple()}>
                 <CssBaseline/>
                 <div className={this.props.classes.root}>
-                    <IndexAppBar leftMenuIsOpen={this.state.leftMenuIsOpen} handleDrawerOpen={this.handleDrawerOpen}/>
-                    <IndexLeftMenu leftMenuIsOpen={this.state.leftMenuIsOpen} handleDrawerClose={this.handleDrawerClose}/>
+                    <IndexAppBar leftMenuIsOpen={this.state.leftMenuIsOpen}
+                                 currentUser={this.state.currentUser}
+                                 handleDrawerOpen={this.handleDrawerOpen}
+                                 setStateToRoot={this.setStateToRoot}/>
+                    <IndexLeftMenu leftMenuIsOpen={this.state.leftMenuIsOpen}
+                                   handleDrawerClose={this.handleDrawerClose}/>
                     <main className={this.props.classes.content}>
                         <div className={this.props.classes.toolbar}/>
                         <Typography paragraph>
@@ -162,7 +170,7 @@ class IndexContainer extends React.Component {
     componentDidMount() {
         LogHelper.info({className: "IndexContainer", msg: "componentDidMount----------"});
         // UserAPIOperator.login({uId: "U00000001", pw: "000000"});
-        UserAPIOperator.preLogin();
+        UserAPIOperator.preLogin({setStateToRoot: this.setStateToRoot});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

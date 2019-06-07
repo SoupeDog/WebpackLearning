@@ -2,12 +2,13 @@ import React from 'react';
 import HttpHelper from "../../utils/HttpHelper.jsx";
 import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
 import WebContextProperties from "../WebContextProperties.jsx";
+import PropertiesHelper from "../../utils/PropertiesHelper.jsx";
 
 export default class UserAPIOperator {
     // 尝试登录(记住用户身份方式)
-    static preLogin() {
+    static preLogin({setStateToRoot}) {
         if (UserAPIOperator.getLocalUserUId() == null || UserAPIOperator.getLocalUserToken() == null) {
-            UserAPIOperator.logOut();
+            UserAPIOperator.logOut({setStateToRoot: setStateToRoot});
             return;
         }
         HttpHelper.httpPost({
@@ -22,18 +23,22 @@ export default class UserAPIOperator {
             successCallback: function (response) {
                 let isEffected = response.data;
                 if (isEffected) {
-                    UserAPIOperator.initUserInfo();
+                    UserAPIOperator.initUserInfo({
+                        setStateToRoot: setStateToRoot
+                    });
                 } else {
                     UserAPIOperator.freshToken({
                         uId: UserAPIOperator.getLocalUserUId(),
-                        refreshKey: UserAPIOperator.getLocalUserRefreshKey()
+                        refreshKey: UserAPIOperator.getLocalUserRefreshKey(),
+                        setStateToRoot: setStateToRoot
                     });
                 }
             },
             errorCallback: function (response) {
                 UserAPIOperator.freshToken({
                     uId: UserAPIOperator.getLocalUserUId(),
-                    refreshKey: UserAPIOperator.getLocalUserRefreshKey()
+                    refreshKey: UserAPIOperator.getLocalUserRefreshKey(),
+                    setStateToRoot: setStateToRoot
                 });
             },
             finallyCallback: function () {
@@ -42,7 +47,7 @@ export default class UserAPIOperator {
         });
     }
 
-    static login({uId, pw}) {
+    static login({uId, pw, setStateToRoot}) {
         HttpHelper.httpPost({
             path: "user-service/extra/token/login",
             requestData: {
@@ -58,7 +63,7 @@ export default class UserAPIOperator {
                 localStorage.setItem("uId", userLoinInfo.uId);
                 localStorage.setItem("token", userLoinInfo.token);
                 localStorage.setItem("refreshKey", userLoinInfo.refreshKey);
-                UserAPIOperator.initUserInfo();
+                UserAPIOperator.initUserInfo({setStateToRoot: setStateToRoot});
             },
             errorCallback: function (response) {
                 alert(JSON.stringify(response));
@@ -70,7 +75,7 @@ export default class UserAPIOperator {
     }
 
     // 刷新token
-    static freshToken({uId, refreshKey}) {
+    static freshToken({uId, refreshKey, setStateToRoot}) {
         HttpHelper.httpPost({
             path: "user-service/extra/token/refresh",
             requestData: {
@@ -86,7 +91,7 @@ export default class UserAPIOperator {
                 localStorage.setItem("uId", userLoinInfo.uId);
                 localStorage.setItem("token", userLoinInfo.token);
                 localStorage.setItem("refreshKey", userLoinInfo.refreshKey);
-                UserAPIOperator.initUserInfo();
+                UserAPIOperator.initUserInfo({setStateToRoot: setStateToRoot});
             },
             errorCallback: function (response) {
                 CallBackViewHelper.call_LightTip({
@@ -96,7 +101,7 @@ export default class UserAPIOperator {
                     vertical: "bottom",
                     horizontal: "center"
                 });
-                UserAPIOperator.logOut();
+                UserAPIOperator.logOut({setStateToRoot: setStateToRoot});
             },
             finallyCallback: function () {
                 CallBackViewHelper.call_Loading_Linear_Unknown(false);
@@ -105,7 +110,7 @@ export default class UserAPIOperator {
     }
 
 
-    static initUserInfo() {
+    static initUserInfo({setStateToRoot}) {
         HttpHelper.httpGet({
             path: "user-service/main/user/" + UserAPIOperator.getLocalUserUId(),
             requestBefore: function () {
@@ -113,7 +118,9 @@ export default class UserAPIOperator {
             },
             successCallback: function (response) {
                 let user = response.data[0];
-                WebContextProperties.setValue("currentUser", user);
+                if (PropertiesHelper.isFunctionNotNull(setStateToRoot)) {
+                    setStateToRoot({currentUser: user});
+                }
                 console.log(user);
             },
             errorCallback: function (response) {
@@ -126,11 +133,13 @@ export default class UserAPIOperator {
     }
 
     // 注销
-    static logOut() {
+    static logOut({setStateToRoot}) {
         localStorage.removeItem("uId");
         localStorage.removeItem("token");
         localStorage.removeItem("refreshKey");
-        WebContextProperties.setValue("currentUser", null);
+        if (PropertiesHelper.isFunctionNotNull(setStateToRoot)) {
+            setStateToRoot({currentUser: null});
+        }
     }
 
     // 获取本地用户 uId
