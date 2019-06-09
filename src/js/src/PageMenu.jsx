@@ -34,7 +34,7 @@ class PageMenu extends React.Component {
 
     render() {
         return (
-            <div id={"boardPageController"+this.props.boardId} className={"pageControl"}>
+            <div id={"boardPageController" + this.props.boardId} className={"pageControl"}>
             </div>
         );
     }
@@ -57,7 +57,6 @@ class PageMenu extends React.Component {
                     pageSize: _react.state.defaultPageSize,
                     currentPage: api.getCurrent(),
                     successCallback: function (response) {
-
                         currentAllArticleSummary.set(_react.props.boardItem.boardId, response);
                     },
                     requestBefore: function () {

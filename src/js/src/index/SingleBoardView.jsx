@@ -35,7 +35,7 @@ class SingleBoardView extends React.Component {
                             "articleCategoryName": "并发"
                         }
                         ],
-                        "summary": "当你对锁一无所知时，看这个入个门就对了",
+                        "summary": "当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了当你对锁一无所知时，看这个入个门就对了",
                         "wordCount": 2346,
                         "pageViews": 61,
                         "properties": "{\"image\":\"https://www.xavierwang.cn/images/9da5c6815907412a9fb55cb6b817a18c_L.jpg\"}",
@@ -178,14 +178,15 @@ class SingleBoardView extends React.Component {
             articleSummaryList = [];
         }
         return (
-            <div>
+            <div id={"articleSummaryList"}>
                 {articleSummaryList.map((articleSummary) => {
                     return (
                         <ArticleSummaryItem articleSummary={articleSummary}
                                             key={articleSummary.articleId}/>
                     )
                 })}
-                <PageMenu boardId={this.props.boardId}
+                <PageMenu key={this.props.boardId + "_pageController"}
+                          boardId={this.props.boardId}
                           currentPage={this.state.currentPage}
                           defaultPageSize={this.state.defaultPageSize}
                           updateCurrentBoardInfo={this.updateCurrentBoardInfo}/>

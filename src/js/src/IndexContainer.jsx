@@ -10,6 +10,7 @@ import {withStyles} from "@material-ui/core";
 import IndexAppBar from "./index/IndexAppBar.jsx";
 import IndexLeftMenu from "./index/IndexLeftMenu.jsx";
 import IndexBoardTabs from "./index/IndexBoardTabs.jsx";
+import Grid from "@material-ui/core/Grid/Grid";
 
 const styles = theme => ({
     root: {
@@ -84,20 +85,24 @@ class IndexContainer extends React.Component {
                     <main className={this.props.classes.content}>
                         <MuiThemeProvider theme={StyleHelper.getLightTheme_Blue_Pink()}>
                             <div className={this.props.classes.toolbar}/>
-                            <IndexBoardTabs/>
+                            <Grid
+                                container
+                                direction="row"
+                                justify="flex-start"
+                                alignItems="flex-start"
+                                spacing={5}
+                            >
+                                <Grid item xs={10} >
+                                    <IndexBoardTabs/>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <div style={{backgroundColor:"#333"}}>asdasd</div>
+                                </Grid>
+                            </Grid>
+
                         </MuiThemeProvider>
                     </main>
                 </div>
-                {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                {/*UserAPIOperator.login({uId: "U00000001", pw: "000000"});*/}
-                {/*}}>*/}
-                {/*登录*/}
-                {/*</Button>*/}
-                {/*<Button variant="contained" color="primary" justify="center" onClick={() => {*/}
-                {/*UserAPIOperator.logOut();*/}
-                {/*}}>*/}
-                {/*注销*/}
-                {/*</Button>*/}
                 <CallBackView/>
             </MuiThemeProvider>
         );

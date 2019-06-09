@@ -1,9 +1,9 @@
 body {
   .pageControl {
-    display: inline-block;
     margin-top: 20px;
     width: 100%;
     text-align: center;
+    display: inline-block;
     clear: both;
   }
   .pageControl .active {
@@ -59,189 +59,31 @@ body {
     background: #00A1D6;
     color: #FFF;
   }
-  .hotTitle {
-    color: #000;
-    font-size: 16px;
-  }
-  .hotMoreInfo {
-    margin-top: 10px;
-    font-size: 12px;
-  }
-  .commentBox {
-    width: 120px;
-  }
-  .commentArticleTitle {
-    padding-right: 5px;
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .commentContent {
-    padding-right: 5px;
-    font-size: 12px;
-    color: #555555;
-  }
-  .appBarLeftMenu {
-    position: absolute;
-    left: 0px;
-    animation: appBarLeftMenu_ToStrait 0.3s
-  }
-  .appBarLeftMenu_Wide {
-    position: absolute;
-    left: 140px;
-    animation: appBarLeftMenu_ToWide 0.3s
-  }
-  .appBarTitle {
-    margin-left: 26px;
-    animation: appBarTitle_ToStrait 0.3s
-  }
-  .appBarTitle_Wide {
-    margin-left: 200px;
-    animation: appBarTitle_ToWide 0.3s
-  }
-  .leftMenu {
-    position: relative;
-    width: 48px;
-    margin-left: -48px;
-    color: #757575;
-    animation: rightMenu_ToStrait 0.3s
-  }
-  .leftMenu_Wide {
-    position: relative;
-    width: 200px;
-    margin-left: -200px;
-    color: #757575;
-    animation: rightMenu_ToWide 0.3s
-  }
-  .textInfoRow {
-    width: 200px;
-    line-height: 20px;
-  }
-  .leftMenuContainer {
-    margin-top: 64px;
-    padding-left: 48px;
-    padding-right: 200px;
-    animation: rightMenuContainer_ToStrait 0.3s
-  }
-  .leftMenuContainer_Wide {
-    margin-top: 64px;
-    padding-left: 200px;
-    padding-right: 200px;
-    animation: rightMenuContainer_ToWide 0.3s
-  }
-  .xavierHeadIcon {
-    width: 24px;
-    height: 24px;
-    margin: 0 auto;
-    animation: xavierHeadIcon_ToStrait 0.3s
-  }
-  .xavierHeadIcon_Wide {
-    width: 128px;
-    height: 128px;
-    margin: 0 auto;
-    animation: xavierHeadIcon_ToWide 0.3s
-  }
   .linkIcon {
     width: 24px;
     height: 24px;
   }
 }
 
-@keyframes rightMenuContainer_ToStrait {
-  0% {
-    padding-left: 200px;
+#articleSummaryList {
+  .articleSummaryItem {
+    display: block;
+    clear: both;
+    width: 100%;
+    margin: 10px;
   }
-  100% {
-    padding-left: 48px;
+  .articleSummaryText{
+    background-color: #1d3e81;
+    display: inline-block;
+    float: left;
+    width: calc(100% - 250px);
   }
-}
-
-@keyframes rightMenuContainer_ToWide {
-  0% {
-    padding-left: 180px;
-  }
-  100% {
-    padding-left: 200px;
-  }
-}
-
-@keyframes leftMenu_ToStrait {
-  0% {
+  .articleSummaryImage {
+    background-color: #5A9600;
+    display: inline-block;
     width: 200px;
-    margin-left: -200px
-  }
-  100% {
-    width: 48px;
-    margin-left: -48px
-  }
-}
-
-@keyframes leftMenu_ToWide {
-  0% {
-    width: 48px;
-    margin-left: -48px;
-    opacity: 0;
-  }
-  100% {
-    width: 200px;
-    margin-left: -200px;
-    opacity: 50%;
-  }
-}
-
-@keyframes xavierHeadIcon_ToStrait {
-  0% {
-    width: 128px;
-    height: 128px;
-  }
-  100% {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-@keyframes xavierHeadIcon_ToWide {
-  0% {
-    width: 24px;
-    height: 24px;
-  }
-  100% {
-    width: 128px;
-    height: 128px;
-  }
-}
-
-@keyframes appBarLeftMenu_ToStrait {
-  0% {
-    left: 140px;
-  }
-  100% {
-    left: 0px;
-  }
-}
-
-@keyframes appBarLeftMenu_ToWide {
-  0% {
-    left: 0px;
-  }
-  100% {
-    left: 140px;
-  }
-}
-
-@keyframes appBarTitle_ToStrait {
-  0% {
-    margin-left: 200px;
-  }
-  100% {
-    margin-left: 26px;
-  }
-}
-
-@keyframes appBarTitle_ToWide {
-  0% {
-    margin-left: 26px;
-  }
-  100% {
-    margin-left: 200px;
+    height: 150px;
+    float: right;
+    margin: 25px 10px 25px 0px;
   }
 }
