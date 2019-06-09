@@ -17,7 +17,8 @@ class IndexBoardTabs extends React.Component {
         this.state = {
             defaultPageSize: 5,
             currentBoardIndex: 0,
-            allBoardSummary: new Map()
+            allBoardSummary: new Map(),
+            allBoardSummaryTotalCount: new Map()
         };
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
             this.changeCurrentBoard(null, nextIndex);
@@ -26,7 +27,6 @@ class IndexBoardTabs extends React.Component {
             if (boardIdIndex != 0 && this.state.currentBoardIndex == boardIdIndex) {
                 return;
             }
-
             switch (boardIdIndex) {
                 case 0:
                 case 1:
@@ -38,6 +38,7 @@ class IndexBoardTabs extends React.Component {
                         currentPage: 1,
                         successCallback: function (response) {
                             _react.changeAllBoardSummary(boardId, response);
+                            _react.changeAllBoardSummaryTotalCount(boardId, response.data.totalCount);
                         },
                         requestBefore: function () {
                             CallBackViewHelper.call_Loading_Linear_Unknown(true);
@@ -66,6 +67,19 @@ class IndexBoardTabs extends React.Component {
             this.setState({
                 allBoardSummary: currentAllBoardSummary
             });
+        }.bind(this);
+        this.changeAllBoardSummaryTotalCount = function (boardId, totalCount) {
+            let currentAllBoardSummaryTotalCount = this.state.allBoardSummaryTotalCount;
+            currentAllBoardSummaryTotalCount.set(boardId, totalCount);
+            this.setState({
+                allBoardSummaryTotalCount: currentAllBoardSummaryTotalCount
+            });
+        }.bind(this);
+        this.getBoardSummaryTotalCount = function (boardId) {
+            if (this.state.allBoardSummaryTotalCount.has(boardId)) {
+                return this.state.allBoardSummaryTotalCount.get(boardId);
+            }
+            return null;
         }.bind(this);
         LogHelper.info({className: "IndexBoardTabs", msg: "constructor----------"});
     }
@@ -115,7 +129,7 @@ class IndexBoardTabs extends React.Component {
                             return (
                                 <Tab label={
                                     <Badge color="secondary"
-                                           badgeContent={999}
+                                           badgeContent={this.getBoardSummaryTotalCount(boardItem.boardId) == null ? "?" : this.getBoardSummaryTotalCount(boardItem.boardId)}
                                            style={{paddingRight: "20px"}}>
                                         {boardItem.boardName}
                                     </Badge>
@@ -142,7 +156,8 @@ class IndexBoardTabs extends React.Component {
                             <Typography key={boardItem.boardId + "_view"} align={"center"} component={"div"}>
                                 <SingleBoardView boardId={boardItem.boardId}
                                                  currentBoardArticleSummary={this.state.allBoardSummary.get(boardItem.boardId)}
-                                                 changeAllBoardSummary={this.changeAllBoardSummary}/>
+                                                 changeAllBoardSummary={this.changeAllBoardSummary}
+                                                 changeAllBoardCurrentPage={this.changeAllBoardCurrentPage}/>
                             </Typography>
                         )
                     })
