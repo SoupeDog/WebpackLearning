@@ -1,8 +1,9 @@
 import React from 'react';
 import LogHelper from "../utils/LogHelper.jsx";
-import Paper from "@material-ui/core/Paper/Paper";
 import BoardAPIOperator from "./api/BoardAPIOperator.jsx";
 import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
+
+let pageControllerAPI;
 
 class PageMenu extends React.Component {
 
@@ -41,23 +42,22 @@ class PageMenu extends React.Component {
 
     componentDidMount() {
         let _react = this;
-        let pageController = $("#boardPageController" + this.props.boardId).pagination({
+        pageControllerAPI = $("#boardPageController" + this.props.boardId).pagination({
             coping: false,
             jump: false,
             prevContent: '上一页',
             nextContent: '下一页',
             current: this.props.currentPage,
             count: this.props.defaultPageSize,
-            pageCount: Math.ceil(100 / this.props.defaultPageSize),
+            pageCount: Math.ceil(this.props.totalCount / this.props.defaultPageSize),
             activeCls: 'active',
             callback: function (api) {
-                let currentAllArticleSummary = _react.props.currentAllArticleSummary;
                 BoardAPIOperator.getSummaryOfBoard({
-                    boardId: _react.props.boardItem.boardId,
-                    pageSize: _react.state.defaultPageSize,
+                    boardId: _react.props.boardId,
+                    pageSize: _react.props.defaultPageSize,
                     currentPage: api.getCurrent(),
                     successCallback: function (response) {
-                        currentAllArticleSummary.set(_react.props.boardItem.boardId, response);
+                        _react.props.changeAllBoardSummary(_react.props.boardId, response);
                     },
                     requestBefore: function () {
                         CallBackViewHelper.call_Loading_Linear_Unknown(true);

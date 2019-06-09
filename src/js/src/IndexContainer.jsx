@@ -92,11 +92,26 @@ class IndexContainer extends React.Component {
                                 alignItems="flex-start"
                                 spacing={5}
                             >
-                                <Grid item xs={10} >
-                                    <IndexBoardTabs/>
+                                <Grid item xs={10}>
+                                    <IndexBoardTabs boardList={[
+                                        {
+                                            boardId: "0ef526a3140a46cb94d458f7d506cfe3",
+                                            uId: "U00000001",
+                                            boardName: "技术",
+                                            lastUpdateTs: 1537782719374,
+                                            ts: 1537782719374
+                                        },
+                                        {
+                                            boardId: "744ed9f224d74827a12db8ec97b6975b",
+                                            uId: "U00000001",
+                                            boardName: "非技术",
+                                            lastUpdateTs: 1537782729174,
+                                            ts: 1537782729174
+                                        }
+                                    ]}/>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <div style={{backgroundColor:"#333"}}>asdasd</div>
+                                    <div style={{backgroundColor: "#333"}}>asdasd</div>
                                 </Grid>
                             </Grid>
 

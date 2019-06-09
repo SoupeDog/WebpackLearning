@@ -4,48 +4,60 @@ import Tabs from "@material-ui/core/Tabs/Tabs";
 import Tab from "@material-ui/core/Tab/Tab";
 import Typography from "@material-ui/core/Typography/Typography";
 import AppBar from "@material-ui/core/AppBar/AppBar";
-import PageMenu from "../PageMenu.jsx";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import Badge from "@material-ui/core/Badge/Badge";
-import Paper from "@material-ui/core/Paper/Paper";
 import SingleBoardView from "./SingleBoardView.jsx";
 import SwipeableViews from "react-swipeable-views";
+import BoardAPIOperator from "../api/BoardAPIOperator.jsx";
+import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
 
 class IndexBoardTabs extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: 1,
             defaultPageSize: 5,
             currentBoardIndex: 0,
-            boardList: [
-                {
-                    boardId: "0ef526a3140a46cb94d458f7d506cfe3",
-                    uId: "U00000001",
-                    boardName: "技术",
-                    lastUpdateTs: 1537782719374,
-                    ts: 1537782719374
-                },
-                {
-                    boardId: "744ed9f224d74827a12db8ec97b6975b",
-                    uId: "U00000001",
-                    boardName: "非技术",
-                    lastUpdateTs: 1537782729174,
-                    ts: 1537782729174
-                }
-            ],
             allBoardSummary: new Map()
         };
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
-            this.setState({currentBoardIndex: nextIndex});
+            this.changeCurrentBoard(null, nextIndex);
         }.bind(this);
-        this.changeCurrentBoard = function (event, boardId) {
-            if (this.state.currentBoardIndex == boardId) {
+        this.changeCurrentBoard = function (event, boardIdIndex) {
+            if (boardIdIndex != 0 && this.state.currentBoardIndex == boardIdIndex) {
                 return;
             }
+
+            switch (boardIdIndex) {
+                case 0:
+                case 1:
+                    let _react = this;
+                    let boardId = _react.props.boardList[boardIdIndex].boardId;
+                    BoardAPIOperator.getSummaryOfBoard({
+                        boardId: boardId,
+                        pageSize: _react.state.defaultPageSize,
+                        currentPage: 1,
+                        successCallback: function (response) {
+                            _react.changeAllBoardSummary(boardId, response);
+                        },
+                        requestBefore: function () {
+                            CallBackViewHelper.call_Loading_Linear_Unknown(true);
+                        },
+                        finallyCallback: function () {
+                            CallBackViewHelper.call_Loading_Linear_Unknown(false);
+                        },
+                        errorCallback: function (response) {
+                            CallBackViewHelper.call_LightTip({
+                                isOpen: true,
+                                type: "error",
+                                msg: "发生了某种错误：" + JSON.stringify(response)
+                            });
+                        }
+                    });
+                    break;
+                default:
+            }
             this.setState({
-                currentBoardIndex: boardId
+                currentBoardIndex: boardIdIndex
             });
         }.bind(this);
         this.changeAllBoardSummary = function (boardId, singleBoardSummary) {
@@ -99,7 +111,7 @@ class IndexBoardTabs extends React.Component {
                     scrollButtons="auto"
                 >
                     {
-                        this.state.boardList.map((boardItem) => {
+                        this.props.boardList.map((boardItem) => {
                             return (
                                 <Tab label={
                                     <Badge color="secondary"
@@ -125,10 +137,12 @@ class IndexBoardTabs extends React.Component {
                 onChangeIndex={this.swipeableViewsChangeIndex}
             >
                 {
-                    this.state.boardList.map((boardItem) => {
+                    this.props.boardList.map((boardItem) => {
                         return (
                             <Typography key={boardItem.boardId + "_view"} align={"center"} component={"div"}>
-                                <SingleBoardView boardId={boardItem.boardId}/>
+                                <SingleBoardView boardId={boardItem.boardId}
+                                                 currentBoardArticleSummary={this.state.allBoardSummary.get(boardItem.boardId)}
+                                                 changeAllBoardSummary={this.changeAllBoardSummary}/>
                             </Typography>
                         )
                     })
@@ -140,6 +154,7 @@ class IndexBoardTabs extends React.Component {
     }
 
     componentDidMount() {
+        this.changeCurrentBoard(null, 0);
         LogHelper.info({className: "IndexBoardTabs", msg: "componentDidMount----------"});
     }
 
