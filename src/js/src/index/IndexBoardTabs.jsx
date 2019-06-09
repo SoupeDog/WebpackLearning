@@ -33,10 +33,11 @@ class IndexBoardTabs extends React.Component {
                 case 1:
                     let _react = this;
                     let boardId = _react.props.boardList[boardIdIndex].boardId;
+                    let currentPage = _react.state.allBoardSummaryCurrentPage.has(boardId) ? _react.state.allBoardSummaryCurrentPage.get(boardId) : 1;
                     BoardAPIOperator.getSummaryOfBoard({
                         boardId: boardId,
                         pageSize: _react.state.defaultPageSize,
-                        currentPage: 1,
+                        currentPage: currentPage,
                         successCallback: function (response) {
                             _react.changeAllBoardSummary(boardId, response);
                             _react.changeAllBoardSummaryTotalCount(boardId, response.data.totalCount);
