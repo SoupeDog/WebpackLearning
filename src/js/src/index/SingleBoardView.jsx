@@ -61,7 +61,8 @@ class SingleBoardView extends React.Component {
                                                      boardId={this.props.boardId}
                                                      currentPage={this.state.currentPage}
                                                      defaultPageSize={this.state.defaultPageSize}
-                                                     changeAllBoardSummary={this.props.changeAllBoardSummary}/>}
+                                                     changeAllBoardSummary={this.props.changeAllBoardSummary}
+                                                     changeAllBoardSummaryCurrentPage={this.props.changeAllBoardSummaryCurrentPage}/>}
 
             </div>
         );

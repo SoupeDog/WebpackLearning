@@ -58,6 +58,7 @@ class PageMenu extends React.Component {
                     currentPage: api.getCurrent(),
                     successCallback: function (response) {
                         _react.props.changeAllBoardSummary(_react.props.boardId, response);
+                        _react.props.changeAllBoardSummaryCurrentPage(_react.props.boardId, api.getCurrent());
                     },
                     requestBefore: function () {
                         CallBackViewHelper.call_Loading_Linear_Unknown(true);

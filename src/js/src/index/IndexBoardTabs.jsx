@@ -18,7 +18,8 @@ class IndexBoardTabs extends React.Component {
             defaultPageSize: 5,
             currentBoardIndex: 0,
             allBoardSummary: new Map(),
-            allBoardSummaryTotalCount: new Map()
+            allBoardSummaryTotalCount: new Map(),
+            allBoardSummaryCurrentPage: new Map()
         };
         this.swipeableViewsChangeIndex = function (nextIndex, prevIndex) {
             this.changeCurrentBoard(null, nextIndex);
@@ -66,6 +67,13 @@ class IndexBoardTabs extends React.Component {
             currentAllBoardSummary.set(boardId, singleBoardSummary);
             this.setState({
                 allBoardSummary: currentAllBoardSummary
+            });
+        }.bind(this);
+        this.changeAllBoardSummaryCurrentPage = function (boardId, currentPage) {
+            let currentAllBoardSummaryCurrentPage = this.state.allBoardSummaryCurrentPage;
+            currentAllBoardSummaryCurrentPage.set(boardId, currentPage);
+            this.setState({
+                allBoardSummaryCurrentPage: currentAllBoardSummaryCurrentPage
             });
         }.bind(this);
         this.changeAllBoardSummaryTotalCount = function (boardId, totalCount) {
@@ -157,7 +165,7 @@ class IndexBoardTabs extends React.Component {
                                 <SingleBoardView boardId={boardItem.boardId}
                                                  currentBoardArticleSummary={this.state.allBoardSummary.get(boardItem.boardId)}
                                                  changeAllBoardSummary={this.changeAllBoardSummary}
-                                                 changeAllBoardCurrentPage={this.changeAllBoardCurrentPage}/>
+                                                 changeAllBoardSummaryCurrentPage={this.changeAllBoardSummaryCurrentPage}/>
                             </Typography>
                         )
                     })
