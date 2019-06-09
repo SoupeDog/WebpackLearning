@@ -113,7 +113,7 @@ class IndexAppBar extends React.Component {
                     <Grid item={true} xs={3} sm={4} md={5}></Grid>
                     <Grid item xs={3} sm={2} md={1}>
                         {Boolean(this.props.currentUser) && (
-                            <Toolbar style={{backgroundColor: "#333", display: "flex", justifyContent: "flex-end"}}>
+                            <Toolbar style={{display: "flex", justifyContent: "flex-end"}}>
                                 <IconButton
                                     aria-label="Account of current user"
                                     aria-controls="menu-appbar"
@@ -150,7 +150,7 @@ class IndexAppBar extends React.Component {
                             </Toolbar>
                         )}
                         {!Boolean(this.props.currentUser) && (
-                            <Toolbar style={{backgroundColor: "#333", display: "flex", justifyContent: "flex-end"}}>
+                            <Toolbar style={{display: "flex", justifyContent: "flex-end"}}>
                                 <Button variant="contained" color="secondary" justify="center" onClick={() => {
                                     UserAPIOperator.login({
                                         uId: "U00000001",

@@ -1,7 +1,6 @@
 import React from 'react';
 import HttpHelper from "../../utils/HttpHelper.jsx";
 import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
-import WebContextProperties from "../WebContextProperties.jsx";
 import PropertiesHelper from "../../utils/PropertiesHelper.jsx";
 
 export default class UserAPIOperator {
