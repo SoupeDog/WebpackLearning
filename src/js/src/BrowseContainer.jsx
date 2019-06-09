@@ -16,10 +16,17 @@ import Grid from "@material-ui/core/Grid/Grid";
 import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 import clsx from "clsx";
 import {withStyles} from "@material-ui/core";
+import PropertiesHelper from "../utils/PropertiesHelper.jsx";
+import TimeHelper from "../utils/TimeHelper.jsx";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import EditIcon from '@material-ui/icons/Edit';
+import ArticleContent from "./browse/ArticleContent.jsx";
 
 const styles = theme => ({
     articleTitle: {
-        textAlign: "center",
         fontSize: "52px",
         fontWeight: 800,
         color: "#000",
@@ -35,15 +42,10 @@ const styles = theme => ({
         color: "#aaa",
         lineHeight: "40px"
     },
-    tag_Box: {},
-    tag: {
-        marginTop: "10px",
-        marginBottom: "10px",
-        marginRight: "16px"
-    },
-    tag_Avatar: {
-        width: "40px",
-        height: "40px"
+    articleContent: {
+        fontSize: "18px",
+        color: "#000",
+        lineHeight: "40px"
     }
 });
 
@@ -167,7 +169,7 @@ class BrowseContainer extends React.Component {
                         <div id={"articleMain"} className={clsx("floatLeft", {
                             "articleContainer_small": this.state.articleCatalogIsOpen,
                             "articleContainer": !this.state.articleCatalogIsOpen
-                        })} >
+                        })}>
                             <Grid
                                 container
                                 direction="row"
@@ -179,7 +181,59 @@ class BrowseContainer extends React.Component {
                                     <div
                                         className={"clearBoth " + this.props.classes.articleTitle}>{this.state.article.title}</div>
                                     <div className={"clearBoth"}>
-                                        asd
+                                        <Grid id="articleInfo" item xs={12} className={this.props.classes.articleInfo}
+                                              container direction="row"
+                                              justify="flex-start" alignItems="baseline">
+                                            <Grid item xs={12} lg={4}>
+                                                <span id="articlePlates">
+                                                    {this.state.article.boardName}
+                                                </span>
+                                                <span className="separate" style={{marginLeft: "5px"}}>/</span>
+                                                <span id="articlePlates" style={{marginLeft: "5px"}}>
+                                                    {PropertiesHelper.arrayToString({
+                                                        isStandard: false,
+                                                        array: this.state.article.articleCategoryPath,
+                                                        targetVal: "articleCategoryName"
+                                                    }).replace(/,/g, "-")}
+                                                </span>
+                                                <Tooltip title={"创建日期"}>
+                                                    <span id="articleDate" style={{marginLeft: "20px"}}>
+                                                        <AccessTimeIcon style={{
+                                                            fontSize: "12px",
+                                                            color: "#aaa",
+                                                            lineHeight: "40px"
+                                                        }}/>&nbsp;
+                                                        {TimeHelper.formatTimeStampToString({
+                                                            target: this.state.article.ts == null ? 0 : this.state.article.ts,
+                                                            type: "yyyy-mm-dd"
+                                                        })}
+                                                    </span>
+                                                </Tooltip>
+                                            </Grid>
+                                            <Grid item xs={12} lg={8}>
+                                                <Tooltip title={"字数统计(近似值)"}>
+                                                    <span id="articleWordCount">
+                                                        <EditIcon style={{
+                                                            fontSize: "12px",
+                                                            color: "#aaa",
+                                                            lineHeight: "40px"
+                                                        }}/>&nbsp;
+                                                        &nbsp;{this.state.article.wordCount}&nbsp;字
+                                                    </span>
+                                                </Tooltip>
+                                                <Tooltip title={"浏览量"}>
+                                                    <span id="articlePageViewsCount" style={{marginLeft: "40px"}}>
+                                                        <VisibilityIcon style={{
+                                                            fontSize: "12px",
+                                                            color: "#aaa",
+                                                            lineHeight: "40px"
+                                                        }}/>&nbsp;
+                                                        {this.state.article.pageViews < 1000 ? "1k以内" : this.state.article.pageViews}
+                                                    </span>
+                                                </Tooltip>
+                                            </Grid>
+                                        </Grid>
+                                        <ArticleContent article={this.state.article}/>
                                     </div>
                                 </Grid>
                                 <Grid item xs={1}></Grid>
