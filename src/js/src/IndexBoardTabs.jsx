@@ -197,10 +197,10 @@ class IndexBoardTabs extends React.Component {
 
     render() {
         return (
-            <Paper>
+            <div>
                 {this.renderTabs()}
                 <SingleBoardView singleBoardInfo={this.state.articleSummaryInfo}/>
-            </Paper>
+            </div>
         );
     }
 

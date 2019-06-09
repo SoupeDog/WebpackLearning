@@ -54,7 +54,7 @@ class SingleBoardView extends React.Component {
                     )
                 })}
                 <div style={{width: "100%", minHeight: "40px"}}>
-                  <PageMenu />
+                  <PageMenu currentPage={this.state.currentPage} defaultPageSize={this.state.defaultPageSize}/>
                 </div>
             </div>
         );
