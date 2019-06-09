@@ -1,5 +1,5 @@
 import React from 'react';
-import LogHelper from "../utils/LogHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import clsx from "clsx";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import Grid from "@material-ui/core/Grid/Grid";
-import UserAPIOperator from "./api/UserAPIOperator.jsx";
+import UserAPIOperator from "../api/UserAPIOperator.jsx";
 import Button from "@material-ui/core/Button/Button";
 
 const drawerWidth = 240;

@@ -7,10 +7,9 @@ import CallBackView from "../component/CallBackView.jsx";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 import {withStyles} from "@material-ui/core";
-import IndexAppBar from "./IndexAppBar.jsx";
-import IndexLeftMenu from "./IndexLeftMenu.jsx";
-import IndexBoardTabs from "./IndexBoardTabs.jsx";
-import PageMenu from "./PageMenu.jsx";
+import IndexAppBar from "./index/IndexAppBar.jsx";
+import IndexLeftMenu from "./index/IndexLeftMenu.jsx";
+import IndexBoardTabs from "./index/IndexBoardTabs.jsx";
 
 const styles = theme => ({
     root: {

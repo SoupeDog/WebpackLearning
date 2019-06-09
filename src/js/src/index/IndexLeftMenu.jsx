@@ -1,5 +1,5 @@
 import React from 'react';
-import LogHelper from "../utils/LogHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
 import Drawer from "@material-ui/core/Drawer/Drawer";
 import clsx from "clsx";
 import IconButton from "@material-ui/core/IconButton/IconButton";
@@ -11,15 +11,15 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import Grid from "@material-ui/core/Grid/Grid";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import Avatar from "@material-ui/core/Avatar/Avatar";
-import gitHubLog from "../../img/gitHubLogo.png";
-import csdnLogo from "../../img/csdnLogo.png";
+import gitHubLog from "../../../img/gitHubLogo.png";
+import csdnLogo from "../../../img/csdnLogo.png";
 import EmailIcon from '@material-ui/icons/Email';
 import LinkIcon from '@material-ui/icons/Link';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import {withStyles} from "@material-ui/core";
-import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
+import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
 
 const drawerWidth = 240;
 const styles = theme => ({

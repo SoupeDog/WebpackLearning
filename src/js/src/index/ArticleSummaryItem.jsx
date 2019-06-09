@@ -1,8 +1,8 @@
 import React from 'react';
-import LogHelper from "../utils/LogHelper.jsx";
-import PropertiesHelper from "../utils/PropertiesHelper.jsx";
-import URLHelper from "../utils/URLHelper.jsx";
-import TimeHelper from "../utils/TimeHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
+import PropertiesHelper from "../../utils/PropertiesHelper.jsx";
+import URLHelper from "../../utils/URLHelper.jsx";
+import TimeHelper from "../../utils/TimeHelper.jsx";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import Card from "@material-ui/core/es/Card/Card";
 import CardActionArea from "@material-ui/core/es/CardActionArea/CardActionArea";
@@ -11,10 +11,10 @@ import Typography from "@material-ui/core/es/Typography/Typography";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import EditIcon from '@material-ui/icons/Edit';
-import defaultImage from "../../img/gitHubLogo.png";
+import defaultImage from "../../../img/gitHubLogo.png";
 import Grid from "@material-ui/core/es/Grid/Grid";
 import Tooltip from "@material-ui/core/es/Tooltip/Tooltip";
-import PageJumpingOperator from "./api/PageJumpingOperator.jsx";
+import PageJumpingOperator from "../api/PageJumpingOperator.jsx";
 
 class ArticleSummaryItem extends React.Component {
 

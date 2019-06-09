@@ -1,7 +1,7 @@
 import React from 'react';
-import LogHelper from "../utils/LogHelper.jsx";
+import LogHelper from "../../utils/LogHelper.jsx";
 import ArticleSummaryItem from "./ArticleSummaryItem.jsx";
-import PageMenu from "./PageMenu.jsx";
+import PageMenu from "../PageMenu.jsx";
 
 class SingleBoardView extends React.Component {
 
