@@ -1,6 +1,8 @@
 import React from 'react';
 import LogHelper from "../utils/LogHelper.jsx";
 import Paper from "@material-ui/core/Paper/Paper";
+import BoardAPIOperator from "./api/BoardAPIOperator.jsx";
+import CallBackViewHelper from "../utils/CallBackViewHelper.jsx";
 
 class PageMenu extends React.Component {
 
@@ -32,14 +34,14 @@ class PageMenu extends React.Component {
 
     render() {
         return (
-            <Paper id={"boardPageController"} className={"pageControl"}>
-            </Paper>
+            <div id={"boardPageController"+this.props.boardId} className={"pageControl"}>
+            </div>
         );
     }
 
     componentDidMount() {
-        LogHelper.info({className: "PageMenu", msg: "componentDidMount----------"});
-        let pageController = $("#boardPageController").pagination({
+        let _react = this;
+        let pageController = $("#boardPageController" + this.props.boardId).pagination({
             coping: false,
             jump: false,
             prevContent: '上一页',
@@ -49,10 +51,32 @@ class PageMenu extends React.Component {
             pageCount: Math.ceil(100 / this.props.defaultPageSize),
             activeCls: 'active',
             callback: function (api) {
-                // 重复代码：1
-                console.log(api.getCurrent());
+                let currentAllArticleSummary = _react.props.currentAllArticleSummary;
+                BoardAPIOperator.getSummaryOfBoard({
+                    boardId: _react.props.boardItem.boardId,
+                    pageSize: _react.state.defaultPageSize,
+                    currentPage: api.getCurrent(),
+                    successCallback: function (response) {
+
+                        currentAllArticleSummary.set(_react.props.boardItem.boardId, response);
+                    },
+                    requestBefore: function () {
+                        CallBackViewHelper.call_Loading_Linear_Unknown(true);
+                    },
+                    finallyCallback: function () {
+                        CallBackViewHelper.call_Loading_Linear_Unknown(false);
+                    },
+                    errorCallback: function (response) {
+                        CallBackViewHelper.call_LightTip({
+                            isOpen: true,
+                            type: "error",
+                            msg: "发生了某种错误：" + JSON.stringify(response)
+                        });
+                    }
+                });
             }
         });
+        LogHelper.info({className: "PageMenu", msg: "componentDidMount----------"});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
