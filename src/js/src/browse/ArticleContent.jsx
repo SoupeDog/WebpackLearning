@@ -63,7 +63,7 @@ class ArticleContent extends React.Component {
             MarkdownHelper.formatToHtml({
                 content: this.props.article.content,
                 containerId: "article_Content",
-                catalogId: "catLogSource",
+                catalogId: "article_Catalog",
                 useCatalog: true
             });
         }

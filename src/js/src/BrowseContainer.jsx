@@ -57,7 +57,8 @@ class BrowseContainer extends React.Component {
             articleId: URLHelper.getQueryString("id"),
             article: null,
             currentUser: null,
-            articleCatalogIsOpen: false
+            articleCatalogIsOpen: false,
+            needFixed: true
         };
         this.setStateToRoot = function (properties) {
             this.setState(properties);
@@ -165,6 +166,17 @@ class BrowseContainer extends React.Component {
                             "articleCatalogContainer_close": !this.state.articleCatalogIsOpen,
                             "articleCatalogContainer": this.state.articleCatalogIsOpen
                         })} onClick={this.closeArticleCatalog}>
+                            <div id={"article_Catalog"}
+                                 className={clsx("hyggeWriter_Markdown_Catalog", {
+                                     "article_Catalog_Hide": !this.state.articleCatalogIsOpen,
+                                     "article_Catalog_Show": this.state.articleCatalogIsOpen
+                                 })}
+                                 style={{
+                                     width: this.state.needFixed ? "20%" : "auto",
+                                     position: this.state.needFixed ? "fixed" : "static",
+                                     height: (window.innerHeight - 64) + "px",
+                                 }}>
+                            </div>
                         </div>
                         <div id={"articleMain"} className={clsx("floatLeft", {
                             "articleContainer_small": this.state.articleCatalogIsOpen,
@@ -248,6 +260,16 @@ class BrowseContainer extends React.Component {
     }
 
     componentDidMount() {
+        let _react = this;
+        WindowsEventHelper.addCallback_Scroll({
+            name: "日志目录固定检查", delta: 50, callbackFunction: function ({currentScrollY}) {
+                if (currentScrollY > 330) {
+                    _react.setState({needFixed: true});
+                } else {
+                    _react.setState({needFixed: false});
+                }
+            }
+        });
         WindowsEventHelper.start_OnResize();
         WindowsEventHelper.start_OnScroll();
         UserAPIOperator.preLogin({setStateToRoot: this.setStateToRoot});
