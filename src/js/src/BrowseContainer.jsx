@@ -24,6 +24,8 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import EditIcon from '@material-ui/icons/Edit';
 import ArticleContent from "./browse/ArticleContent.jsx";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import TOCIcon from '@material-ui/icons/toc';
 
 const styles = theme => ({
     articleTitle: {
@@ -58,7 +60,8 @@ class BrowseContainer extends React.Component {
             article: null,
             currentUser: null,
             articleCatalogIsOpen: false,
-            needFixed: true
+            catalogNeedFixed: false,
+            rightMenuNeedFixed: false
         };
         this.setStateToRoot = function (properties) {
             this.setState(properties);
@@ -165,15 +168,15 @@ class BrowseContainer extends React.Component {
                         <div id={"catalog"} className={clsx("floatLeft", {
                             "articleCatalogContainer_close": !this.state.articleCatalogIsOpen,
                             "articleCatalogContainer": this.state.articleCatalogIsOpen
-                        })} onClick={this.closeArticleCatalog}>
+                        })}>
                             <div id={"article_Catalog"}
                                  className={clsx("hyggeWriter_Markdown_Catalog", {
                                      "article_Catalog_Hide": !this.state.articleCatalogIsOpen,
                                      "article_Catalog_Show": this.state.articleCatalogIsOpen
                                  })}
                                  style={{
-                                     width: this.state.needFixed ? "20%" : "auto",
-                                     position: this.state.needFixed ? "fixed" : "static",
+                                     width: this.state.catalogNeedFixed ? "20%" : "auto",
+                                     position: this.state.catalogNeedFixed ? "fixed" : "static",
                                      height: (window.innerHeight - 64) + "px",
                                  }}>
                             </div>
@@ -189,7 +192,7 @@ class BrowseContainer extends React.Component {
                                 alignItems="flex-start"
                             >
                                 <Grid item xs={1}></Grid>
-                                <Grid item xs={10} onClick={this.openArticleCatalog}>
+                                <Grid item xs={10}>
                                     <div
                                         className={"clearBoth " + this.props.classes.articleTitle}>{this.state.article.title}</div>
                                     <div className={"clearBoth"}>
@@ -248,7 +251,28 @@ class BrowseContainer extends React.Component {
                                         <ArticleContent article={this.state.article}/>
                                     </div>
                                 </Grid>
-                                <Grid item xs={1}></Grid>
+                                <Grid item xs={1}>
+                                    <div style={{display: "flex", justifyContent: "center"}}>
+                                        <Tooltip title={this.state.articleCatalogIsOpen ? "展开目录" : "收起目录"}
+                                                 placement="left">
+                                            <IconButton variant="outlined" color="secondary"
+                                                        style={{
+                                                            marginTop: this.state.rightMenuNeedFixed ? "" : "300px",
+                                                            // display: "block",
+                                                            position: this.state.rightMenuNeedFixed ? "fixed" : "",
+                                                        }}
+                                                        onClick={() => {
+                                                            if (this.state.articleCatalogIsOpen) {
+                                                                this.closeArticleCatalog();
+                                                            } else {
+                                                                this.openArticleCatalog();
+                                                            }
+                                                        }}>
+                                                <TOCIcon/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </div>
+                                </Grid>
                             </Grid>
                         </div>
                     </Grid>
@@ -262,11 +286,22 @@ class BrowseContainer extends React.Component {
     componentDidMount() {
         let _react = this;
         WindowsEventHelper.addCallback_Scroll({
+            name: "修正右侧菜单固定检查",
+            delta: 50,
+            callbackFunction: function ({currentScrollY}) {
+                if (currentScrollY > 300) {
+                    _react.setState({rightMenuNeedFixed: true});
+                } else {
+                    _react.setState({rightMenuNeedFixed: false});
+                }
+            }
+        });
+        WindowsEventHelper.addCallback_Scroll({
             name: "日志目录固定检查", delta: 50, callbackFunction: function ({currentScrollY}) {
                 if (currentScrollY > 330) {
-                    _react.setState({needFixed: true});
+                    _react.setState({catalogNeedFixed: true});
                 } else {
-                    _react.setState({needFixed: false});
+                    _react.setState({catalogNeedFixed: false});
                 }
             }
         });
