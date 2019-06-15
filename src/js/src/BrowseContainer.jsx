@@ -55,6 +55,8 @@ class BrowseContainer extends React.Component {
 
     constructor(props) {
         super(props);
+        this.stateCheckPropertiesList = new Array("articleId","article","currentUser","articleCatalogIsOpen","catalogNeedFixed","rightMenuNeedFixed");
+        this.propsCheckPropertiesList = new Array("leftMenuIsOpen", "currentUser");
         this.state = {
             articleId: URLHelper.getQueryString("id"),
             article: null,
@@ -127,7 +129,15 @@ class BrowseContainer extends React.Component {
         LogHelper.debug({className: "BrowseContainer", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "BrowseContainer", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        return PropertiesHelper.needUpdate({
+            componentName: "BrowseContainer",
+            currentProps: this.props,
+            nextProps: nextProps,
+            propsPropertiesList: this.propsCheckPropertiesList,
+            nextState: nextState,
+            currentState: this.state,
+            statePropertiesList: this.stateCheckPropertiesList
+        });
     }
 
     render() {
