@@ -20,6 +20,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import {withStyles} from "@material-ui/core";
 import CallBackViewHelper from "../../utils/CallBackViewHelper.jsx";
+import PropertiesHelper from "../../utils/PropertiesHelper.jsx";
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -75,13 +76,12 @@ const styles = theme => ({
     },
 });
 
-
-
-
 class IndexLeftMenu extends React.Component {
 
     constructor(props) {
         super(props);
+        this.stateCheckPropertiesList = null;
+        this.propsCheckPropertiesList = new Array("leftMenuIsOpen");
         this.state = {};
         this.friendsLinksButtonClick = function () {
             CallBackViewHelper.call_LightTip({
@@ -125,7 +125,15 @@ class IndexLeftMenu extends React.Component {
         LogHelper.debug({className: "IndexLeftMenu", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "IndexLeftMenu", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        return PropertiesHelper.needUpdate({
+            componentName: "IndexLeftMenu",
+            currentProps: this.props,
+            nextProps: nextProps,
+            propsPropertiesList: this.propsCheckPropertiesList,
+            nextState: nextState,
+            currentState: this.state,
+            statePropertiesList: this.stateCheckPropertiesList
+        });
     }
 
     render() {
@@ -153,7 +161,7 @@ class IndexLeftMenu extends React.Component {
                 </div>
                 <Divider/>
                 <List>
-                    <ListItem >
+                    <ListItem>
                         <Grid
                             container
                             direction="row"

@@ -92,8 +92,6 @@ export default class PropertiesHelper {
                 }
             });
         }
-        LogHelper.pointInfo({className: "IndexAppBar", tag: "nextProps", msg: nextProps, isJson: true});
-        LogHelper.pointInfo({className: "IndexAppBar", tag: "nextState", msg: nextState, isJson: true});
         if (PropertiesHelper.isArrayNotNull(statePropertiesList)) {
             statePropertiesList.map((name) => {
                 if (nextState[name] != currentState[name]) {
