@@ -122,7 +122,7 @@ module.exports = {
             filename: "editor.html",
             title: "编辑页",
             favicon: "./src/img/icon.ico",
-            template: "./src/html/template.html",
+            template: "./src/html/browse.html",
             chunks: ["editor", "commons"],
             inject: "body",
             minify: {
