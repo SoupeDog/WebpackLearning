@@ -11,6 +11,7 @@ import IndexAppBar from "./index/IndexAppBar.jsx";
 import IndexLeftMenu from "./index/IndexLeftMenu.jsx";
 import IndexBoardTabs from "./index/IndexBoardTabs.jsx";
 import Grid from "@material-ui/core/Grid/Grid";
+import WebContext from "./WebContext.jsx";
 
 const styles = theme => ({
     root: {
@@ -119,6 +120,7 @@ class IndexContainer extends React.Component {
     }
 
     componentDidMount() {
+        WebContext.checkPC();
         LogHelper.info({className: "IndexContainer", msg: "componentDidMount----------"});
         UserAPIOperator.preLogin({setStateToRoot: this.setStateToRoot});
     }

@@ -26,6 +26,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import ArticleContent from "./browse/ArticleContent.jsx";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import TOCIcon from '@material-ui/icons/toc';
+import WebContext from "./WebContext.jsx";
 
 const styles = theme => ({
     articleTitle: {
@@ -55,7 +56,7 @@ class BrowseContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.stateCheckPropertiesList = new Array("articleId","article","currentUser","articleCatalogIsOpen","catalogNeedFixed","rightMenuNeedFixed");
+        this.stateCheckPropertiesList = new Array("articleId", "article", "currentUser", "articleCatalogIsOpen", "catalogNeedFixed", "rightMenuNeedFixed");
         this.propsCheckPropertiesList = new Array("leftMenuIsOpen", "currentUser");
         this.state = {
             articleId: URLHelper.getQueryString("id"),
@@ -179,17 +180,17 @@ class BrowseContainer extends React.Component {
                             "articleCatalogContainer_close": !this.state.articleCatalogIsOpen,
                             "articleCatalogContainer": this.state.articleCatalogIsOpen
                         })}>
-                            <div id={"article_Catalog"}
-                                 className={clsx("hyggeWriter_Markdown_Catalog", {
-                                     "article_Catalog_Hide": !this.state.articleCatalogIsOpen,
-                                     "article_Catalog_Show": this.state.articleCatalogIsOpen
-                                 })}
-                                 style={{
-                                     width: this.state.catalogNeedFixed ? "20%" : "auto",
-                                     position: this.state.catalogNeedFixed ? "fixed" : "static",
-                                     height: (window.innerHeight - 64) + "px",
-                                 }}>
-                            </div>
+                            {WebContext.isPC() && <div id={"article_Catalog"}
+                                                       className={clsx("hyggeWriter_Markdown_Catalog", {
+                                                           "article_Catalog_Hide": !this.state.articleCatalogIsOpen,
+                                                           "article_Catalog_Show": this.state.articleCatalogIsOpen
+                                                       })}
+                                                       style={{
+                                                           width: this.state.catalogNeedFixed ? "20%" : "auto",
+                                                           position: this.state.catalogNeedFixed ? "fixed" : "static",
+                                                           height: (window.innerHeight - 64) + "px",
+                                                       }}>
+                            </div>}
                         </div>
                         <div id={"articleMain"} className={clsx("floatLeft", {
                             "articleContainer_small": this.state.articleCatalogIsOpen,
@@ -262,7 +263,7 @@ class BrowseContainer extends React.Component {
                                     </div>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <div style={{display: "flex", justifyContent: "center"}}>
+                                    {WebContext.isPC() && <div style={{display: "flex", justifyContent: "center"}}>
                                         <Tooltip title={this.state.articleCatalogIsOpen ? "展开目录" : "收起目录"}
                                                  placement="left">
                                             <IconButton variant="outlined" color="secondary"
@@ -281,7 +282,7 @@ class BrowseContainer extends React.Component {
                                                 <TOCIcon/>
                                             </IconButton>
                                         </Tooltip>
-                                    </div>
+                                    </div>}
                                 </Grid>
                             </Grid>
                         </div>
