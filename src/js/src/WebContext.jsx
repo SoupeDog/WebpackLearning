@@ -10,7 +10,7 @@ export default class WebContext {
     }
 
     static checkPC(){
-        if(!isPC()){
+        if(!WebContextProperties.getValue("isPC")){
             CallBackViewHelper.call_Dialog_Conform({
                 isOpen: true,
                 title: "提示",

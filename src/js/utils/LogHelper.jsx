@@ -1,4 +1,4 @@
-let CurrentLogLevel = {tag: "pointInfo", index: 15};    // 当前日志级别
+let CurrentLogLevel = {tag: "warn", index: 20};    // 当前日志级别
 console.log("[LogHelper] " + "constructor----------");
 export default class LogHelper {
 

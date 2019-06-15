@@ -120,7 +120,6 @@ export default class UserAPIOperator {
                 if (PropertiesHelper.isFunctionNotNull(setStateToRoot)) {
                     setStateToRoot({currentUser: user});
                 }
-                console.log(user);
             },
             errorCallback: function (response) {
                 alert(JSON.stringify(response));
