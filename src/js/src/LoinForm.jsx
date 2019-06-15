@@ -7,11 +7,14 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 import TextField from "@material-ui/core/TextField/TextField";
 import UserAPIOperator from "./api/UserAPIOperator.jsx";
+import PropertiesHelper from "../utils/PropertiesHelper.jsx";
 
 class LoinForm extends React.Component {
 
     constructor(props) {
         super(props);
+        this.stateCheckPropertiesList = new Array("uId", "pw");
+        this.propsCheckPropertiesList = new Array("isLoginFormOpen");
         this.state = {
             uId: "",
             pw: ""
@@ -49,7 +52,15 @@ class LoinForm extends React.Component {
         LogHelper.debug({className: "LoinForm", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "LoinForm", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        return PropertiesHelper.needUpdate({
+            componentName: "IndexAppBar",
+            currentProps: this.props,
+            nextProps: nextProps,
+            propsPropertiesList: this.propsCheckPropertiesList,
+            nextState: nextState,
+            currentState: this.state,
+            statePropertiesList: this.stateCheckPropertiesList
+        });
     }
 
     render() {
