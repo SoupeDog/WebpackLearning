@@ -11,7 +11,6 @@ import IndexAppBar from "./index/IndexAppBar.jsx";
 import IndexLeftMenu from "./index/IndexLeftMenu.jsx";
 import IndexBoardTabs from "./index/IndexBoardTabs.jsx";
 import Grid from "@material-ui/core/Grid/Grid";
-import LoinForm from "./LoinForm.jsx";
 
 const styles = theme => ({
     root: {
@@ -35,18 +34,11 @@ class IndexContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoginFormOpen: false,
             leftMenuIsOpen: false,
             currentUser: null
         };
         this.handleDrawerOpen = function () {
             this.setState({leftMenuIsOpen: true});
-        }.bind(this);
-        this.loginFormOpen = function () {
-            this.setState({isLoginFormOpen: true});
-        }.bind(this);
-        this.loginFormClose = function () {
-            this.setState({isLoginFormOpen: false});
         }.bind(this);
         this.handleDrawerClose = function () {
             this.setState({leftMenuIsOpen: false});
@@ -121,9 +113,6 @@ class IndexContainer extends React.Component {
                         </MuiThemeProvider>
                     </main>
                 </div>
-                <LoinForm isLoginFormOpen={this.state.isLoginFormOpen}
-                          loginFormClose={this.loginFormClose}
-                          setStateToRoot={this.setStateToRoot}/>
                 <CallBackView/>
             </MuiThemeProvider>
         );
