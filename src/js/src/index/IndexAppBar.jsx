@@ -151,13 +151,7 @@ class IndexAppBar extends React.Component {
                         )}
                         {!Boolean(this.props.currentUser) && (
                             <Toolbar style={{display: "flex", justifyContent: "flex-end"}}>
-                                <Button variant="contained" color="secondary" justify="center" onClick={() => {
-                                    UserAPIOperator.login({
-                                        uId: "U00000001",
-                                        pw: "000000",
-                                        setStateToRoot: this.props.setStateToRoot
-                                    });
-                                }}>
+                                <Button variant="contained" color="secondary" justify="center" onClick={this.props.loginFormOpen}>
                                     登录
                                 </Button>
                             </Toolbar>

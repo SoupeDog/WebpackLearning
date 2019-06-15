@@ -15,6 +15,7 @@ import UserAPIOperator from "../api/UserAPIOperator.jsx";
 import Button from "@material-ui/core/Button/Button";
 import LeftDrawerMenu_Browse from "./LeftDrawerMenu_Browse.jsx";
 import WindowsEventHelper from "../../utils/WindowsEventHelper.jsx";
+import LoinForm from "../LoinForm.jsx";
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -46,10 +47,17 @@ class IndexAppBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoginFormOpen: false,
             anchorLoginUser: null,
             swipeableDrawerIsOpen: false,
             menu_Top_BackgroundTransparent: true
         };
+        this.loginFormOpen = function () {
+            this.setState({isLoginFormOpen: true});
+        }.bind(this);
+        this.loginFormClose = function () {
+            this.setState({isLoginFormOpen: false});
+        }.bind(this);
         this.openSwipeableDrawer = function () {
             this.setState({
                 swipeableDrawerIsOpen: true
@@ -164,13 +172,7 @@ class IndexAppBar extends React.Component {
                             )}
                             {!Boolean(this.props.currentUser) && (
                                 <Toolbar style={{display: "flex", justifyContent: "flex-end"}}>
-                                    <Button variant="contained" color="secondary" justify="center" onClick={() => {
-                                        UserAPIOperator.login({
-                                            uId: "U00000001",
-                                            pw: "000000",
-                                            setStateToRoot: this.props.setStateToRoot
-                                        });
-                                    }}>
+                                    <Button variant="contained" color="secondary" justify="center" onClick={this.loginFormOpen}>
                                         登录
                                     </Button>
                                 </Toolbar>
@@ -178,6 +180,9 @@ class IndexAppBar extends React.Component {
                         </Grid>
                     </Grid>
                 </AppBar>
+                <LoinForm isLoginFormOpen={this.state.isLoginFormOpen}
+                          loginFormClose={this.loginFormClose}
+                          setStateToRoot={this.props.setStateToRoot}/>
             </div>
         );
     }

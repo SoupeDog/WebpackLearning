@@ -11,6 +11,7 @@ import IndexAppBar from "./index/IndexAppBar.jsx";
 import IndexLeftMenu from "./index/IndexLeftMenu.jsx";
 import IndexBoardTabs from "./index/IndexBoardTabs.jsx";
 import Grid from "@material-ui/core/Grid/Grid";
+import LoinForm from "./LoinForm.jsx";
 
 const styles = theme => ({
     root: {
@@ -34,14 +35,19 @@ class IndexContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoginFormOpen: false,
             leftMenuIsOpen: false,
             currentUser: null
         };
-
         this.handleDrawerOpen = function () {
             this.setState({leftMenuIsOpen: true});
         }.bind(this);
-
+        this.loginFormOpen = function () {
+            this.setState({isLoginFormOpen: true});
+        }.bind(this);
+        this.loginFormClose = function () {
+            this.setState({isLoginFormOpen: false});
+        }.bind(this);
         this.handleDrawerClose = function () {
             this.setState({leftMenuIsOpen: false});
         }.bind(this);
@@ -79,7 +85,8 @@ class IndexContainer extends React.Component {
                     <IndexAppBar leftMenuIsOpen={this.state.leftMenuIsOpen}
                                  currentUser={this.state.currentUser}
                                  handleDrawerOpen={this.handleDrawerOpen}
-                                 setStateToRoot={this.setStateToRoot}/>
+                                 setStateToRoot={this.setStateToRoot}
+                                 loginFormOpen={this.loginFormOpen}/>
                     <IndexLeftMenu leftMenuIsOpen={this.state.leftMenuIsOpen}
                                    handleDrawerClose={this.handleDrawerClose}/>
                     <main className={this.props.classes.content}>
@@ -114,6 +121,9 @@ class IndexContainer extends React.Component {
                         </MuiThemeProvider>
                     </main>
                 </div>
+                <LoinForm isLoginFormOpen={this.state.isLoginFormOpen}
+                          loginFormClose={this.loginFormClose}
+                          setStateToRoot={this.setStateToRoot}/>
                 <CallBackView/>
             </MuiThemeProvider>
         );
@@ -121,7 +131,6 @@ class IndexContainer extends React.Component {
 
     componentDidMount() {
         LogHelper.info({className: "IndexContainer", msg: "componentDidMount----------"});
-        // UserAPIOperator.login({uId: "U00000001", pw: "000000"});
         UserAPIOperator.preLogin({setStateToRoot: this.setStateToRoot});
     }
 
