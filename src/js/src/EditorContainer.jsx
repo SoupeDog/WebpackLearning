@@ -246,7 +246,6 @@ class EditorContainer extends BaseComponent {
         let _react = this;
         let articleCategoryId = this.文章类别.getVal();
         articleCategoryId = articleCategoryId.substr(articleCategoryId.indexOf("-") + 1);
-        alert(articleCategoryId)
         let requestObj = {};
         requestObj.ts = new Date().getTime();
         if (_react.state.title != null && _react.state.title.trim() != "") {

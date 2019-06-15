@@ -1,5 +1,5 @@
-let CurrentLogLevel = {tag: "warn", index: 20};    // 当前日志级别
-console.log("[LogHelper] "+"constructor----------");
+let CurrentLogLevel = {tag: "pointInfo", index: 15};    // 当前日志级别
+console.log("[LogHelper] " + "constructor----------");
 export default class LogHelper {
 
     static getCurrentLogLevel() {
@@ -14,6 +14,8 @@ export default class LogHelper {
         switch (levelTag) {
             case "info":
                 return 10;
+            case "pointInfo":
+                return 15;
             case "warn":
                 return 20;
             case "error":
@@ -68,6 +70,10 @@ export default class LogHelper {
 
     static info({msg, isJson, tag, className}) {
         this.log({className: className, level: "info", msg: msg, isJson: isJson, tag: tag});
+    }
+
+    static pointInfo({msg, isJson, tag, className}) {
+        this.log({className: className, level: "pointInfo", msg: msg, isJson: isJson, tag: tag});
     }
 
     static warn({msg, isJson, tag, className}) {

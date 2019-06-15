@@ -13,6 +13,7 @@ import Avatar from "@material-ui/core/Avatar/Avatar";
 import Grid from "@material-ui/core/Grid/Grid";
 import UserAPIOperator from "../api/UserAPIOperator.jsx";
 import Button from "@material-ui/core/Button/Button";
+import PropertiesHelper from "../../utils/PropertiesHelper.jsx";
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -43,17 +44,17 @@ class IndexAppBar extends React.Component {
 
     constructor(props) {
         super(props);
+        this.stateCheckPropertiesList = new Array("anchorLoginUser");
+        this.propsCheckPropertiesList = new Array("leftMenuIsOpen","currentUser");
         this.state = {
             anchorLoginUser: null
         };
         this.setAnchorLoginUser = function (event) {
             this.setState({anchorLoginUser: event.currentTarget});
         }.bind(this);
-
         this.removeAnchorLoginUser = function () {
             this.setState({anchorLoginUser: null});
         }.bind(this);
-
         LogHelper.info({className: "IndexAppBar", msg: "constructor----------"});
     }
 
@@ -74,7 +75,15 @@ class IndexAppBar extends React.Component {
         LogHelper.debug({className: "IndexAppBar", tag: "nextState", msg: nextState, isJson: true});
         LogHelper.debug({className: "IndexAppBar", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
-        return true;
+        return PropertiesHelper.needUpdate({
+            componentName: "IndexAppBar",
+            currentProps: this.props,
+            nextProps: nextProps,
+            propsPropertiesList: this.propsCheckPropertiesList,
+            nextState: nextState,
+            currentState: this.state,
+            statePropertiesList: this.stateCheckPropertiesList
+        });
     }
 
     render() {
@@ -151,7 +160,8 @@ class IndexAppBar extends React.Component {
                         )}
                         {!Boolean(this.props.currentUser) && (
                             <Toolbar style={{display: "flex", justifyContent: "flex-end"}}>
-                                <Button variant="contained" color="secondary" justify="center" onClick={this.props.loginFormOpen}>
+                                <Button variant="contained" color="secondary" justify="center"
+                                        onClick={this.props.loginFormOpen}>
                                     登录
                                 </Button>
                             </Toolbar>
@@ -177,6 +187,7 @@ class IndexAppBar extends React.Component {
     componentWillUnmount() {
         LogHelper.info({className: "IndexAppBar", msg: "componentWillUnmount----------"});
     }
+
 }
 
 export default withStyles(styles)(IndexAppBar);

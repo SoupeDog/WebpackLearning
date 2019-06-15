@@ -82,4 +82,28 @@ export default class PropertiesHelper {
         return arrayStringVal;
     }
 
+
+    static needUpdate({componentName, currentProps, nextProps, propsPropertiesList, nextState, currentState, statePropertiesList}) {
+        let result = false;
+        if (PropertiesHelper.isArrayNotNull(propsPropertiesList)) {
+            propsPropertiesList.map((name) => {
+                if (nextProps[name] != currentProps[name]) {
+                    result = true;
+                }
+            });
+        }
+        LogHelper.pointInfo({className: "IndexAppBar", tag: "nextProps", msg: nextProps, isJson: true});
+        LogHelper.pointInfo({className: "IndexAppBar", tag: "nextState", msg: nextState, isJson: true});
+        if (PropertiesHelper.isArrayNotNull(statePropertiesList)) {
+            statePropertiesList.map((name) => {
+                if (nextState[name] != currentState[name]) {
+                    result = true;
+                }
+            });
+        }
+        if (result) {
+            LogHelper.pointInfo({className: componentName, isJson: false, msg: "shouldComponentUpdate -> true."});
+        }
+        return result;
+    }
 }
