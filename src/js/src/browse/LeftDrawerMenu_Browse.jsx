@@ -81,13 +81,13 @@ class LeftDrawerMenu_Browse extends React.Component {
                 <Grid container>
                     <Grid item xs={12}>
                         <List>
-                            <ListItem button>
+                            <ListItem button onClick={
+                                this.goToHomePage
+                            }>
                                 <ListItemIcon>
                                     <HomeIcon/>
                                 </ListItemIcon>
-                                <ListItemText primary="主页" onClick={
-                                    this.goToHomePage
-                                }/>
+                                <ListItemText primary="主页" />
                             </ListItem>
                             <Divider/>
                             <ListItem button onClick={this.friendsLinksButtonClick}>
