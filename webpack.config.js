@@ -20,7 +20,7 @@ module.exports = {
         open: true,
         compress: true,
         port: 9000,
-        host:"192.168.1.102"
+        host:"192.168.1.105"
         // host:"192.168.12.70"
     },
     module: {
@@ -93,7 +93,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: __dirname + "/src/plugin/", to: "./plugin/"}
         ]),
-        new CleanWebpackPlugin(['dist']),
+        // new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             filename: "index.html",
             title: "我的小宅子",

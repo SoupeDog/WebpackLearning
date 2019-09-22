@@ -32,7 +32,7 @@ export default class MarkdownHelper {
         $("#"+catalogId).empty();
         let testEditormdView = editormd.markdownToHTML(containerId, {
             markdown: content,// md 文字内容
-            htmlDecode: "style,script,iframe",  // you can filter tags decode
+            htmlDecode : true,// 允许解析 html 标签
             toc: useCatalog == null ? false : useCatalog,// 是否开启目录
             tocm: false,    // Using [TOCM]
             tocContainer: "#" + catalogId, // 目录容器
