@@ -1,73 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="author" content="Xavier">
+    <meta name="description" content="网站的描述信息">
+    <meta name="keywords" content="搜索关键字1,搜索关键字2">
+    <!--<meta property="og:image" content="https://developer.cdn.mozilla.net/static/img/opengraph-logo.dc4e08e2f6af.png">-->
+    <!--<meta property="og:description" content="The Mozilla Developer Network (MDN) provides-->
+    <!--information about Open Web technologies including HTML, CSS, and APIs for both Web sites-->
+    <!--and HTML5 Apps. It also documents Mozilla products, like Firefox OS.">-->
+    <!--<meta property="og:title" content="Mozilla Developer Network">-->
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0"/>-->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./plugin/pagination/pagination.min.js"></script>
-    <style type="text/css">
-        .footer {
-            color: #999999;
-            text-align: center;
-        }
-
-        .textItem {
-            font-size: 12px;
-            line-height: 20px;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .policeLink:hover {
-            color: #F35C8F
-        }
-
-        .policeLink {
-            color: #999999;
-            cursor: pointer
-        }
-
-        .dependentLink:hover {
-            color: #F35C8F
-        }
-
-        .dependentLink {
-            text-decoration: underline;
-            color: #999999;
-            cursor: pointer
-        }
-    </style>
 </head>
 <body>
-<div id="root" style="display: block">
-    正在加载依赖，初次加载可能较为缓慢，请尝试等待...（本站服务器下行网络仅 128kb/s）
-    <br/><br/>
-    若长时间显示该内容：<br/>
-    ①未兼容的浏览器，优先推荐 webkit 内核的现代化浏览器，如 Chrome、搜狗浏览器…… <br/>
-    ②网络问题，下载依赖失败，可尝试切换网络<br/>
-    ③未知的问题，如若愿意协助解决问题，可尝试联系 xavierpe@qq.com
-</div>
-<footer class="footer" style="display:block;">
-    <div style="display: block;width:300px; margin: 0 auto;clear: both;">
-        <a class="textItem policeLink" target="_blank" href="http://www.beian.miit.gov.cn">津ICP备18004196号-1</a>
-        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12010402000667"
-           class="textItem policeLink"><img
-                src="https://www.xavierwang.cn/images/icon-police.png"
-                style="float:left;"/>
-            <span>&nbsp;津公网安备12010402000667号</span>
-        </a>
+    <div id="root">
     </div>
-    <div style="display: block;width:300px; margin: 0 auto;clear: both;">
-        <span class="textItem">©2019 Xavier</span>
-        <div class="textItem" style="margin-left:20px; margin-right: 20px">
-            <span>Power by</span>
-            <a class="dependentLink" target="_blank" href="https://react.docschina.org">React</a>
-            <span>&nbsp;&&nbsp;</span>
-            <a class="dependentLink" target="_blank" href="https://material-ui.com">Material UI</a>
-        </div>
-    </div>
-</footer>
 </body>
 </html>

@@ -1,88 +1,70 @@
 // 内置插件
-const Path = require("path");
-// npm 外部安装插件
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const path = require("path");
+
+// 外部插件
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 module.exports = {
     entry: {
         index: "./src/js/index.jsx",
-        browse: "./src/js/browse.jsx",
-        editor: "./src/js/editor.jsx",
     },
     output: {
         publicPath: "",
-        path: Path.resolve(__dirname, "./dist"),
+        path: path.resolve(__dirname, "./dist"),
         filename: "./js/[name]-[chunkhash].js"
     },
     devServer: {
-        contentBase: Path.join(__dirname, "./dist"),
+        contentBase: path.join(__dirname, "./dist"),
         open: true,
         compress: true,
         port: 9000,
-        host:"192.168.1.105"
-        // host:"192.168.12.70"
+        // host: "192.168.1.105"
     },
     module: {
         rules: [
             {
-                test: /\.less$/,
+                test: /\.jsx?$/,
                 use: [
                     {
-                        loader: "style-loader" // creates style nodes from JS strings
-                    },
-                    {
-                        loader: "css-loader" // translates CSS into CommonJS
-                    },
-                    {
-                        loader: "postcss-loader",
+                        loader: "babel-loader",
                         options: {
-                            ident: "postcss",
-                            plugins: (loader) => [
-                                require("autoprefixer")()
+                            presets: ["@babel/preset-env", "@babel/react"],
+                            plugins: [
+                                [require("@babel/plugin-proposal-decorators"), {"legacy": true}]
                             ]
                         }
-                    },
-                    {
-                        loader: "less-loader" // compiles Less to CSS
-                    }]
-            },
-            {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: "style-loader" // creates style nodes from JS strings
-                    },
-                    {
-                        loader: "css-loader" // translates CSS into CommonJS
-                    },
-                    {
-                        loader: "postcss-loader",
-                        options: {
-                            ident: "postcss",
-                            plugins: (loader) => [
-                                require("autoprefixer")()
-                            ]
-                        }
-                    }]
-            },
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /(node_modules)/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ["react", "es2015", "stage-3"]
                     }
-                }
+                ],
+                include: path.resolve(__dirname, "src"),
+                exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif)$/i,
+                test: /\.css/,
+                use: [{loader: "style-loader"}, {loader: "css-loader"}],
+                exclude: /node_modules/,
+                include: path.resolve(__dirname, "src")
+            },
+            {
+                test: /\.less/,
+                use: [{loader: "style-loader"}, {loader: "css-loader"}, {loader: "less-loader"}],
+                exclude: /node_modules/,
+                include: path.resolve(__dirname, "src")
+            },
+            {
+                test: /\.scss/,
+                use: [{loader: "style-loader"}, {loader: "css-loader"}, {loader: "sass-loader"}],
+                exclude: /node_modules/,
+                include: path.resolve(__dirname, "src")
+            },
+            {
+                test: /\.(gif|jpg|png|bmp|eot|woff|woff2|ttf|svg)/,
                 use: [
                     {
-                        loader: 'url-loader',
+                        loader: "url-loader",
                         options: {
-                            limit: 8192
+                            limit: 1024,
+                            outputPath: "images"
                         }
                     }
                 ]
@@ -90,40 +72,18 @@ module.exports = {
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            {from: __dirname + "/src/plugin/", to: "./plugin/"}
-        ]),
-        // new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin(
+            {
+                cleanOnceBeforeBuildPatterns: [
+                    path.resolve(__dirname, "dist")
+                ]
+            }
+        ),
         new HtmlWebpackPlugin({
             filename: "index.html",
-            title: "我的小宅子",
-            favicon: "./src/img/icon.ico",
+            title: "首页",
+            favicon: "./src/img/favicon.ico",
             template: "./src/html/template.html",
-            chunks: ["index", "commons"],
-            inject: "body",
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true
-            }
-        }),
-        new HtmlWebpackPlugin({
-            filename: "browse.html",
-            title: "浏览页",
-            favicon: "./src/img/icon.ico",
-            template: "./src/html/browse.html",
-            chunks: ["browse", "commons"],
-            inject: "body",
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true
-            }
-        }),
-        new HtmlWebpackPlugin({
-            filename: "editor.html",
-            title: "编辑页",
-            favicon: "./src/img/icon.ico",
-            template: "./src/html/browse.html",
-            chunks: ["editor", "commons"],
             inject: "body",
             minify: {
                 removeComments: true,
@@ -134,7 +94,7 @@ module.exports = {
     optimization: {
         splitChunks: {
             // 打包公共依赖
-            chunks: 'all',
+            chunks: "all",
             name: "commons"
         }
     }

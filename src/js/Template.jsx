@@ -1,6 +1,7 @@
 import React from 'react';
 import LogHelper from "../../utils/LogHelper.jsx";
 
+// react 16.x 后生命周期钩子函数发生了变化  请注意版本
 class Template extends React.Component {
 
     constructor(props) {
@@ -9,15 +10,12 @@ class Template extends React.Component {
         LogHelper.info({className: "Template", msg: "constructor----------"});
     }
 
-    componentWillMount() {
-        LogHelper.info({className: "Template", msg: "componentWillMount----------"});
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        LogHelper.info({className: "Template", msg: "componentWillReceiveProps----------"});
+    static getDerivedStateFromProps(nextProps, nextContext) {
+        LogHelper.info({className: "Template", msg: "getDerivedStateFromProps----------"});
         LogHelper.debug({className: "Template", tag: "nextProps", msg: nextProps, isJson: true});
         LogHelper.debug({className: "Template", tag: "nextContext", msg: nextContext, isJson: true});
         LogHelper.debug({msg: ""});
+        return nextProps;
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
