@@ -1,7 +1,7 @@
 {
-  "name": "test-new-md",
+  "name": "ReactFalsework",
   "version": "1.0.0",
-  "description": "测试新的 md 库",
+  "description": "React 脚手架",
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress --colors --mode production",
