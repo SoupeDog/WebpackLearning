@@ -77,14 +77,6 @@ address, caption, cite, code, dfn, p, em, i, th, var {
     text-align: center;
 }
 
-.b_r {
-    color: #00A1D6;
-    cursor:pointer
-}
-.b_r:hover {
-    color: #F35C8F
-}
-
 .testStyle1{
     background-color: #333333;
     color: #CC6633;

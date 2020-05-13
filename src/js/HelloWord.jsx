@@ -30,12 +30,13 @@ class HelloWord extends React.Component {
     render() {
         if (this.state.hasError) {
             // 你可以渲染任何自定义的降级  UI
-            return <h1>Something went wrong.</h1>;
+            return (<h1>Something went wrong.</h1>);
         } else {
             return (
                 <>
-                    <h1 className="testStyle1">Hello world - 1.</h1>
-                    <h1 className="testStyle2">Hello world - 2.</h1>
+                    <h1 className="testStyle1">Hello world - css.</h1>
+                    <h1 className="testStyle2">Hello world - less.</h1>
+                    <h1 className="testStyle3">Hello world - scss.</h1>
                 </>
             );
         }

@@ -4,6 +4,7 @@ const path = require("path");
 // 外部插件
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
     entry: {
         index: "./src/js/index.jsx",
@@ -23,41 +24,63 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.jsx$/,
                 use: [
                     {
                         loader: "babel-loader",
                         options: {
                             presets: ["@babel/preset-env", "@babel/react"],
                             plugins: [
-                                [require("@babel/plugin-proposal-decorators"), {"legacy": true}]
+                                ["import", {
+                                    "libraryName": "antd",
+                                    "libraryDirectory": "es",
+                                    "style": true // `style: true` 会加载 less 文件
+                                }]
                             ]
                         }
                     }
                 ],
                 include: path.resolve(__dirname, "src"),
-                exclude: /node_modules/
+                // exclude: /node_modules/
             },
             {
-                test: /\.css/,
-                use: [{loader: "style-loader"}, {loader: "css-loader"}],
-                exclude: /node_modules/,
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+                // exclude: /node_modules/,
                 include: path.resolve(__dirname, "src")
             },
             {
-                test: /\.less/,
-                use: [{loader: "style-loader"}, {loader: "css-loader"}, {loader: "less-loader"}],
-                exclude: /node_modules/,
+                test: /\.less$/,
+                use: [
+                    {loader: "style-loader"},
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: "less-loader",
+                        options: {
+                            sourceMap: true
+                        }
+                    }],
                 include: path.resolve(__dirname, "src")
             },
             {
-                test: /\.scss/,
-                use: [{loader: "style-loader"}, {loader: "css-loader"}, {loader: "sass-loader"}],
-                exclude: /node_modules/,
+                test: /\.s[ac]ss$/,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                ],
                 include: path.resolve(__dirname, "src")
             },
             {
-                test: /\.(gif|jpg|png|bmp|eot|woff|woff2|ttf|svg)/,
+                test: /\.(gif|jpg|png|bmp|eot|woff|woff2|ttf|svg)$/,
                 use: [
                     {
                         loader: "url-loader",
@@ -88,7 +111,8 @@ module.exports = {
                 removeComments: true,
                 collapseWhitespace: true
             }
-        })
+        }),
+        new BundleAnalyzerPlugin()
     ],
     optimization: {
         splitChunks: {
