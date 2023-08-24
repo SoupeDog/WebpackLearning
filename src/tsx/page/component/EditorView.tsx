@@ -1,0 +1,67 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from 'remark-gfm' // 渲染表格、checkBox 等组件
+import rehypeRaw from 'rehype-raw' // 允许原生 html 渲染
+import rehypeSlug from 'rehype-slug' // 标题标签标记描点
+import rehypeHighlight from 'rehype-highlight' // 代码高亮标记
+import bash from 'highlight.js/lib/languages/bash';
+import shell from 'highlight.js/lib/languages/shell'
+import dockerfile from 'highlight.js/lib/languages/dockerfile';
+import nginx from 'highlight.js/lib/languages/nginx';
+import javascript from 'highlight.js/lib/languages/javascript';
+import typescript from 'highlight.js/lib/languages/typescript';
+import java from 'highlight.js/lib/languages/java';
+import python from 'highlight.js/lib/languages/python';
+import sql from 'highlight.js/lib/languages/sql';
+import properties from 'highlight.js/lib/languages/properties';
+import json from 'highlight.js/lib/languages/json';
+import xml from 'highlight.js/lib/languages/xml';
+import yaml from 'highlight.js/lib/languages/yaml';
+import {Col, Row} from "antd";
+import React from "react";
+import TextArea from "antd/es/input/TextArea";
+import {EditorContext} from "../Editor";
+
+function EditorView() {
+    return (
+        <EditorContext.Consumer>
+            {({content, updateContent}) => (
+                <Row gutter={[8, 8]}>
+                    <Col span={12} style={{maxHeight: "400px"}}>
+                        <TextArea rows={20} placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！"
+                                  onChange={event => {
+                                      updateContent(event.target.value);
+                                  }}
+                        />
+                    </Col>
+                    <Col span={12} >
+                        <ReactMarkdown className={"md-preview"}
+                                       children={content}
+                                       remarkPlugins={[remarkGfm]}
+                                       rehypePlugins={[rehypeSlug, rehypeRaw, [rehypeHighlight, {
+                                           detect: true,// 没有 language 属性的代码尝试自动解析语言类型
+                                           ignoreMissing: true, // 出现故障不抛出异常打断页面渲染
+                                           languages: {// 默认会装载部分语言，但手动更完整和准确
+                                               bash,
+                                               shell,
+                                               dockerfile,
+                                               nginx,
+                                               javascript,
+                                               typescript,
+                                               java,
+                                               python,
+                                               sql,
+                                               properties,
+                                               json,
+                                               xml,
+                                               yaml
+                                           }
+                                       }]]}
+                        />
+                    </Col>
+                </Row>
+            )}
+        </EditorContext.Consumer>
+    );
+}
+
+export default EditorView;
