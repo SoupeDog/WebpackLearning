@@ -1,7 +1,4 @@
-import "highlight.js/styles/atom-one-dark-reasonable.css"
-import "../../style/markdownCustomStyle.less"
-
-import React, {createContext, useState} from 'react';
+import React, {createContext, useMemo, useState} from 'react';
 import zhCN from "antd/locale/zh_CN";
 import {ConfigProvider} from "antd";
 import EditorMenu from "./component/EditorMenu";
@@ -12,25 +9,19 @@ export interface EditorState {
     updateContent: Function;
 }
 
-export const EditorContext = createContext<EditorState>(
-    {
-        content: "",
-        updateContent: () => {
-        }
-    }
-);
+export const EditorContext = createContext<EditorState>({} as EditorState);
 
 function Editor() {
     const [content, updateContent] = useState("");
 
+    const state = useMemo(() => ({
+        content: content,
+        updateContent: updateContent
+    }), [content])
+
     return (
         <ConfigProvider locale={zhCN}>
-            <EditorContext.Provider value={
-                {
-                    content: content,
-                    updateContent: updateContent
-                }
-            }>
+            <EditorContext.Provider value={state}>
                 <EditorMenu/>
                 <EditorView/>
             </EditorContext.Provider>

@@ -1,4 +1,7 @@
 import "../style/default.css"
+import "highlight.js/styles/atom-one-dark-reasonable.css"
+import "../../style/markdownCustomStyle.less"
+import "katex/dist/katex.min.css"
 
 import React from 'react';
 import {createRoot} from 'react-dom/client';

@@ -3,6 +3,8 @@ import remarkGfm from 'remark-gfm' // 渲染表格、checkBox 等组件
 import rehypeRaw from 'rehype-raw' // 允许原生 html 渲染
 import rehypeSlug from 'rehype-slug' // 标题标签标记描点
 import rehypeHighlight from 'rehype-highlight' // 代码高亮标记
+import remarkMath from 'remark-math' // 数学公式支持
+import rehypeKatex from 'rehype-katex' // 数学公式支持
 import bash from 'highlight.js/lib/languages/bash';
 import shell from 'highlight.js/lib/languages/shell'
 import dockerfile from 'highlight.js/lib/languages/dockerfile';
@@ -27,17 +29,18 @@ function EditorView() {
             {({content, updateContent}) => (
                 <Row gutter={[8, 8]}>
                     <Col span={12} style={{maxHeight: "400px"}}>
-                        <TextArea rows={20} placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！"
+                        <TextArea rows={20}
+                                  placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！"
                                   onChange={event => {
                                       updateContent(event.target.value);
                                   }}
                         />
                     </Col>
-                    <Col span={12} >
+                    <Col span={12}>
                         <ReactMarkdown className={"md-preview"}
                                        children={content}
-                                       remarkPlugins={[remarkGfm]}
-                                       rehypePlugins={[rehypeSlug, rehypeRaw, [rehypeHighlight, {
+                                       remarkPlugins={[remarkGfm, remarkMath]}
+                                       rehypePlugins={[rehypeKatex, rehypeSlug, rehypeRaw, [rehypeHighlight, {
                                            detect: true,// 没有 language 属性的代码尝试自动解析语言类型
                                            ignoreMissing: true, // 出现故障不抛出异常打断页面渲染
                                            languages: {// 默认会装载部分语言，但手动更完整和准确
