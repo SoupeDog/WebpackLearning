@@ -112,6 +112,17 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
+                                            updateContent(leftPart + "<u>" + selectedPart + "</u>" + rightPart);
+                                        });
+                                    }}>下划线</Button>
+                                    <Button type="link" onClick={(event) => {
+                                        // @ts-ignore
+                                        let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
+                                        InputElementHelper.appendTextToTextArea(element, "", ({
+                                                                                                  leftPart,
+                                                                                                  selectedPart,
+                                                                                                  rightPart
+                                                                                              }) => {
                                             updateContent(leftPart + "<sup>" + selectedPart + "</sup>" + rightPart);
                                         });
                                     }}>上标</Button>

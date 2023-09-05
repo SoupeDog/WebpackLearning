@@ -5,7 +5,7 @@ export const md_template_code: string = "\n```java\n" +
     "```\n";
 
 export const md_template_scheduled_tasks: string = "- [ ] 未完成任务\n" +
-    "- [x] 完成任务";
+    "- [x] 完成任务\n";
 
 export const md_template_summary: string = "<details>\n" +
     "  <summary>摘要</summary>\n" +
