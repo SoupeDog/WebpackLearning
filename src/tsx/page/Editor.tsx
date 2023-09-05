@@ -9,15 +9,19 @@ export interface EditorState {
     updateContent: Function;
 }
 
-export const EditorContext = createContext<EditorState>({} as EditorState);
-
 function Editor() {
     const [content, updateContent] = useState("");
-
+    const [editorExtendInfo, updateEditorExtendInfo] = useState({
+        hyperlinkModalEnable: false,
+        hyperlinkText: "",
+        hyperlinkValue: ""
+    });
     const state = useMemo(() => ({
         content: content,
-        updateContent: updateContent
-    }), [content])
+        updateContent: updateContent,
+        editorExtendInfo: editorExtendInfo,
+        updateEditorExtendInfo: updateEditorExtendInfo
+    }), [content, editorExtendInfo])
 
     return (
         <ConfigProvider locale={zhCN}>
@@ -29,4 +33,5 @@ function Editor() {
     );
 }
 
+export const EditorContext = createContext<EditorState>({} as EditorState);
 export default Editor;

@@ -22,22 +22,32 @@ import {Col, Row} from "antd";
 import React from "react";
 import TextArea from "antd/es/input/TextArea";
 import {EditorContext} from "../Editor";
+import {class_md_preview, editor_text_area} from "./properties/ElementNameContainer";
 
 function EditorView() {
     return (
         <EditorContext.Consumer>
             {({content, updateContent}) => (
-                <Row gutter={[8, 8]}>
-                    <Col span={12} style={{maxHeight: "400px"}}>
-                        <TextArea rows={20}
+                <Row gutter={[8, 8]} style={{
+                    marginTop: "8px",
+                    borderBottom: "solid",
+                    borderBottomWidth: "2px",
+                    borderBottomColor: "#adadad",
+                    paddingBottom: "8px"
+                }}>
+                    <Col span={12} style={{maxHeight: "600px"}}>
+                        <TextArea id={editor_text_area} rows={27}
                                   placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！"
+                                  value={content}
                                   onChange={event => {
                                       updateContent(event.target.value);
                                   }}
+                            // 不允许文本域调整大小
+                                  style={{resize: "none"}}
                         />
                     </Col>
-                    <Col span={12}>
-                        <ReactMarkdown className={"md-preview"}
+                    <Col span={12} style={{maxHeight: "600px", overflowY: "scroll"}}>
+                        <ReactMarkdown className={class_md_preview}
                                        children={content}
                                        remarkPlugins={[remarkGfm, remarkMath]}
                                        rehypePlugins={[rehypeKatex, rehypeSlug, rehypeRaw, [rehypeHighlight, {
