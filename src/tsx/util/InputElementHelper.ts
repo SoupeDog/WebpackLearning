@@ -25,18 +25,18 @@ export default class InputElementHelper {
         let selectedPart: string = "";
         let rightPart: string = "";
 
-        let old: string | null = element.textContent;
+        let oldTextContent: string | null = element.textContent;
 
-        if (old == null) {
+        if (oldTextContent == null) {
             // 原始内容为空，直接覆盖
             return appendTarget;
         } else {
             // 原始内容不为空，覆盖掉选中内容
             let cursorInfo: TextAreaCursorInfo = this.getTextAreaCursorInfo(element);
-            selectedPart = old.slice(cursorInfo.selectionStart, cursorInfo.selectionEnd);
+            selectedPart = oldTextContent.slice(cursorInfo.selectionStart, cursorInfo.selectionEnd);
 
-            leftPart = old.slice(0, cursorInfo.selectionStart);
-            rightPart = old.slice(cursorInfo.selectionEnd);
+            leftPart = oldTextContent.slice(0, cursorInfo.selectionStart);
+            rightPart = oldTextContent.slice(cursorInfo.selectionEnd);
         }
 
         if (successHook != null) {
