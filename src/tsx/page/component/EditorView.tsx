@@ -19,12 +19,21 @@ import json from 'highlight.js/lib/languages/json';
 import xml from 'highlight.js/lib/languages/xml';
 import yaml from 'highlight.js/lib/languages/yaml';
 import {Col, Row} from "antd";
-import React from "react";
+import React, {useState} from "react";
 import TextArea from "antd/es/input/TextArea";
 import {EditorContext} from "../Editor";
 import {class_md_preview, editor_text_area} from "./properties/ElementNameContainer";
+import InputElementHelper from "../../util/InputElementHelper";
+
+// 阻断事件向上冒泡
+function stopEvent(event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+}
 
 function EditorView() {
+    const [isCtrlActive, setIsCtrlActive] = useState(false);
+
     return (
         <EditorContext.Consumer>
             {({content, updateContent}) => (
@@ -41,6 +50,40 @@ function EditorView() {
                                   value={content}
                                   onChange={event => {
                                       updateContent(event.target.value);
+                                  }}
+                                  onKeyDown={(event) => {
+                                      console.log("按下" + event.key)
+
+                                      if (event.key == "Control") {
+                                          setIsCtrlActive(true);
+                                          stopEvent(event);
+                                      } else if (isCtrlActive && event.key == "s") {
+                                          // ctrl + s
+                                          console.log("执行：保存");
+                                          stopEvent(event);
+                                      } else if (isCtrlActive && event.key == "d") {
+                                          // ctrl + d
+                                          console.log("执行：删除行");
+
+                                          // @ts-ignore
+                                          let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
+
+                                          InputElementHelper.removeSelectedLine(element, ({
+                                                                                              leftPart,
+                                                                                              rightPart
+                                                                                          }) => {
+                                              updateContent(leftPart + rightPart);
+                                          });
+                                          stopEvent(event);
+                                      }
+                                  }}
+                                  onKeyUp={(event) => {
+                                      console.log("弹起" + event.key)
+
+                                      if (event.key == "Control") {
+                                          setIsCtrlActive(false);
+                                          stopEvent(event);
+                                      }
                                   }}
                             // 不允许文本域调整大小
                                   style={{resize: "none"}}

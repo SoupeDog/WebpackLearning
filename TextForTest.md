@@ -49,7 +49,7 @@ A<sub>1</sub>
   <p>详情内容</p>
 </details>
 
-<acronym title="全称详情">缩语</acronym>
+<acronym title="全称详情">缩略语</acronym>
 
 # 公式
 
@@ -164,3 +164,9 @@ config-attributes:
     - name: bbb
       age: 31
 ```
+
+# 资源
+
+![百度Logo](https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png)
+
+<img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" alt="百度Logo" width="540" height="258" style="margin:0 auto;display: block;">

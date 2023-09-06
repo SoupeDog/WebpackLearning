@@ -11,6 +11,7 @@ import {
 } from "./properties/MarkDownStaticValue";
 import EditorHyperlinkModal from "./EditorHyperlinkModal";
 import {editor_text_area} from "./properties/ElementNameContainer";
+import EditorImageModal from "./EditorImageModal";
 
 const onChange = (key: string) => {
     console.log(key);
@@ -84,6 +85,7 @@ function EditorMenu() {
                                         });
                                     }}>代码块</Button>
                                     <EditorHyperlinkModal/>
+                                    <EditorImageModal/>
                                     <Button type="link" onClick={(event) => {
                                         // @ts-ignore
                                         let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
@@ -158,7 +160,7 @@ function EditorMenu() {
                                                                                               }) => {
                                             updateContent(leftPart + md_template_acronym + rightPart);
                                         });
-                                    }}>缩语</Button>
+                                    }}>缩略语</Button>
                                 </Space>
                             </Row>
                     },

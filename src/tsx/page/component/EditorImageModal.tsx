@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
-import {Button, Input, message, Modal, Space} from "antd";
+import {Button, Input, message, Modal, Radio, Space} from "antd";
 import {EditorContext} from "../Editor";
 import {editor_text_area} from "./properties/ElementNameContainer";
 import InputElementHelper from "../../util/InputElementHelper";
 
-function EditorHyperlinkModal() {
+function EditorImageModal() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [hyperlinkText, setHyperlinkText] = useState("");
-    const [hyperlinkValue, setHyperlinkValue] = useState("");
+    const [imageText, setImageText] = useState("");
+    const [imageLinkValue, setImageLinkValue] = useState("");
+    const [imageType, setImageType] = useState("center");
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -25,15 +26,21 @@ function EditorHyperlinkModal() {
                 <>
                     {contextHolder}
                     <Button type="link" onClick={showModal}>
-                        插入超链接
+                        插入图片
                     </Button>
-                    <Modal title="超链接信息" open={isModalOpen} onOk={() => {
-                        if (hyperlinkText.length < 1 || hyperlinkValue.length < 1) {
-                            messageApi.warning("请输入完整超链接信息");
+                    <Modal title="图片信息" open={isModalOpen} onOk={() => {
+                        if (imageText.length < 1 || imageLinkValue.length < 1) {
+                            messageApi.warning("请输入完整图片信息");
                             return;
                         }
 
-                        let content = "[" + hyperlinkText + "](" + hyperlinkValue + ")";
+                        let content: string;
+
+                        if (imageType == "center") {
+                            content = "<img src=\"" + imageLinkValue + "\" alt=\"" + imageText + "\" width=\"540\" height=\"258\" style=\"margin:0 auto;display: block;\">";
+                        } else {
+                            content = "![" + imageText + "](" + imageLinkValue + ")";
+                        }
 
                         // @ts-ignore
                         let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
@@ -47,16 +54,22 @@ function EditorHyperlinkModal() {
 
                         // 完成插入后重置为初始状态
                         setIsModalOpen(false);
-                        setHyperlinkText("");
-                        setHyperlinkValue("");
+                        setImageText("");
+                        setImageLinkValue("");
                     }} onCancel={handleCancel}>
                         <Space size={"small"} direction={"vertical"} style={{width: "90%"}}>
-                            <Input placeholder="显示文本" value={hyperlinkText} onChange={(event) => {
-                                setHyperlinkText(event.target.value);
+                            <Input placeholder="提示文本" value={imageText} onChange={(event) => {
+                                setImageText(event.target.value);
                             }}/>
-                            <Input placeholder="超链接" value={hyperlinkValue} onChange={(event) => {
-                                setHyperlinkValue(event.target.value);
+                            <Input placeholder="图片链接" value={imageLinkValue} onChange={(event) => {
+                                setImageLinkValue(event.target.value);
                             }}/>
+                            <Radio.Group defaultValue="center" buttonStyle="solid" onChange={(event) => {
+                                setImageType(event.target.value);
+                            }}>
+                                <Radio.Button value="center">图片居中</Radio.Button>
+                                <Radio.Button value="default">Markdown 默认</Radio.Button>
+                            </Radio.Group>
                         </Space>
                     </Modal>
                 </>
@@ -65,4 +78,4 @@ function EditorHyperlinkModal() {
     );
 }
 
-export default EditorHyperlinkModal;
+export default EditorImageModal;
