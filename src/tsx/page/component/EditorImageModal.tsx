@@ -3,6 +3,7 @@ import {Button, Input, message, Modal, Radio, Space} from "antd";
 import {EditorContext} from "../Editor";
 import {editor_text_area} from "./properties/ElementNameContainer";
 import InputElementHelper from "../../util/InputElementHelper";
+import {contentChangeUndoStackHandler} from "./EditorView";
 
 function EditorImageModal() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,7 +50,10 @@ function EditorImageModal() {
                                                                                        leftPart,
                                                                                        rightPart
                                                                                    }) => {
-                            updateContent(leftPart + appendTarget + rightPart);
+                            let nextContent = leftPart + appendTarget + rightPart;
+                            updateContent(nextContent);
+
+                            contentChangeUndoStackHandler(nextContent);
                         });
 
                         // 完成插入后重置为初始状态

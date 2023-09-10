@@ -18,21 +18,44 @@ import properties from 'highlight.js/lib/languages/properties';
 import json from 'highlight.js/lib/languages/json';
 import xml from 'highlight.js/lib/languages/xml';
 import yaml from 'highlight.js/lib/languages/yaml';
-import {Col, Row} from "antd";
-import React, {useState} from "react";
+import {Col, message, Row} from "antd";
+import React from "react";
 import TextArea from "antd/es/input/TextArea";
 import {EditorContext} from "../Editor";
 import {class_md_preview, editor_text_area} from "./properties/ElementNameContainer";
 import InputElementHelper from "../../util/InputElementHelper";
 
+const stackMaxSize = 20;
+const undoStack: string[] = new Array<string>(); // 用于存储撤销历史记录
+// 初始为空
+undoStack.push("");
+const redoStack: string[] = new Array<string>(); // 用于存储重做历史记录
+
 // 阻断事件向上冒泡
 function stopEvent(event: any) {
     event.preventDefault();
-    event.stopPropagation();
+}
+
+export function contentChangeUndoStackHandler(content: string) {
+    undoStack.push(content);
+
+    // 栈容量限制
+    if (undoStack.length > stackMaxSize) {
+        undoStack.shift();
+        // 清空
+        redoStack.length = 0;
+    }
+}
+
+export function contentChangeTextAreaPostHandler(element: HTMLTextAreaElement, cursorIndex: number) {
+    // react 更新和 dom 操作间是异步的，这里用延时不太靠谱地指定 dom 操作在 react 更新后执行，
+    setTimeout(function () {
+        element.setSelectionRange(cursorIndex, cursorIndex)
+    }, 50);
 }
 
 function EditorView() {
-    const [isCtrlActive, setIsCtrlActive] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
 
     return (
         <EditorContext.Consumer>
@@ -45,44 +68,81 @@ function EditorView() {
                     paddingBottom: "8px"
                 }}>
                     <Col span={12} style={{maxHeight: "600px"}}>
+                        {contextHolder}
                         <TextArea id={editor_text_area} rows={27}
                                   placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！"
                                   value={content}
                                   onChange={event => {
+                                      contentChangeUndoStackHandler(event.target.value);
+
                                       updateContent(event.target.value);
                                   }}
                                   onKeyDown={(event) => {
-                                      console.log("按下" + event.key)
-
-                                      if (event.key == "Control") {
-                                          setIsCtrlActive(true);
-                                          stopEvent(event);
-                                      } else if (isCtrlActive && event.key == "s") {
-                                          // ctrl + s
-                                          console.log("执行：保存");
-                                          stopEvent(event);
-                                      } else if (isCtrlActive && event.key == "d") {
-                                          // ctrl + d
-                                          console.log("执行：删除行");
-
+                                      // 如果是 ctrl 组合键
+                                      if (event.ctrlKey) {
                                           // @ts-ignore
                                           let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
 
-                                          InputElementHelper.removeSelectedLine(element, ({
-                                                                                              leftPart,
-                                                                                              rightPart
-                                                                                          }) => {
-                                              updateContent(leftPart + rightPart);
-                                          });
-                                          stopEvent(event);
-                                      }
-                                  }}
-                                  onKeyUp={(event) => {
-                                      console.log("弹起" + event.key)
+                                          switch (event.key) {
+                                              case "s":
+                                                  stopEvent(event);
 
-                                      if (event.key == "Control") {
-                                          setIsCtrlActive(false);
-                                          stopEvent(event);
+                                                  messageApi.success("保存成功");
+                                                  break;
+                                              case "d":
+                                                  stopEvent(event);
+
+                                                  InputElementHelper.removeSelectedLine(element, ({
+                                                                                                      leftPart,
+                                                                                                      rightPart
+                                                                                                  }) => {
+                                                      let nextContent = leftPart + rightPart;
+                                                      updateContent(nextContent);
+
+                                                      contentChangeUndoStackHandler(nextContent);
+                                                      contentChangeTextAreaPostHandler(element, leftPart.length);
+                                                  });
+                                                  break;
+                                              case "z":
+                                                  stopEvent(event);
+
+                                                  if (undoStack.length > 0) {
+                                                      let nextContent = undoStack.pop();
+
+                                                      if (nextContent == null) {
+                                                          break;
+                                                      }
+
+                                                      redoStack.push(nextContent);
+
+                                                      if (nextContent == element.textContent!) {
+                                                          nextContent = undoStack.pop();
+                                                          redoStack.push(nextContent!);
+                                                      }
+                                                      updateContent(nextContent);
+                                                  }
+
+                                                  break;
+                                              case "y":
+                                                  stopEvent(event);
+
+                                                  if (redoStack.length > 0) {
+                                                      let nextContent = redoStack.pop();
+                                                      if (nextContent == null) {
+                                                          break;
+                                                      }
+                                                      undoStack.push(nextContent);
+
+                                                      if (nextContent == element.textContent) {
+                                                          nextContent = redoStack.pop();
+                                                          undoStack.push(nextContent!);
+                                                      }
+                                                      updateContent(nextContent);
+                                                  }
+
+                                                  break;
+                                              default:
+                                          }
                                       }
                                   }}
                             // 不允许文本域调整大小

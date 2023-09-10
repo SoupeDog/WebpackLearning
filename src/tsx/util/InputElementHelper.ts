@@ -3,6 +3,12 @@ export interface TextAreaCursorInfo {
     selectionEnd: number;
 }
 
+// 结尾为换行符或文本最后一个字符(闭区间)
+export interface TextAreaContentLineInfo {
+    start: number;
+    end: number;
+}
+
 export interface TextAreaContentRemoveLineInfo {
     leftPart: string;
     rightPart: string;
@@ -52,38 +58,67 @@ export default class InputElementHelper {
             }
         }
 
-        let leftCutIndex: number = 0;
-        let rightCutIndex: number = oldContent.length;
+        let lineInfoArray = new Array<TextAreaContentLineInfo>();
 
         lineBreakIndexArray.forEach((value, index, array) => {
-            if (value <= textAreaCursorInfo.selectionStart) {
-                leftCutIndex = value;
+            let start;
+            let end;
+
+            if (index == 0) {
+                // 首行
+                start = 0;
+                end = array[index + 1];
+
+            } else if (index == array.length - 1) {
+                // 最后一行
+                start = value + 1;
+                end = oldContent!.length - 1
+            } else {
+                // 首行外 +1
+                start = value + 1;
+                end = array[index + 1];
+            }
+
+            lineInfoArray.push({
+                start: start,
+                end: end
+            });
+        });
+
+        let leftCutIndex: number = 0;
+        let rightCutIndex: number = oldContent.length - 1;
+
+        // 找出选中区域左端点对应的行起始点
+        lineInfoArray.forEach((item, index, array) => {
+
+            if (item.start <= textAreaCursorInfo.selectionStart) {
+                leftCutIndex = item.start;
             }
         });
 
-        for (let i = lineBreakIndexArray.length - 1; i > 0; i--) {
-            let value = lineBreakIndexArray[i];
-            if (value > textAreaCursorInfo.selectionEnd) {
-                rightCutIndex = value;
+        // 找出选中区域右端点对应的行结束点
+        for (let i = lineInfoArray.length - 1; i >= 0; i--) {
+            let item = lineInfoArray[i];
+
+            if (item.end >= textAreaCursorInfo.selectionEnd) {
+                rightCutIndex = item.end;
             }
         }
 
         let leftPart: string;
+
         if (leftCutIndex != 0) {
             leftPart = oldContent.slice(0, leftCutIndex);
         } else {
             leftPart = "";
         }
 
-        let rightPart: string = oldContent.slice(rightCutIndex);
+        let rightPart: string = oldContent.slice(rightCutIndex + 1);
 
         successHook({
             leftPart: leftPart,
             rightPart: rightPart
         });
-
-        console.log(lineBreakIndexArray);
-
     }
 
     static appendTextToTextArea(element: HTMLTextAreaElement, appendTarget: string,

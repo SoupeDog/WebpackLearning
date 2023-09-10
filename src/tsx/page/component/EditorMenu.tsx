@@ -12,6 +12,7 @@ import {
 import EditorHyperlinkModal from "./EditorHyperlinkModal";
 import {editor_text_area} from "./properties/ElementNameContainer";
 import EditorImageModal from "./EditorImageModal";
+import {contentChangeUndoStackHandler} from "./EditorView";
 
 const onChange = (key: string) => {
     console.log(key);
@@ -37,7 +38,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + "**" + selectedPart + "**" + rightPart);
+                                            let nextContent = leftPart + "**" + selectedPart + "**" + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>加粗</Button>
                                     <Button type="link" onClick={(event) => {
@@ -48,7 +52,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + "*" + selectedPart + "*" + rightPart);
+                                            let nextContent = leftPart + "*" + selectedPart + "*" + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>斜体</Button>
                                     <Button type="link" onClick={(event) => {
@@ -59,7 +66,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + "~" + selectedPart + "~" + rightPart);
+                                            let nextContent = leftPart + "~" + selectedPart + "~" + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>删除线</Button>
                                     <Button type="link" onClick={(event) => {
@@ -70,7 +80,10 @@ function EditorMenu() {
                                                                                                                  leftPart,
                                                                                                                  rightPart
                                                                                                              }) => {
-                                            updateContent(leftPart + appendTarget + rightPart);
+                                            let nextContent = leftPart + appendTarget + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>表格</Button>
                                     <Button type="link" onClick={(event) => {
@@ -81,7 +94,10 @@ function EditorMenu() {
                                                                                                                 leftPart,
                                                                                                                 rightPart
                                                                                                             }) => {
-                                            updateContent(leftPart + appendTarget + rightPart);
+                                            let nextContent = leftPart + appendTarget + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>代码块</Button>
                                     <EditorHyperlinkModal/>
@@ -94,7 +110,10 @@ function EditorMenu() {
                                                                                                                            leftPart,
                                                                                                                            rightPart
                                                                                                                        }) => {
-                                            updateContent(leftPart + appendTarget + rightPart);
+                                            let nextContent = leftPart + appendTarget + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>计划任务</Button>
                                 </Space>
@@ -114,7 +133,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + "<u>" + selectedPart + "</u>" + rightPart);
+                                            let nextContent = leftPart + "<u>" + selectedPart + "</u>" + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>下划线</Button>
                                     <Button type="link" onClick={(event) => {
@@ -125,7 +147,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + "<sup>" + selectedPart + "</sup>" + rightPart);
+                                            let nextContent = leftPart + "<sup>" + selectedPart + "</sup>" + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>上标</Button>
                                     <Button type="link" onClick={(event) => {
@@ -136,7 +161,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + "<sub>" + selectedPart + "</sub>" + rightPart);
+                                            let nextContent = leftPart + "<sub>" + selectedPart + "</sub>" + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>下标</Button>
                                     <Button type="link" onClick={(event) => {
@@ -147,7 +175,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + md_template_summary + rightPart);
+                                            let nextContent = leftPart + md_template_summary + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>摘要</Button>
                                     <Button type="link" onClick={(event) => {
@@ -158,7 +189,10 @@ function EditorMenu() {
                                                                                                   selectedPart,
                                                                                                   rightPart
                                                                                               }) => {
-                                            updateContent(leftPart + md_template_acronym + rightPart);
+                                            let nextContent = leftPart + md_template_acronym + rightPart;
+                                            updateContent(nextContent);
+
+                                            contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>缩略语</Button>
                                 </Space>

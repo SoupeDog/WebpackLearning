@@ -3,6 +3,7 @@ import {Button, Input, message, Modal, Space} from "antd";
 import {EditorContext} from "../Editor";
 import {editor_text_area} from "./properties/ElementNameContainer";
 import InputElementHelper from "../../util/InputElementHelper";
+import {contentChangeUndoStackHandler} from "./EditorView";
 
 function EditorHyperlinkModal() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,7 +43,10 @@ function EditorHyperlinkModal() {
                                                                                        leftPart,
                                                                                        rightPart
                                                                                    }) => {
-                            updateContent(leftPart + appendTarget + rightPart);
+                            let nextContent = leftPart + appendTarget + rightPart;
+                            updateContent(nextContent);
+
+                            contentChangeUndoStackHandler(nextContent);
                         });
 
                         // 完成插入后重置为初始状态
