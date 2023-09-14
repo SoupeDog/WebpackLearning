@@ -1,8 +1,9 @@
 import React from 'react';
-import {Button, Row, Space, Tabs} from "antd";
+import {Button, message, Row, Space, Tabs, Tooltip} from "antd";
 import InputElementHelper from "../../util/InputElementHelper";
 import {EditorContext} from "../Editor";
 import {
+    key_draft,
     md_template_acronym,
     md_template_code,
     md_template_scheduled_tasks,
@@ -30,34 +31,38 @@ function EditorMenu() {
                         children:
                             <Row gutter={[8, 8]}>
                                 <Space size={"small"}>
-                                    <Button type="link" onClick={(event) => {
-                                        // @ts-ignore
-                                        let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
-                                        InputElementHelper.appendTextToTextArea(element, "", ({
-                                                                                                  leftPart,
-                                                                                                  selectedPart,
-                                                                                                  rightPart
-                                                                                              }) => {
-                                            let nextContent = leftPart + "**" + selectedPart + "**" + rightPart;
-                                            updateContent(nextContent);
+                                    <Tooltip placement="top" title={"Ctrl + B"}>
+                                        <Button type="link" onClick={(event) => {
+                                            // @ts-ignore
+                                            let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
+                                            InputElementHelper.appendTextToTextArea(element, "", ({
+                                                                                                      leftPart,
+                                                                                                      selectedPart,
+                                                                                                      rightPart
+                                                                                                  }) => {
+                                                let nextContent = leftPart + "**" + selectedPart + "**" + rightPart;
+                                                updateContent(nextContent);
 
-                                            contentChangeUndoStackHandler(nextContent);
-                                        });
-                                    }}>加粗</Button>
-                                    <Button type="link" onClick={(event) => {
-                                        // @ts-ignore
-                                        let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
-                                        InputElementHelper.appendTextToTextArea(element, "", ({
-                                                                                                  leftPart,
-                                                                                                  selectedPart,
-                                                                                                  rightPart
-                                                                                              }) => {
-                                            let nextContent = leftPart + "*" + selectedPart + "*" + rightPart;
-                                            updateContent(nextContent);
+                                                contentChangeUndoStackHandler(nextContent);
+                                            });
+                                        }}>加粗</Button>
+                                    </Tooltip>
+                                    <Tooltip placement="top" title={"Ctrl + I"}>
+                                        <Button type="link" onClick={(event) => {
+                                            // @ts-ignore
+                                            let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
+                                            InputElementHelper.appendTextToTextArea(element, "", ({
+                                                                                                      leftPart,
+                                                                                                      selectedPart,
+                                                                                                      rightPart
+                                                                                                  }) => {
+                                                let nextContent = leftPart + "*" + selectedPart + "*" + rightPart;
+                                                updateContent(nextContent);
 
-                                            contentChangeUndoStackHandler(nextContent);
-                                        });
-                                    }}>斜体</Button>
+                                                contentChangeUndoStackHandler(nextContent);
+                                            });
+                                        }}>斜体</Button>
+                                    </Tooltip>
                                     <Button type="link" onClick={(event) => {
                                         // @ts-ignore
                                         let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
@@ -116,6 +121,17 @@ function EditorMenu() {
                                             contentChangeUndoStackHandler(nextContent);
                                         });
                                     }}>计划任务</Button>
+                                    <Button type="link" onClick={() => {
+                                        let nextContent = localStorage.getItem(key_draft);
+
+                                        if (nextContent != null) {
+                                            updateContent(nextContent);
+                                            contentChangeUndoStackHandler(nextContent);
+                                            message.info("加载草稿完成")
+                                        } else {
+                                            message.warning("未找到可用草稿")
+                                        }
+                                    }}>加载草稿</Button>
                                 </Space>
                             </Row>
                     },
@@ -200,13 +216,11 @@ function EditorMenu() {
                     },
                     {
                         key: '3',
-                        label: '等待施工菜单 3',
+                        label: '　　其他　　',
                         children:
                             <Row gutter={[8, 8]}>
                                 <Space size={"small"}>
-                                    <Button type="link">xx 功能</Button>
-                                    <Button type="link">xx 功能</Button>
-                                    <Button type="link">xx 功能</Button>
+                                    <Button type="link">插入 Bilibili 外链</Button>
                                 </Space>
                             </Row>
                     },

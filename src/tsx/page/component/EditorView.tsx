@@ -24,6 +24,7 @@ import TextArea from "antd/es/input/TextArea";
 import {EditorContext} from "../Editor";
 import {class_md_preview, editor_text_area} from "./properties/ElementNameContainer";
 import InputElementHelper from "../../util/InputElementHelper";
+import {key_draft} from "./properties/MarkDownStaticValue";
 
 const stackMaxSize = 20;
 const undoStack: string[] = new Array<string>(); // 用于存储撤销历史记录
@@ -70,7 +71,14 @@ function EditorView() {
                     <Col span={12} style={{maxHeight: "600px"}}>
                         {contextHolder}
                         <TextArea id={editor_text_area} rows={27}
-                                  placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！"
+                                  placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！
+                                        Ctrl + B 加粗
+                                        Ctrl + D 删除当前行
+                                        Ctrl + I 斜体
+                                        Ctrl + S 保存草稿
+                                        Ctrl + Y 回退
+                                        Ctrl + Z 撤销
+                                        "
                                   value={content}
                                   onChange={event => {
                                       contentChangeUndoStackHandler(event.target.value);
@@ -85,11 +93,15 @@ function EditorView() {
 
                                           switch (event.key) {
                                               case "s":
+                                                  // 保存
                                                   stopEvent(event);
 
-                                                  messageApi.success("保存成功");
+                                                  localStorage.setItem(key_draft, element.textContent!);
+
+                                                  messageApi.success("保存草稿成功");
                                                   break;
                                               case "d":
+                                                  // 删除行
                                                   stopEvent(event);
 
                                                   InputElementHelper.removeSelectedLine(element, ({
@@ -103,7 +115,36 @@ function EditorView() {
                                                       contentChangeTextAreaPostHandler(element, leftPart.length);
                                                   });
                                                   break;
+                                              case "b":
+                                                  // 加粗
+                                                  stopEvent(event);
+                                                  InputElementHelper.appendTextToTextArea(element, "", ({
+                                                                                                            leftPart,
+                                                                                                            selectedPart,
+                                                                                                            rightPart
+                                                                                                        }) => {
+                                                      let nextContent = leftPart + "**" + selectedPart + "**" + rightPart;
+                                                      updateContent(nextContent);
+
+                                                      contentChangeUndoStackHandler(nextContent);
+                                                  });
+                                                  break;
+                                              case "i":
+                                                  // 斜体
+                                                  stopEvent(event);
+                                                  InputElementHelper.appendTextToTextArea(element, "", ({
+                                                                                                            leftPart,
+                                                                                                            selectedPart,
+                                                                                                            rightPart
+                                                                                                        }) => {
+                                                      let nextContent = leftPart + "*" + selectedPart + "*" + rightPart;
+                                                      updateContent(nextContent);
+
+                                                      contentChangeUndoStackHandler(nextContent);
+                                                  });
+                                                  break;
                                               case "z":
+                                                  // 撤销
                                                   stopEvent(event);
 
                                                   if (undoStack.length > 0) {
@@ -124,6 +165,7 @@ function EditorView() {
 
                                                   break;
                                               case "y":
+                                                  // 回退
                                                   stopEvent(event);
 
                                                   if (redoStack.length > 0) {
