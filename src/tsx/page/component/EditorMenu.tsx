@@ -14,6 +14,8 @@ import EditorHyperlinkModal from "./EditorHyperlinkModal";
 import {editor_text_area} from "./properties/ElementNameContainer";
 import EditorImageModal from "./EditorImageModal";
 import {contentChangeUndoStackHandler} from "./EditorView";
+import EditorBilibiliShareModal from "./EditorBilibiliShareModal";
+import {AntdTreeNodeInfo, MdHelper} from "../../util/MdHelper";
 
 const onChange = (key: string) => {
     console.log(key);
@@ -107,6 +109,7 @@ function EditorMenu() {
                                     }}>代码块</Button>
                                     <EditorHyperlinkModal/>
                                     <EditorImageModal/>
+                                    <EditorBilibiliShareModal/>
                                     <Button type="link" onClick={(event) => {
                                         // @ts-ignore
                                         let element: HTMLTextAreaElement = document.getElementById(editor_text_area);
@@ -220,7 +223,36 @@ function EditorMenu() {
                         children:
                             <Row gutter={[8, 8]}>
                                 <Space size={"small"}>
-                                    <Button type="link">插入 Bilibili 外链</Button>
+                                    <Button type="link" onClick={(event) => {
+
+                                        let antdTreeNodeInfos: Array<AntdTreeNodeInfo> = new Array<AntdTreeNodeInfo>();
+                                        let map: Map<number, AntdTreeNodeInfo> = new Map<number, AntdTreeNodeInfo>();
+
+                                        document.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((item, index) => {
+                                            let antdTreeNode = {
+                                                index: index,
+                                                key: "toc_" + index,
+                                                nodeName: item.tagName,
+                                                level: null,
+                                                title: item.textContent as string,
+                                                value: item.id,
+                                                parentNodeIndex: null,
+                                                children: new Array<AntdTreeNodeInfo>
+                                            };
+
+                                            antdTreeNodeInfos.push(antdTreeNode);
+                                            map.set(index, antdTreeNode);
+                                        });
+
+                                        let currentTOC = MdHelper.initTitleTree({
+                                            currentTOCArray: antdTreeNodeInfos,
+                                            allTocNodeMap: map,
+                                            errorCallback: null
+                                        });
+
+                                        console.log(currentTOC);
+
+                                    }}>显示目录</Button>
                                 </Space>
                             </Row>
                     },

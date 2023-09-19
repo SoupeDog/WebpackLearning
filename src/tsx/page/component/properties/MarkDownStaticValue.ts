@@ -14,5 +14,4 @@ export const md_template_summary: string = "<details>\n" +
 
 export const md_template_acronym: string = "<acronym title=\"全称详情\">缩略语</acronym>";
 
-
 export const key_draft: string = "md_draft";

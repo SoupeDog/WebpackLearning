@@ -63,9 +63,6 @@ function EditorView() {
             {({content, updateContent}) => (
                 <Row gutter={[8, 8]} style={{
                     marginTop: "8px",
-                    borderBottom: "solid",
-                    borderBottomWidth: "2px",
-                    borderBottomColor: "#adadad",
                     paddingBottom: "8px"
                 }}>
                     <Col span={12} style={{maxHeight: "600px"}}>
