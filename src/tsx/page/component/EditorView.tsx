@@ -18,13 +18,15 @@ import properties from 'highlight.js/lib/languages/properties';
 import json from 'highlight.js/lib/languages/json';
 import xml from 'highlight.js/lib/languages/xml';
 import yaml from 'highlight.js/lib/languages/yaml';
-import {Col, message, Row} from "antd";
+import {Col, message, Row, Tree} from "antd";
 import React from "react";
 import TextArea from "antd/es/input/TextArea";
 import {EditorContext} from "../Editor";
 import {class_md_preview, editor_text_area} from "./properties/ElementNameContainer";
 import InputElementHelper from "../../util/InputElementHelper";
 import {key_draft} from "./properties/MarkDownStaticValue";
+import {DownOutlined} from '@ant-design/icons';
+import {TreeProps} from "antd/es/tree/Tree";
 
 const stackMaxSize = 20;
 const undoStack: string[] = new Array<string>(); // 用于存储撤销历史记录
@@ -58,14 +60,37 @@ export function contentChangeTextAreaPostHandler(element: HTMLTextAreaElement, c
 function EditorView() {
     const [messageApi, contextHolder] = message.useMessage();
 
+    // 目录选中自动跳转函数
+    const onSelect: TreeProps['onSelect'] = (selectedKeys, info) => {
+        // @ts-ignore
+        let element = document.getElementById(info.node.value);
+
+        if (element != null) {
+            // 滚动到锚点元素的顶部
+            element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+        } else {
+            message.warning("未找到对应跳转锚点")
+        }
+    };
+
     return (
         <EditorContext.Consumer>
-            {({content, updateContent}) => (
+            {({content, updateContent, tocEnable, tocTree}) => (
                 <Row gutter={[8, 8]} style={{
                     marginTop: "8px",
                     paddingBottom: "8px"
                 }}>
-                    <Col span={12} style={{maxHeight: "600px"}}>
+                    {tocEnable ?
+                        <Col span={4}>
+                            <Tree
+                                showLine
+                                switcherIcon={<DownOutlined/>}
+                                onSelect={onSelect}
+                                treeData={tocTree}
+                            />
+                        </Col>
+                        : null}
+                    <Col span={tocEnable ? 8 : 12} style={{maxHeight: "600px"}}>
                         {contextHolder}
                         <TextArea id={editor_text_area} rows={27}
                                   placeholder="这里是 markdown 编辑器写作区，请开始您的创作吧！

@@ -118,21 +118,23 @@
   }
 
   p {
-    padding-right: 0.5em;
-    padding-left: 0.5em;
+    // 调整段落间的各种间距
+    padding-right: 0.5em !important;
+    padding-left: 0.5em !important;
+    margin-block-start: 0.5em !important;
+    margin-block-end: 0.5em !important;
     // 保留文本中的空白、换行符
     white-space: pre-wrap;
   }
 
   a {
-    font-weight: bolder;
     color: dodgerblue;
     text-decoration: none; /* 去除下划线 */
   }
 
   a:hover {
     color: hotpink;
-    text-decoration: underline; /* 去除下划线 */
+    text-decoration: underline;
   }
 
   a:active {

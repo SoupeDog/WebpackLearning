@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, message, Row, Space, Tabs, Tooltip} from "antd";
+import {Button, message, Row, Space, Tabs, Tooltip, Upload} from "antd";
 import InputElementHelper from "../../util/InputElementHelper";
 import {EditorContext} from "../Editor";
 import {
@@ -16,6 +16,7 @@ import EditorImageModal from "./EditorImageModal";
 import {contentChangeUndoStackHandler} from "./EditorView";
 import EditorBilibiliShareModal from "./EditorBilibiliShareModal";
 import {AntdTreeNodeInfo, MdHelper} from "../../util/MdHelper";
+import {UploadOutlined} from '@ant-design/icons';
 
 const onChange = (key: string) => {
     console.log(key);
@@ -25,7 +26,7 @@ function EditorMenu() {
 
     return (
         <EditorContext.Consumer>
-            {({updateContent}) => (
+            {({updateContent, tocEnable, updateTocEnable, updateTocTree}) => (
                 <Tabs defaultActiveKey="1" items={[
                     {
                         key: '1',
@@ -33,6 +34,43 @@ function EditorMenu() {
                         children:
                             <Row gutter={[8, 8]}>
                                 <Space size={"small"}>
+                                    <Button type="link" onClick={(event) => {
+
+                                        let antdTreeNodeInfos: Array<AntdTreeNodeInfo> = new Array<AntdTreeNodeInfo>();
+                                        let map: Map<number, AntdTreeNodeInfo> = new Map<number, AntdTreeNodeInfo>();
+
+                                        document.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((item, index) => {
+                                            let antdTreeNode = {
+                                                index: index,
+                                                key: "toc_" + index,
+                                                nodeName: item.tagName,
+                                                level: null,
+                                                title: item.textContent as string,
+                                                value: item.id,
+                                                parentNodeIndex: null,
+                                                children: new Array<AntdTreeNodeInfo>
+                                            };
+
+                                            antdTreeNodeInfos.push(antdTreeNode);
+                                            map.set(index, antdTreeNode);
+                                        });
+
+                                        let currentTOC = MdHelper.initTitleTree({
+                                            currentTOCArray: antdTreeNodeInfos,
+                                            allTocNodeMap: map,
+                                            errorCallback: null
+                                        });
+
+                                        updateTocTree(currentTOC);
+
+                                        console.log(currentTOC);
+
+                                        if (currentTOC.length > 0) {
+                                            updateTocEnable(!tocEnable);
+                                        } else {
+                                            message.info("未找到目录结构");
+                                        }
+                                    }}>{tocEnable ? "隐藏目录" : "预览目录"}</Button>
                                     <Tooltip placement="top" title={"Ctrl + B"}>
                                         <Button type="link" onClick={(event) => {
                                             // @ts-ignore
@@ -223,36 +261,11 @@ function EditorMenu() {
                         children:
                             <Row gutter={[8, 8]}>
                                 <Space size={"small"}>
-                                    <Button type="link" onClick={(event) => {
-
-                                        let antdTreeNodeInfos: Array<AntdTreeNodeInfo> = new Array<AntdTreeNodeInfo>();
-                                        let map: Map<number, AntdTreeNodeInfo> = new Map<number, AntdTreeNodeInfo>();
-
-                                        document.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((item, index) => {
-                                            let antdTreeNode = {
-                                                index: index,
-                                                key: "toc_" + index,
-                                                nodeName: item.tagName,
-                                                level: null,
-                                                title: item.textContent as string,
-                                                value: item.id,
-                                                parentNodeIndex: null,
-                                                children: new Array<AntdTreeNodeInfo>
-                                            };
-
-                                            antdTreeNodeInfos.push(antdTreeNode);
-                                            map.set(index, antdTreeNode);
-                                        });
-
-                                        let currentTOC = MdHelper.initTitleTree({
-                                            currentTOCArray: antdTreeNodeInfos,
-                                            allTocNodeMap: map,
-                                            errorCallback: null
-                                        });
-
-                                        console.log(currentTOC);
-
-                                    }}>显示目录</Button>
+                                    <Upload showUploadList={true} multiple={true} onChange={(info) => {
+                                        console.log(info.file);
+                                    }}>
+                                        <Button type="link" icon={<UploadOutlined/>}>上传文件</Button>
+                                    </Upload>
                                 </Space>
                             </Row>
                     },

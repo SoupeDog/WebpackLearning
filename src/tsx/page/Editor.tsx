@@ -7,21 +7,25 @@ import EditorView from "./component/EditorView";
 export interface EditorState {
     content: string;
     updateContent: Function;
+    tocEnable: boolean;
+    updateTocEnable: Function;
+    tocTree: any[];
+    updateTocTree: Function;
 }
 
 function Editor() {
     const [content, updateContent] = useState("");
-    const [editorExtendInfo, updateEditorExtendInfo] = useState({
-        hyperlinkModalEnable: false,
-        hyperlinkText: "",
-        hyperlinkValue: ""
-    });
+    const [tocEnable, updateTocEnable] = useState(false);
+    const [tocTree, updateTocTree] = useState([]);
+
     const state = useMemo(() => ({
         content: content,
         updateContent: updateContent,
-        editorExtendInfo: editorExtendInfo,
-        updateEditorExtendInfo: updateEditorExtendInfo
-    }), [content, editorExtendInfo])
+        tocEnable: tocEnable,
+        updateTocEnable: updateTocEnable,
+        tocTree: tocTree,
+        updateTocTree: updateTocTree
+    }), [content, tocEnable, tocTree]);
 
     return (
         <ConfigProvider locale={zhCN}>
