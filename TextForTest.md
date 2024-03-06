@@ -14,23 +14,23 @@
 
 **这是加粗内容**
 
-``行内代码``
+`行内代码`
 
-*这是斜体内容*
+_这是斜体内容_
 
-~这是删除线内容~
+~~这是删除线内容~~
 
 <u>这是下划线内容</u>
 
 - 无序列表
-    - 无序列表
+  - 无序列表
 
 1. 有序列表
 2. 有序列表
 3. 有序列表
 
-|  表头  |  表头  |  表头  |
-|:----:|:----:|:----:|
+|   表头   |   表头   |   表头   |
+| :------: | :------: | :------: |
 | 示例内容 | 示例内容 | 示例内容 |
 
 - [ ] 未完成任务
@@ -53,13 +53,22 @@ A<sub>1</sub>
 
 # 公式
 
-$$$
+$$
 S_{n}=\frac{n \left( a_{1}+a_{n}\right)}{2}
-$$$
+$$
 
-$$$
+$$
 Q = I ^ { 2 } R \mathrm { t }
-$$$
+$$
+
+# 时序图
+
+```mermaid
+sequenceDiagram
+  A->>B: hello!
+  B-->>A: hi!
+  A-)B: bye!
+```
 
 # 代码块
 
@@ -168,5 +177,3 @@ config-attributes:
 # 资源
 
 ![百度Logo](https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png)
-
-<img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" alt="百度Logo" width="540" height="258" style="margin:0 auto;display: block;">

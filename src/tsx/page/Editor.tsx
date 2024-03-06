@@ -1,37 +1,34 @@
+import 'md-editor-rt/lib/style.css';
+
 import React, {createContext, useMemo, useState} from 'react';
 import zhCN from "antd/locale/zh_CN";
-import {ConfigProvider} from "antd";
-import EditorMenu from "./component/EditorMenu";
-import EditorView from "./component/EditorView";
+import {ConfigProvider, message} from "antd";
+import {MdEditor} from 'md-editor-rt';
+import {allowAll, key_draft} from "./component/properties/MarkDownStaticValue";
 
 export interface EditorState {
     content: string;
     updateContent: Function;
-    tocEnable: boolean;
-    updateTocEnable: Function;
-    tocTree: any[];
-    updateTocTree: Function;
 }
 
+// 草稿
+const draft = localStorage.getItem(key_draft);
+
 function Editor() {
-    const [content, updateContent] = useState("");
-    const [tocEnable, updateTocEnable] = useState(false);
-    const [tocTree, updateTocTree] = useState([]);
+    const [content, updateContent] = useState(draft == undefined ? "" : draft);
 
     const state = useMemo(() => ({
         content: content,
         updateContent: updateContent,
-        tocEnable: tocEnable,
-        updateTocEnable: updateTocEnable,
-        tocTree: tocTree,
-        updateTocTree: updateTocTree
-    }), [content, tocEnable, tocTree]);
+    }), [content]);
 
     return (
         <ConfigProvider locale={zhCN}>
             <EditorContext.Provider value={state}>
-                <EditorMenu/>
-                <EditorView/>
+                <MdEditor sanitize={allowAll} modelValue={content} onChange={updateContent} onSave={() => {
+                    localStorage.setItem(key_draft, content);
+                    message.success("保存成功", 3);
+                }}/>
             </EditorContext.Provider>
         </ConfigProvider>
     );
