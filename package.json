@@ -5,7 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "start:dev": "webpack serve --config webpack.config.js --progress --mode development --open",
-    "build": "webpack --mode production"
+    "build": "webpack --config webpack.config.js --progress --mode production"
   },
   "author": "soupedog",
   "license": "Apache License 2.0",
