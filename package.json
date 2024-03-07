@@ -45,7 +45,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "antd": "^5.9.4",
+    "antd": "^5.11.0",
     "md-editor-rt": "^4.12.1"
   }
 }

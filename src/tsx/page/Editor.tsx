@@ -15,7 +15,8 @@ export interface EditorState {
 const draft = localStorage.getItem(key_draft);
 
 function Editor() {
-    const [content, updateContent] = useState(draft == undefined ? "" : draft);
+    // draft == undefined ? "" : draft
+    const [content, updateContent] = useState(draft ?? "");
 
     const state = useMemo(() => ({
         content: content,
@@ -25,10 +26,10 @@ function Editor() {
     return (
         <ConfigProvider locale={zhCN}>
             <EditorContext.Provider value={state}>
-                <MdEditor sanitize={allowAll} modelValue={content} onChange={updateContent} onSave={() => {
+                <MdEditor modelValue={content} onChange={updateContent} onSave={() => {
                     localStorage.setItem(key_draft, content);
                     message.success("保存成功", 3);
-                }}/>
+                }} sanitize={allowAll}/>
             </EditorContext.Provider>
         </ConfigProvider>
     );
