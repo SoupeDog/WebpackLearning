@@ -92,8 +92,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: "index.html",
             title: "主页",
-            favicon: "./src/image/favicon.ico",
-            template: "./src/html/defaultTemplate.html",
+            favicon: "./public/image/favicon.ico",
+            template: "./public/html/defaultTemplate.html",
             chunks: ["index", "commons"],
             inject: "body",
             minify: {

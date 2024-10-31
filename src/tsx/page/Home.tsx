@@ -1,7 +1,7 @@
 import React from 'react';
-import '../../style/index.css'
-import '../../style/index.less'
-import '../../style/index.scss'
+import '../../../public/style/index.css'
+import '../../../public/style/index.scss'
+import '../../../public/style/index.less'
 
 function Home() {
     return (

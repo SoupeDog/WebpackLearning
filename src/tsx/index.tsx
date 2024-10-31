@@ -1,10 +1,11 @@
-import "../style/default.css"
+import '../../public/style/default.css'
 
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+
 import Home from "./page/Home";
 import NotFound from "./page/NotFound";
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 const container: Element | null = document.getElementById('root');
 
